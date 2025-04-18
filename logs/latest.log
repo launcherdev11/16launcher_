@@ -1,0 +1,94 @@
+[10:43:52] [Datafixer Bootstrap/INFO]: 263 Datafixer optimizations took 983 milliseconds
+[10:43:55] [Render thread/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[10:43:55] [Render thread/INFO]: Setting user: humorousCrane0
+[10:43:55] [Render thread/INFO]: Backend library: LWJGL version 3.3.3+5
+[10:43:56] [Render thread/INFO]: Using optional rendering extensions: GL_KHR_debug, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access
+[10:43:56] [Download-2/ERROR]: Failed to fetch user properties
+com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
+	at com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:59) ~[authlib-6.0.58.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:150) ~[authlib-6.0.58.jar:?]
+	at fqq.bN(SourceFile:454) ~[1.21.5.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401
+	at com.mojang.authlib.minecraft.client.MinecraftClient.readInputStream(MinecraftClient.java:103) ~[authlib-6.0.58.jar:?]
+	at com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:56) ~[authlib-6.0.58.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:121) ~[authlib-6.0.58.jar:?]
+	... 5 more
+[10:43:56] [Render thread/INFO]: Reloading ResourceManager: vanilla
+[10:43:56] [Worker-Main-7/INFO]: Found unifont_all_no_pua-16.0.01.hex, loading
+[10:43:56] [Worker-Main-8/INFO]: Found unifont_jp_patch-16.0.01.hex, loading
+[10:43:57] [Download-2/ERROR]: Failed to fetch Realms feature flags
+fnm: Realms service error (400) with no payload
+	at flq.a(SourceFile:499) ~[1.21.5.jar:?]
+	at flq.n(SourceFile:177) ~[1.21.5.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
+[10:43:57] [Render thread/WARN]: minecraft:pipeline/entity_translucent_emissive shader program does not use sampler Sampler2 defined in the pipeline. This might be a bug.
+[10:43:57] [Render thread/INFO]: OpenAL initialized on device OpenAL Soft on Динамики (USB Audio Device)
+[10:43:57] [Render thread/INFO]: Sound engine started
+[10:43:57] [Render thread/INFO]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 2048x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[10:43:57] [Render thread/INFO]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[10:43:58] [IO-Worker-1/ERROR]: Couldn't connect to realms
+fnm: Realms service error (400) with no payload
+	at flq.a(SourceFile:499) ~[1.21.5.jar:?]
+	at flq.h(SourceFile:278) ~[1.21.5.jar:?]
+	at flk.c(SourceFile:51) ~[1.21.5.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
+[10:44:03] [Render thread/INFO]: Loaded 1373 recipes
+[10:44:03] [Render thread/INFO]: Loaded 1484 advancements
+[10:44:03] [Server thread/INFO]: Starting integrated minecraft server version 1.21.5
+[10:44:03] [Server thread/INFO]: Generating keypair
+[10:44:03] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[10:44:04] [Render thread/INFO]: Подготовка области возрождения: 0%
+[10:44:04] [Render thread/INFO]: Подготовка области возрождения: 0%
+[10:44:04] [Render thread/INFO]: Time elapsed: 697 ms
+[10:44:04] [Server thread/INFO]: Changing view distance to 12, from 10
+[10:44:04] [Server thread/INFO]: Changing simulation distance to 12, from 0
+[10:44:05] [Server thread/INFO]: humorousCrane0[local:E:8c9c0957] logged in with entity id 83 at (-75.97620199817786, 68.0, 328.2510963904907)
+[10:44:05] [Server thread/INFO]: humorousCrane0 присоединился к игре
+[10:44:05] [Render thread/INFO]: Loaded 9 advancements
+[10:44:05] [Render thread/WARN]: Unable to play empty soundEvent: minecraft:entity.tropical_fish.ambient
+[10:44:10] [Render thread/INFO]: Loaded 27 advancements
+[10:44:22] [Server thread/INFO]: humorousCrane0 погребён заживо
+[10:44:22] [Render thread/INFO]: [System] [CHAT] humorousCrane0 погребён заживо
+[10:44:24] [Render thread/WARN]: Received passengers for unknown entity
+[10:44:50] [Render thread/INFO]: Loaded 37 advancements
+[10:44:53] [Render thread/INFO]: Loaded 39 advancements
+[10:45:13] [Server thread/INFO]: Saving and pausing game...
+[10:45:13] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:overworld
+[10:45:13] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_end
+[10:45:13] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_nether
+[10:45:14] [Render thread/INFO]: Stopping!
+[10:45:14] [Server thread/INFO]: humorousCrane0 lost connection: Отключение
+[10:45:14] [Server thread/INFO]: humorousCrane0 покинул игру
+[10:45:14] [Server thread/INFO]: Stopping singleplayer server as player logged out
+[10:45:14] [Server thread/INFO]: Stopping server
+[10:45:14] [Server thread/INFO]: Saving players
+[10:45:14] [Server thread/INFO]: Saving worlds
+[10:45:14] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:overworld
+[10:45:14] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_end
+[10:45:14] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_nether
+[10:45:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (Новый мир (3)): All chunks are saved
+[10:45:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[10:45:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[10:45:14] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
