@@ -1,6 +1,6 @@
 2025-03-24 19:52:02,329 - DEBUG - Starting new HTTPS connection (1): launchermeta.mojang.com:443
 2025-03-24 19:52:02,722 - DEBUG - https://launchermeta.mojang.com:443 "GET /mc/game/version_manifest_v2.json HTTP/1.1" 200 None
-2025-03-24 19:52:05,500 - ERROR - Ошибка установки fabric: install_fabric() got an unexpected keyword argument 'version'
+2025-03-24 19:52:05,500 - ERROR - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fabric: install_fabric() got an unexpected keyword argument 'version'
 2025-03-24 19:52:08,599 - DEBUG - Starting new HTTPS connection (1): maven.minecraftforge.net:443
 2025-03-24 19:52:09,151 - DEBUG - https://maven.minecraftforge.net:443 "GET /net/minecraftforge/forge/maven-metadata.xml HTTP/1.1" 200 14908
 2025-03-24 19:52:09,286 - DEBUG - Starting new HTTPS connection (1): maven.minecraftforge.net:443

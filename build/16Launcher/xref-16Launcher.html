@@ -24,10 +24,14 @@ imports:
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
+ &#8226;   <a href="#base64">base64</a>
+ &#8226;   <a href="#cfg">cfg</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#ely">ely</a>
+ &#8226;   <a href="#ely_device">ely_device</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.aliases">encodings.aliases</a>
  &#8226;   <a href="#encodings.ascii">encodings.ascii</a>
@@ -151,6 +155,7 @@ imports:
  &#8226;   <a href="#encodings.uu_codec">encodings.uu_codec</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#flow">flow</a>
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#genericpath">genericpath</a>
  &#8226;   <a href="#hashlib">hashlib</a>
@@ -165,10 +170,12 @@ imports:
  &#8226;   <a href="#minecraft_launcher_lib.fabric">minecraft_launcher_lib.fabric</a>
  &#8226;   <a href="#minecraft_launcher_lib.forge">minecraft_launcher_lib.forge</a>
  &#8226;   <a href="#minecraft_launcher_lib.install">minecraft_launcher_lib.install</a>
+ &#8226;   <a href="#minecraft_launcher_lib.quilt">minecraft_launcher_lib.quilt</a>
  &#8226;   <a href="#minecraft_launcher_lib.utils">minecraft_launcher_lib.utils</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#platform">platform</a>
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#pyi_rth_cryptography_openssl.py">pyi_rth_cryptography_openssl.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
@@ -176,7 +183,6 @@ imports:
  &#8226;   <a href="#pyi_rth_pkgutil.py">pyi_rth_pkgutil.py</a>
  &#8226;   <a href="#pyi_rth_pyqt5.py">pyi_rth_pyqt5.py</a>
  &#8226;   <a href="#random">random</a>
- &#8226;   <a href="#random_username.generate">random_username.generate</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._casefix">re._casefix</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
@@ -191,12 +197,16 @@ imports:
  &#8226;   <a href="#stat">stat</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#uuid">uuid</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
+ &#8226;   <a href="#zipfile">zipfile</a>
 
   </div>
 
@@ -300,6 +310,8 @@ imported by:
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#OpenSSL.crypto">OpenSSL.crypto</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
  &#8226;   <a href="#http.client">http.client</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#logging">logging</a>
@@ -498,7 +510,9 @@ imported by:
   <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/site-packages/PyQt5/__init__.py" type="text/plain"><tt>PyQt5</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imports:
-    <a href="#PyQt5.sip">PyQt5.sip</a>
+    <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
  &#8226;   <a href="#sys">sys</a>
@@ -520,11 +534,17 @@ imported by:
   <tt>PyQt5.QtCore</tt> <span class="moduletype"><tt>C:\Users\BAZA\AppData\Local\Programs\Python\Python313\Lib\site-packages\PyQt5\QtCore.pyd</tt></span>  <div class="import">
 imports:
     <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#typing">typing</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+    <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#main.py">main.py</a>
 
@@ -538,11 +558,16 @@ imported by:
 imports:
     <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#typing">typing</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+    <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#main.py">main.py</a>
 
   </div>
@@ -556,11 +581,16 @@ imports:
     <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#typing">typing</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#main.py">main.py</a>
+    <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -571,11 +601,15 @@ imported by:
   <tt>PyQt5.sip</tt> <span class="moduletype"><tt>C:\Users\BAZA\AppData\Local\Programs\Python\Python313\Lib\site-packages\PyQt5\sip.cp313-win_amd64.pyd</tt></span>  <div class="import">
 imports:
     <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#typing">typing</a>
 
   </div>
   <div class="import">
 imported by:
     <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
 
   </div>
 
@@ -594,6 +628,7 @@ imported by:
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#charset_normalizer.constant">charset_normalizer.constant</a>
  &#8226;   <a href="#charset_normalizer.legacy">charset_normalizer.legacy</a>
+ &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
  &#8226;   <a href="#charset_normalizer.version">charset_normalizer.version</a>
@@ -697,6 +732,18 @@ imported by:
   <tt>_ast</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#ast">ast</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="_asyncio"></a>
+  <tt>_asyncio</tt> <span class="moduletype"><tt>C:\Users\BAZA\AppData\Local\Programs\Python\Python313\DLLs\_asyncio.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
 
   </div>
 
@@ -1070,6 +1117,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#platform">platform</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
 
   </div>
 
@@ -1196,6 +1244,16 @@ imported by:
 imported by:
     <a href="#hmac">hmac</a>
  &#8226;   <a href="#operator">operator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="_overlapped"></a>
+  <tt>_overlapped</tt> <span class="moduletype"><tt>C:\Users\BAZA\AppData\Local\Programs\Python\Python313\DLLs\_overlapped.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#asyncio.windows_events">asyncio.windows_events</a>
 
   </div>
 
@@ -1661,7 +1719,9 @@ imported by:
   <a name="_winapi"></a>
   <tt>_winapi</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#encodings">encodings</a>
+    <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.heap">multiprocessing.heap</a>
@@ -1766,6 +1826,7 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#uuid">uuid</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
   </div>
@@ -1811,6 +1872,949 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="asyncio"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/__init__.py" type="text/plain"><tt>asyncio</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.DefaultEventLoopPolicy">asyncio.DefaultEventLoopPolicy</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.taskgroups">asyncio.taskgroups</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.taskgroups">asyncio.taskgroups</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#flow">flow</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.DefaultEventLoopPolicy"></a>
+  <a target="code" href="" type="text/plain"><tt>asyncio.DefaultEventLoopPolicy</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.base_events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/base_events.py" type="text/plain"><tt>asyncio.base_events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#'collections.abc'">'collections.abc'</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#concurrent.futures">concurrent.futures</a>
+ &#8226;   <a href="#errno">errno</a>
+ &#8226;   <a href="#heapq">heapq</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#ssl">ssl</a>
+ &#8226;   <a href="#stat">stat</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#traceback">traceback</a>
+ &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#weakref">weakref</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.base_futures"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/base_futures.py" type="text/plain"><tt>asyncio.base_futures</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#reprlib">reprlib</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.base_subprocess"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/base_subprocess.py" type="text/plain"><tt>asyncio.base_subprocess</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#signal">signal</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.base_tasks"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/base_tasks.py" type="text/plain"><tt>asyncio.base_tasks</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#linecache">linecache</a>
+ &#8226;   <a href="#reprlib">reprlib</a>
+ &#8226;   <a href="#traceback">traceback</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.constants"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/constants.py" type="text/plain"><tt>asyncio.constants</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#enum">enum</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.coroutines"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/coroutines.py" type="text/plain"><tt>asyncio.coroutines</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#'collections.abc'">'collections.abc'</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#types">types</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/events.py" type="text/plain"><tt>asyncio.events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_asyncio">_asyncio</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.DefaultEventLoopPolicy">asyncio.DefaultEventLoopPolicy</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#signal">signal</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.taskgroups">asyncio.taskgroups</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.exceptions"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/exceptions.py" type="text/plain"><tt>asyncio.exceptions</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.taskgroups">asyncio.taskgroups</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.format_helpers"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/format_helpers.py" type="text/plain"><tt>asyncio.format_helpers</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#reprlib">reprlib</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#traceback">traceback</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.futures"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/futures.py" type="text/plain"><tt>asyncio.futures</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_asyncio">_asyncio</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#concurrent.futures">concurrent.futures</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#types">types</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.locks"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/locks.py" type="text/plain"><tt>asyncio.locks</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#enum">enum</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.log"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/log.py" type="text/plain"><tt>asyncio.log</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#logging">logging</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.mixins"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/mixins.py" type="text/plain"><tt>asyncio.mixins</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#threading">threading</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.proactor_events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/proactor_events.py" type="text/plain"><tt>asyncio.proactor_events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#signal">signal</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.protocols"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/protocols.py" type="text/plain"><tt>asyncio.protocols</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.queues"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/queues.py" type="text/plain"><tt>asyncio.queues</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#heapq">heapq</a>
+ &#8226;   <a href="#types">types</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.runners"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/runners.py" type="text/plain"><tt>asyncio.runners</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#signal">signal</a>
+ &#8226;   <a href="#threading">threading</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.selector_events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/selector_events.py" type="text/plain"><tt>asyncio.selector_events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#errno">errno</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#ssl">ssl</a>
+ &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#weakref">weakref</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.sslproto"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/sslproto.py" type="text/plain"><tt>asyncio.sslproto</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#ssl">ssl</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.staggered"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/staggered.py" type="text/plain"><tt>asyncio.staggered</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#contextlib">contextlib</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.streams"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/streams.py" type="text/plain"><tt>asyncio.streams</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#weakref">weakref</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.subprocess"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/subprocess.py" type="text/plain"><tt>asyncio.subprocess</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.protocols">asyncio.protocols</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.taskgroups"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/taskgroups.py" type="text/plain"><tt>asyncio.taskgroups</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.tasks"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/tasks.py" type="text/plain"><tt>asyncio.tasks</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_asyncio">_asyncio</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#concurrent.futures">concurrent.futures</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#weakref">weakref</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.taskgroups">asyncio.taskgroups</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.threads"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/threads.py" type="text/plain"><tt>asyncio.threads</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#functools">functools</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.timeouts"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/timeouts.py" type="text/plain"><tt>asyncio.timeouts</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.transports"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/transports.py" type="text/plain"><tt>asyncio.transports</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.trsock"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/trsock.py" type="text/plain"><tt>asyncio.trsock</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#socket">socket</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.unix_events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/unix_events.py" type="text/plain"><tt>asyncio.unix_events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.transports">asyncio.transports</a>
+ &#8226;   <a href="#errno">errno</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#signal">signal</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#stat">stat</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.windows_events"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/windows_events.py" type="text/plain"><tt>asyncio.windows_events</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_overlapped">_overlapped</a>
+ &#8226;   <a href="#_winapi">_winapi</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.exceptions">asyncio.exceptions</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#errno">errno</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#msvcrt">msvcrt</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#struct">struct</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#weakref">weakref</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="asyncio.windows_utils"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/asyncio/windows_utils.py" type="text/plain"><tt>asyncio.windows_utils</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_winapi">_winapi</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#msvcrt">msvcrt</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#tempfile">tempfile</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="atexit"></a>
   <tt>atexit</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
@@ -1846,6 +2850,7 @@ imported by:
  &#8226;   <a href="#email.base64mime">email.base64mime</a>
  &#8226;   <a href="#email.encoders">email.encoders</a>
  &#8226;   <a href="#encodings.base64_codec">encodings.base64_codec</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#minecraft_launcher_lib.microsoft_account">minecraft_launcher_lib.microsoft_account</a>
  &#8226;   <a href="#requests.auth">requests.auth</a>
  &#8226;   <a href="#secrets">secrets</a>
@@ -2050,6 +3055,23 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="cfg"></a>
+  <a target="code" href="///C:/Users/BAZA/Desktop/16Launcher/cfg.py" type="text/plain"><tt>cfg</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#json">json</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ely">ely</a>
+ &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="chardet"></a>
   <a target="code" href="" type="text/plain"><tt>chardet</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
@@ -2162,6 +3184,7 @@ imported by:
     <a href="#charset_normalizer.api">charset_normalizer.api</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#charset_normalizer.legacy">charset_normalizer.legacy</a>
+ &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
 
@@ -2195,7 +3218,12 @@ imported by:
   <a name="charset_normalizer.md"></a>
   <tt>charset_normalizer.md</tt> <span class="moduletype"><tt>C:\Users\BAZA\AppData\Local\Programs\Python\Python313\Lib\site-packages\charset_normalizer\md.cp313-win_amd64.pyd</tt></span>  <div class="import">
 imports:
-    <a href="#charset_normalizer">charset_normalizer</a>
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#charset_normalizer">charset_normalizer</a>
+ &#8226;   <a href="#charset_normalizer.constant">charset_normalizer.constant</a>
+ &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#logging">logging</a>
 
   </div>
   <div class="import">
@@ -2273,6 +3301,7 @@ imported by:
     <a href="#charset_normalizer">charset_normalizer</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
+ &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.models">charset_normalizer.models</a>
 
   </div>
@@ -2467,6 +3496,14 @@ imports:
 imported by:
     <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#contextlib">contextlib</a>
@@ -2490,6 +3527,7 @@ imported by:
  &#8226;   <a href="#requests.structures">requests.structures</a>
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#ssl">ssl</a>
  &#8226;   <a href="#statistics">statistics</a>
@@ -2530,7 +3568,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#concurrent.futures._base">concurrent.futures._base</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
  &#8226;   <a href="#minecraft_launcher_lib.install">minecraft_launcher_lib.install</a>
@@ -2633,6 +3674,7 @@ imports:
 imported by:
     <a href="#_threading_local">_threading_local</a>
  &#8226;   <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
  &#8226;   <a href="#getpass">getpass</a>
  &#8226;   <a href="#glob">glob</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
@@ -2664,6 +3706,11 @@ imports:
   <div class="import">
 imported by:
     <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
 
   </div>
 
@@ -2692,6 +3739,7 @@ imported by:
  &#8226;   <a href="#requests.cookies">requests.cookies</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#weakref">weakref</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
 
   </div>
 
@@ -4107,6 +5155,7 @@ imported by:
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#multiprocessing.sharedctypes">multiprocessing.sharedctypes</a>
  &#8226;   <a href="#platform">platform</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
 
   </div>
 
@@ -4289,6 +5338,9 @@ imports:
   <div class="import">
 imported by:
     <a href="#OpenSSL.crypto">OpenSSL.crypto</a>
+ &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#cryptography.x509.base">cryptography.x509.base</a>
@@ -4360,6 +5412,45 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#requests.cookies">requests.cookies</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ely"></a>
+  <a target="code" href="///C:/Users/BAZA/Desktop/16Launcher/ely.py" type="text/plain"><tt>ely</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#cfg">cfg</a>
+ &#8226;   <a href="#ely_device">ely_device</a>
+ &#8226;   <a href="#flow">flow</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#requests">requests</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ely_device"></a>
+  <a target="code" href="///C:/Users/BAZA/Desktop/16Launcher/ely_device.py" type="text/plain"><tt>ely_device</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#requests">requests</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ely">ely</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -7365,7 +8456,13 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ast">ast</a>
+    <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio.constants">asyncio.constants</a>
+ &#8226;   <a href="#asyncio.locks">asyncio.locks</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#cryptography.hazmat.primitives.serialization.ssh">cryptography.hazmat.primitives.serialization.ssh</a>
  &#8226;   <a href="#cryptography.utils">cryptography.utils</a>
@@ -7391,6 +8488,10 @@ imported by:
   <tt>errno</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#gettext">gettext</a>
  &#8226;   <a href="#gzip">gzip</a>
  &#8226;   <a href="#http.client">http.client</a>
@@ -7418,6 +8519,25 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#subprocess">subprocess</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="flow"></a>
+  <a target="code" href="///C:/Users/BAZA/Desktop/16Launcher/flow.py" type="text/plain"><tt>flow</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#multiprocessing">multiprocessing</a>
+ &#8226;   <a href="#threading">threading</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ely">ely</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -7507,7 +8627,14 @@ imports:
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#OpenSSL.crypto">OpenSSL.crypto</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
+ &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#contextlib">contextlib</a>
@@ -7774,7 +8901,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#collections">collections</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#queue">queue</a>
 
@@ -8590,6 +9719,9 @@ imports:
   <div class="import">
 imported by:
     <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
@@ -8616,6 +9748,8 @@ imports:
 imported by:
     <a href="#_colorize">_colorize</a>
  &#8226;   <a href="#_compression">_compression</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#bz2">bz2</a>
  &#8226;   <a href="#csv">csv</a>
  &#8226;   <a href="#dis">dis</a>
@@ -8648,6 +9782,7 @@ imported by:
  &#8226;   <a href="#requests.models">requests.models</a>
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#runpy">runpy</a>
+ &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tarfile">tarfile</a>
@@ -8700,6 +9835,11 @@ imported by:
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
@@ -8769,7 +9909,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#charset_normalizer.models">charset_normalizer.models</a>
+    <a href="#cfg">cfg</a>
+ &#8226;   <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#json.decoder">json.decoder</a>
  &#8226;   <a href="#json.encoder">json.encoder</a>
@@ -8876,7 +10017,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#inspect">inspect</a>
+    <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
@@ -8939,8 +10081,11 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#charset_normalizer">charset_normalizer</a>
+    <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.log">asyncio.log</a>
+ &#8226;   <a href="#charset_normalizer">charset_normalizer</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
+ &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#hashlib">hashlib</a>
@@ -9003,6 +10148,8 @@ imported by:
 imported by:
     <a href="#_pydatetime">_pydatetime</a>
  &#8226;   <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#cryptography.hazmat.primitives.asymmetric.rsa">cryptography.hazmat.primitives.asymmetric.rsa</a>
  &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#random">random</a>
@@ -9575,7 +10722,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#minecraft_launcher_lib">minecraft_launcher_lib</a>
+    <a href="#main.py">main.py</a>
+ &#8226;   <a href="#minecraft_launcher_lib">minecraft_launcher_lib</a>
  &#8226;   <a href="#minecraft_launcher_lib.mrpack">minecraft_launcher_lib.mrpack</a>
 
   </div>
@@ -9713,7 +10861,9 @@ imported by:
   <a name="msvcrt"></a>
   <tt>msvcrt</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#getpass">getpass</a>
+    <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#getpass">getpass</a>
  &#8226;   <a href="#multiprocessing.popen_spawn_win32">multiprocessing.popen_spawn_win32</a>
  &#8226;   <a href="#multiprocessing.spawn">multiprocessing.spawn</a>
  &#8226;   <a href="#subprocess">subprocess</a>
@@ -9751,6 +10901,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#concurrent.futures.process">concurrent.futures.process</a>
+ &#8226;   <a href="#flow">flow</a>
  &#8226;   <a href="#multiprocessing">multiprocessing</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.context">multiprocessing.context</a>
@@ -10693,6 +11844,14 @@ imported by:
  &#8226;   <a href="#_pyi_rth_utils.qt">_pyi_rth_utils.qt</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#argparse">argparse</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#bz2">bz2</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
@@ -10706,6 +11865,7 @@ imported by:
  &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
  &#8226;   <a href="#ctypes.macholib.dyld">ctypes.macholib.dyld</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
+ &#8226;   <a href="#ely">ely</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#fnmatch">fnmatch</a>
  &#8226;   <a href="#genericpath">genericpath</a>
@@ -10768,11 +11928,11 @@ imported by:
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#pyi_rth_pyqt5.py">pyi_rth_pyqt5.py</a>
  &#8226;   <a href="#random">random</a>
- &#8226;   <a href="#random_username.generate">random_username.generate</a>
  &#8226;   <a href="#requests.auth">requests.auth</a>
  &#8226;   <a href="#requests.sessions">requests.sessions</a>
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#runpy">runpy</a>
+ &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#ssl">ssl</a>
@@ -10786,6 +11946,7 @@ imported by:
  &#8226;   <a href="#urllib3.filepost">urllib3.filepost</a>
  &#8226;   <a href="#urllib3.util.ssl_">urllib3.util.ssl_</a>
  &#8226;   <a href="#uuid">uuid</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
  &#8226;   <a href="#zipfile">zipfile</a>
@@ -10977,7 +12138,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#minecraft_launcher_lib._helper">minecraft_launcher_lib._helper</a>
+    <a href="#main.py">main.py</a>
+ &#8226;   <a href="#minecraft_launcher_lib._helper">minecraft_launcher_lib._helper</a>
  &#8226;   <a href="#minecraft_launcher_lib.java_utils">minecraft_launcher_lib.java_utils</a>
  &#8226;   <a href="#minecraft_launcher_lib.natives">minecraft_launcher_lib.natives</a>
  &#8226;   <a href="#minecraft_launcher_lib.runtime">minecraft_launcher_lib.runtime</a>
@@ -11206,41 +12368,11 @@ imported by:
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#minecraft_launcher_lib.utils">minecraft_launcher_lib.utils</a>
- &#8226;   <a href="#random_username.generate">random_username.generate</a>
  &#8226;   <a href="#secrets">secrets</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#urllib3.util.retry">urllib3.util.retry</a>
  &#8226;   <a href="#uuid">uuid</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="random_username"></a>
-  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/site-packages/random_username/__init__.py" type="text/plain"><tt>random_username</tt></a>
-<span class="moduletype">Package</span>  <div class="import">
-imported by:
-    <a href="#random_username.generate">random_username.generate</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="random_username.generate"></a>
-  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/site-packages/random_username/generate.py" type="text/plain"><tt>random_username.generate</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#os">os</a>
- &#8226;   <a href="#random">random</a>
- &#8226;   <a href="#random_username">random_username</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -11327,6 +12459,7 @@ imported by:
  &#8226;   <a href="#requests._internal_utils">requests._internal_utils</a>
  &#8226;   <a href="#requests.auth">requests.auth</a>
  &#8226;   <a href="#requests.utils">requests.utils</a>
+ &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
@@ -11446,7 +12579,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#collections">collections</a>
+    <a href="#asyncio.base_futures">asyncio.base_futures</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#main.py">main.py</a>
@@ -11484,7 +12620,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#main.py">main.py</a>
+    <a href="#ely">ely</a>
+ &#8226;   <a href="#ely_device">ely_device</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#minecraft_launcher_lib._helper">minecraft_launcher_lib._helper</a>
  &#8226;   <a href="#minecraft_launcher_lib._internal_types.helper_types">minecraft_launcher_lib._internal_types.helper_types</a>
  &#8226;   <a href="#minecraft_launcher_lib.install">minecraft_launcher_lib.install</a>
@@ -12002,10 +13140,32 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#multiprocessing.connection">multiprocessing.connection</a>
+    <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.forkserver">multiprocessing.forkserver</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#subprocess">subprocess</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="shlex"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/shlex.py" type="text/plain"><tt>shlex</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#collections">collections</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#webbrowser">webbrowser</a>
 
   </div>
 
@@ -12046,6 +13206,7 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#uuid">uuid</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
   </div>
@@ -12063,7 +13224,12 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#multiprocessing.forkserver">multiprocessing.forkserver</a>
+    <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#multiprocessing.forkserver">multiprocessing.forkserver</a>
  &#8226;   <a href="#multiprocessing.managers">multiprocessing.managers</a>
  &#8226;   <a href="#multiprocessing.popen_fork">multiprocessing.popen_fork</a>
  &#8226;   <a href="#multiprocessing.popen_spawn_win32">multiprocessing.popen_spawn_win32</a>
@@ -12106,6 +13272,14 @@ imports:
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#_ssl">_ssl</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#ftplib">ftplib</a>
  &#8226;   <a href="#http.client">http.client</a>
@@ -12220,7 +13394,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ftplib">ftplib</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#ftplib">ftplib</a>
  &#8226;   <a href="#http.client">http.client</a>
  &#8226;   <a href="#requests">requests</a>
  &#8226;   <a href="#requests.adapters">requests.adapters</a>
@@ -12249,7 +13426,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#genericpath">genericpath</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#genericpath">genericpath</a>
  &#8226;   <a href="#glob">glob</a>
  &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#netrc">netrc</a>
@@ -12343,7 +13522,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#base64">base64</a>
+    <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#gettext">gettext</a>
@@ -12392,7 +13572,13 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ctypes._aix">ctypes._aix</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.subprocess">asyncio.subprocess</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#minecraft_launcher_lib.fabric">minecraft_launcher_lib.fabric</a>
@@ -12406,6 +13592,7 @@ imported by:
  &#8226;   <a href="#platform">platform</a>
  &#8226;   <a href="#pyi_rth_multiprocessing.py">pyi_rth_multiprocessing.py</a>
  &#8226;   <a href="#uuid">uuid</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
 
   </div>
 
@@ -12428,6 +13615,17 @@ imported by:
  &#8226;   <a href="#_pyi_rth_utils">_pyi_rth_utils</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio">asyncio</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
@@ -12511,6 +13709,7 @@ imported by:
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#runpy">runpy</a>
  &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#ssl">ssl</a>
@@ -12533,6 +13732,7 @@ imported by:
  &#8226;   <a href="#uuid">uuid</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#xml.parsers.expat">xml.parsers.expat</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
@@ -12598,7 +13798,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ctypes.util">ctypes.util</a>
+    <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
  &#8226;   <a href="#minecraft_launcher_lib.fabric">minecraft_launcher_lib.fabric</a>
  &#8226;   <a href="#minecraft_launcher_lib.forge">minecraft_launcher_lib.forge</a>
@@ -12666,10 +13867,17 @@ imports:
   <div class="import">
 imported by:
     <a href="#_threading_local">_threading_local</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.mixins">asyncio.mixins</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
  &#8226;   <a href="#cryptography.hazmat.bindings.openssl.binding">cryptography.hazmat.bindings.openssl.binding</a>
+ &#8226;   <a href="#flow">flow</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#importlib.util">importlib.util</a>
  &#8226;   <a href="#logging">logging</a>
@@ -12693,6 +13901,7 @@ imported by:
  &#8226;   <a href="#urllib3.connection">urllib3.connection</a>
  &#8226;   <a href="#urllib3.http2.connection">urllib3.http2.connection</a>
  &#8226;   <a href="#urllib3.http2.probe">urllib3.http2.probe</a>
+ &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
   </div>
@@ -12711,8 +13920,11 @@ imported by:
     <a href="#_datetime">_datetime</a>
  &#8226;   <a href="#_pydatetime">_pydatetime</a>
  &#8226;   <a href="#_strptime">_strptime</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#ely_device">ely_device</a>
  &#8226;   <a href="#email._parseaddr">email._parseaddr</a>
  &#8226;   <a href="#email.generator">email.generator</a>
  &#8226;   <a href="#email.utils">email.utils</a>
@@ -12721,6 +13933,7 @@ imported by:
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#http.cookies">http.cookies</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#multiprocessing.managers">multiprocessing.managers</a>
  &#8226;   <a href="#multiprocessing.pool">multiprocessing.pool</a>
@@ -12807,7 +14020,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#concurrent.futures.process">concurrent.futures.process</a>
+    <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_tasks">asyncio.base_tasks</a>
+ &#8226;   <a href="#asyncio.format_helpers">asyncio.format_helpers</a>
+ &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#main.py">main.py</a>
@@ -12860,6 +14076,11 @@ imports:
   <div class="import">
 imported by:
     <a href="#_weakrefset">_weakrefset</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#asyncio.futures">asyncio.futures</a>
+ &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
@@ -12932,6 +14153,11 @@ imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#OpenSSL._util">OpenSSL._util</a>
  &#8226;   <a href="#OpenSSL.crypto">OpenSSL.crypto</a>
+ &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
+ &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
@@ -13113,6 +14339,7 @@ imported by:
     <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#http.client">http.client</a>
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#minecraft_launcher_lib.microsoft_account">minecraft_launcher_lib.microsoft_account</a>
  &#8226;   <a href="#nturl2path">nturl2path</a>
@@ -14353,6 +15580,15 @@ imported by:
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#ast">ast</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.base_subprocess">asyncio.base_subprocess</a>
+ &#8226;   <a href="#asyncio.events">asyncio.events</a>
+ &#8226;   <a href="#asyncio.proactor_events">asyncio.proactor_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#charset_normalizer.legacy">charset_normalizer.legacy</a>
  &#8226;   <a href="#cryptography">cryptography</a>
@@ -14442,6 +15678,11 @@ imports:
 imported by:
     <a href="#OpenSSL.SSL">OpenSSL.SSL</a>
  &#8226;   <a href="#_threading_local">_threading_local</a>
+ &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
+ &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
+ &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
+ &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
+ &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
  &#8226;   <a href="#copy">copy</a>
@@ -14456,6 +15697,32 @@ imported by:
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#urllib3.connectionpool">urllib3.connectionpool</a>
  &#8226;   <a href="#xml.sax.expatreader">xml.sax.expatreader</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="webbrowser"></a>
+  <a target="code" href="///C:/Users/BAZA/AppData/Local/Programs/Python/Python313/Lib/webbrowser.py" type="text/plain"><tt>webbrowser</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_ios_support">_ios_support</a>
+ &#8226;   <a href="#argparse">argparse</a>
+ &#8226;   <a href="#copy">copy</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#shlex">shlex</a>
+ &#8226;   <a href="#shutil">shutil</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#threading">threading</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ely_device">ely_device</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -14739,6 +16006,7 @@ imports:
 imported by:
     <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#minecraft_launcher_lib._helper">minecraft_launcher_lib._helper</a>
  &#8226;   <a href="#minecraft_launcher_lib.forge">minecraft_launcher_lib.forge</a>
  &#8226;   <a href="#minecraft_launcher_lib.mrpack">minecraft_launcher_lib.mrpack</a>

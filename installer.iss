@@ -1,6 +1,6 @@
 #define MyAppName "16Launcher"
-#define MyAppVersion "1.0.1"
-#define MyAppPublisher "YourNameHere"
+#define MyAppVersion "1.0.2"
+#define MyAppPublisher "16steyy"
 #define MyAppExeName "16Launcher.exe"
 
 [Setup]
