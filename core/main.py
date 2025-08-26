@@ -3,7 +3,6 @@ import os
 import sys
 import logging
 import json
-import random
 from PyQt5.QtCore import QThread, pyqtSignal, QSize, Qt, QTimer
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, 
                             QComboBox, QProgressBar, QPushButton, QApplication, 
@@ -20,20 +19,14 @@ from minecraft_launcher_lib.quilt import install_quilt
 from minecraft_launcher_lib.fabric import get_all_minecraft_versions
 from uuid import uuid1
 import urllib.request
-from subprocess import call
 import shutil
 import requests
-from datetime import datetime
 import hashlib
 from functools import lru_cache
 from base64 import b64encode
 import webbrowser
-from ely_device import authorize_via_device_code
-import random 
+import random
 import zipfile
-from urllib.parse import urlparse
-from cfg import read, write, ELY_CLIENT_ID
-from flow import dedicated, logged
 import ely
 import traceback
 import time
@@ -95,7 +88,7 @@ def authenticate_ely_by(username, password):
 
 
 def resource_path(relative_path):
-    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath(".."))
     return os.path.join(base_path, relative_path)
 
 
@@ -220,7 +213,7 @@ class SplashScreen(QWidget):
         
         # Логотип
         self.logo = QLabel()
-        pixmap = QPixmap(resource_path("assets/icon.ico")).scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        pixmap = QPixmap(resource_path("../assets/icon.ico")).scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.logo.setPixmap(pixmap)
         self.logo.setAlignment(Qt.AlignCenter)
         content_layout.addWidget(self.logo)
@@ -1404,7 +1397,7 @@ class ModsTab(QWidget):
         search_layout.addWidget(self.search_input)
         
         self.search_button = QPushButton()
-        self.search_button.setIcon(QIcon(resource_path("assets/search.png")))
+        self.search_button.setIcon(QIcon(resource_path("../assets/search.png")))
         self.search_button.setIconSize(QSize(24, 24))
         self.search_button.setFixedSize(40, 40)
         self.search_button.setStyleSheet("""
@@ -3182,10 +3175,10 @@ class SettingsTab(QWidget):
         """Обновляет иконку и текст кнопки в зависимости от текущей темы"""
         current_theme = getattr(self.parent_window, 'current_theme', 'dark')
         if current_theme == 'dark':
-            self.theme_button.setIcon(QIcon(resource_path("assets/sun.png")))
+            self.theme_button.setIcon(QIcon(resource_path("../assets/sun.png")))
             self.theme_button.setText(" Светлая тема")
         else:
-            self.theme_button.setIcon(QIcon(resource_path("assets/moon.png")))
+            self.theme_button.setIcon(QIcon(resource_path("../assets/moon.png")))
             self.theme_button.setText(" Тёмная тема")
         self.theme_button.setIconSize(QSize(24, 24))
         
@@ -3353,7 +3346,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("16Launcher 1.0.2")
         self.setFixedSize(1280, 720)
-        self.setWindowIcon(QIcon(resource_path("assets/icon.ico")))
+        self.setWindowIcon(QIcon(resource_path("../assets/icon.ico")))
 
         self.motd_messages = [
             "Приятной игры, легенда!",
@@ -3487,7 +3480,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка "Играть"
         self.play_button = QPushButton()
-        self.play_button.setIcon(QIcon(resource_path("assets/play64.png")))
+        self.play_button.setIcon(QIcon(resource_path("../assets/play64.png")))
         self.play_button.setIconSize(QSize(64, 64))
         self.play_button.setFixedSize(75, 75)
         self.play_button.setStyleSheet("""
@@ -3507,7 +3500,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка "Настройки"
         self.settings_button = QPushButton()
-        self.settings_button.setIcon(QIcon(resource_path("assets/set64.png")))
+        self.settings_button.setIcon(QIcon(resource_path("../assets/set64.png")))
         self.settings_button.setIconSize(QSize(64, 64))
         self.settings_button.setFixedSize(75, 75)
         self.settings_button.setStyleSheet(self.play_button.styleSheet())
@@ -3516,7 +3509,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка "Новости"
         self.news_button = QPushButton()
-        self.news_button.setIcon(QIcon(resource_path("assets/news64.png")))
+        self.news_button.setIcon(QIcon(resource_path("../assets/news64.png")))
         self.news_button.setIconSize(QSize(64, 64))
         self.news_button.setFixedSize(75, 75)
         self.news_button.setStyleSheet(self.play_button.styleSheet())
@@ -3528,7 +3521,7 @@ class MainWindow(QMainWindow):
         
         # Кнопка "Телеграм"
         self.telegram_button = QPushButton()
-        self.telegram_button.setIcon(QIcon(resource_path("assets/tg.png")))
+        self.telegram_button.setIcon(QIcon(resource_path("../assets/tg.png")))
         self.telegram_button.setIconSize(QSize(64, 64))
         self.telegram_button.setFixedSize(75, 75)
         self.telegram_button.setStyleSheet(self.play_button.styleSheet())
@@ -3537,7 +3530,7 @@ class MainWindow(QMainWindow):
         
         #Кнопка "Поддержать"
         self.support_button = QPushButton()
-        self.support_button.setIcon(QIcon(resource_path("assets/support64.png")))
+        self.support_button.setIcon(QIcon(resource_path("../assets/support64.png")))
         self.support_button.setIconSize(QSize(64, 64))
         self.support_button.setFixedSize(75, 75)
         self.support_button.setStyleSheet(self.play_button.styleSheet())
@@ -3635,7 +3628,7 @@ class MainWindow(QMainWindow):
         top_row.addWidget(self.username)
 
         self.random_name_button = QToolButton(self.username)
-        self.random_name_button.setIcon(QIcon(resource_path("assets/random.png"))) # Путь к вашей иконке
+        self.random_name_button.setIcon(QIcon(resource_path("../assets/random.png"))) # Путь к вашей иконке
         self.random_name_button.setIconSize(QSize(45, 45))
         self.random_name_button.setCursor(Qt.PointingHandCursor)
         self.random_name_button.setStyleSheet("""
@@ -3731,7 +3724,7 @@ class MainWindow(QMainWindow):
         
                 # Кнопка "Открыть папку"
         self.open_folder_button = QPushButton()
-        self.open_folder_button.setIcon(QIcon(resource_path("assets/folder.png")))
+        self.open_folder_button.setIcon(QIcon(resource_path("../assets/folder.png")))
         self.open_folder_button.setToolTip("Открыть папку с игрой")
         self.open_folder_button.setIconSize(QSize(24, 24))
         self.open_folder_button.setCursor(Qt.PointingHandCursor)
@@ -4160,9 +4153,9 @@ class MainWindow(QMainWindow):
 
         # Можно менять иконку в зависимости от состояния
         if is_visible:
-            self.toggle_sidebar_button.setIcon(QIcon(resource_path("assets/toggle_open.png")))
+            self.toggle_sidebar_button.setIcon(QIcon(resource_path("../assets/toggle_open.png")))
         else:
-            self.toggle_sidebar_button.setIcon(QIcon(resource_path("assets/toggle_close.png")))
+            self.toggle_sidebar_button.setIcon(QIcon(resource_path("../assets/toggle_close.png")))
 
 
     
@@ -4682,10 +4675,10 @@ class MainWindow(QMainWindow):
                 )
         if hasattr(self, 'ely_button'):
             # Для кнопки Ely.by используем стандартную иконку
-            self.ely_button.setIcon(QIcon(resource_path("assets/account.png")))
+            self.ely_button.setIcon(QIcon(resource_path("../assets/account.png")))
         if hasattr(self, 'skin_button'):
             # Для кнопки скина используем стандартную иконку
-            self.skin_button.setIcon(QIcon(resource_path("assets/change_name.png")))
+            self.skin_button.setIcon(QIcon(resource_path("../assets/change_name.png")))
         
         # Обновляем иконки в настройках
         if hasattr(self, 'settings_tab'):
@@ -4813,7 +4806,6 @@ class MainWindow(QMainWindow):
     def open_root_folder(self):
         import subprocess
         import platform
-        import os
 
         # Используем глобальную переменную MINECRAFT_DIR, которая содержит путь к папке игры
         folder = MINECRAFT_DIR
@@ -5034,7 +5026,7 @@ class ModsTab(QWidget):
         search_layout.addWidget(self.search_input)
         
         self.search_button = QPushButton()
-        self.search_button.setIcon(QIcon(resource_path("assets/search.png")))
+        self.search_button.setIcon(QIcon(resource_path("../assets/search.png")))
         self.search_button.setIconSize(QSize(24, 24))
         self.search_button.setFixedSize(40, 40)
         self.search_button.setStyleSheet("""
@@ -5473,11 +5465,11 @@ if __name__ == "__main__":
         # Показываем splash screen
         splash = SplashScreen()
         splash.show()
-        
+
         # Инициализируем главное окно в фоне
         splash.update_progress(10, "Загрузка основных компонентов...")
         window = MainWindow()
-        
+
         # Имитация прогресса загрузки (можно заменить реальными шагами)
         steps = [
             (20, "Загрузка настроек..."),

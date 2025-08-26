@@ -1,15 +1,14 @@
-import requests, cfg, flow as flow
+import requests
 from ely_device import authorize_via_device_code
-import os
-
-
+from flow import logged
+import cfg
 BASE_URL = "https://authserver.ely.by"
 
 
 class AuthError(Exception): pass
 
 
-@flow.logged
+@logged
 def auth(login, password):
     data = _auth(login, password)
     return {
@@ -18,7 +17,7 @@ def auth(login, password):
         "token": data["accessToken"]
     }
 
-@flow.logged
+@logged
 def _auth(login, password):
     data = {
         "username": login,
@@ -32,40 +31,40 @@ def _auth(login, password):
     return r.json()
 
 
-@flow.logged
+@logged
 def username(val = None):
     if val is None:
-        return cfg.read("data/login.json")["username"]
-    dat = cfg.read("data/login.json")
+        return cfg.read("../data/login.json")["username"]
+    dat = cfg.read("../data/login.json")
     dat["username"] = val
-    cfg.write("data/login.json", dat)
+    cfg.write("../data/login.json", dat)
 
 
-@flow.logged
+@logged
 def uuid(val = None):
     if val is None:
-        return cfg.read("data/login.json")["uuid"]
-    dat = cfg.read("data/login.json")
+        return cfg.read("../data/login.json")["uuid"]
+    dat = cfg.read("../data/login.json")
     dat["uuid"] = val
-    cfg.write("data/login.json", dat)
+    cfg.write("../data/login.json", dat)
 
 
-@flow.logged
+@logged
 def token(val = None):
     if val is None:
-        return cfg.read("data/login.json")["token"]
-    dat = cfg.read("data/login.json")
+        return cfg.read("../data/login.json")["token"]
+    dat = cfg.read("../data/login.json")
     dat["token"] = val
-    cfg.write("data/login.json", dat)
+    cfg.write("../data/login.json", dat)
 
 
-@flow.logged
+@logged
 def logged_in(val = None):
     if val is None:
-        return cfg.read("data/login.json")["logged_in"]
-    dat = cfg.read("data/login.json")
+        return cfg.read("../data/login.json")["logged_in"]
+    dat = cfg.read("../data/login.json")
     dat["logged_in"] = val
-    cfg.write("data/login.json", dat)
+    cfg.write("../data/login.json", dat)
 
 class AuthError(Exception): pass
 
@@ -93,12 +92,12 @@ def write_login_data(data):
         "token": data["token"],
         "logged_in": data.get("logged_in", False)
     }
-    cfg.write("data/login.json", login_data)
+    cfg.write("../data/login.json", login_data)
 
 def is_logged_in():
     """Проверяет, есть ли активная сессия"""
     try:
-        data = cfg.read("data/login.json")
+        data = cfg.read("../data/login.json")
         return data.get("logged_in", False)
     except:
         return False
