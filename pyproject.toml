@@ -85,11 +85,10 @@ addopts = "-v --cov=core --cov-report=xml"
 
 [project]
 name = "16launcher"
-dynamic = ["version"]
+dyna    mic = ["version"]
 description = "16Launcher - Minecraft game launcher."
 authors = [
     { name = "binobinos", email = "binobinos.dev@gmail.com" },
-    { name = "16steyy", email = "binobinos.dev@gmail.com" },
 ]
 readme = "README.md"
 license = { text = "MIT" }
@@ -119,8 +118,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/16steyy/16launcher_"
 Issues = "https://github.com/16steyy/16launcher_/issues"
-
-[project.dependencies]
 
 [project.optional-dependencies]
 dev = [
