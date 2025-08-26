@@ -5364,6 +5364,7 @@ class ModsTab(QWidget):
         """Обрабатывает ошибки поиска"""
         self.hide_loading_indicator()
         QMessageBox.critical(self, "Ошибка", f"Ошибка при поиске модов: {error_message}")
+        #ПЕНИИИИИИИИИИИИИС
         
     def prev_page(self):
         """Переход на предыдущую страницу"""
