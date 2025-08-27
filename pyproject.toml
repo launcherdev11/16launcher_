@@ -85,7 +85,7 @@ addopts = "-v --cov=core --cov-report=xml"
 
 [project]
 name = "16launcher"
-dyna    mic = ["version"]
+dynamic = ["version"]
 description = "16Launcher - Minecraft game launcher."
 authors = [
     { name = "binobinos", email = "binobinos.dev@gmail.com" },

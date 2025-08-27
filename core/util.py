@@ -162,8 +162,10 @@ def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except AttributeError:
-        base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    return os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')), relative_path)
+        base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    return os.path.join(
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "../")), relative_path
+    )
 
 
 def read(path):

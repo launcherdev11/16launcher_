@@ -35,7 +35,7 @@ class ModsTab(QWidget):
         self.mods_data = []
         self.minecraft_versions = []
         self.setup_ui()
-        self.is_loaded = False  # Флаг загрузки данных
+        self.is_loaded = False
 
         # Добавляем надпись о загрузке
         self.loading_label = QLabel("Моды загружаются, подождите...")

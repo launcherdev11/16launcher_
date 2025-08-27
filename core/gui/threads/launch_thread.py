@@ -18,6 +18,11 @@ from ...config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
 
 class LaunchThread(QThread):
+    launch_setup_signal = pyqtSignal(str, str, str, int, bool)
+    progress_update_signal = pyqtSignal(int, int, str)
+    state_update_signal = pyqtSignal(bool)
+    close_launcher_signal = pyqtSignal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent_window = parent
@@ -26,11 +31,6 @@ class LaunchThread(QThread):
         self.loader_type = "vanilla"
         self.memory_mb = 4096
         self.close_on_launch = False
-
-    launch_setup_signal = pyqtSignal(str, str, str, int, bool)
-    progress_update_signal = pyqtSignal(int, int, str)
-    state_update_signal = pyqtSignal(bool)
-    close_launcher_signal = pyqtSignal()
 
     def launch_setup(
         self, version_id, username, loader_type, memory_mb, close_on_launch
@@ -58,10 +58,11 @@ class LaunchThread(QThread):
                     f"-Xms{min(self.memory_mb // 2, 2048)}M",
                 ],
                 "launcherName": "16Launcher",
-                "launcherVersion": "1.0",
+                "launcherVersion": "1.0.2",
+                "demo": False,
+                "fullscreen": "false",
             }
 
-            # 2. Обработка Ely.by сессии
             if (
                 hasattr(self.parent_window, "ely_session")
                 and self.parent_window.ely_session
@@ -91,13 +92,16 @@ class LaunchThread(QThread):
                 try:
                     loader_version = get_latest_loader_version()
                     launch_version = f"fabric-loader-{loader_version}-{self.version_id}"
-                    logging.info(f"[LAUNCH THREAD] Fabric launch version: {launch_version}")
+                    logging.info(
+                        f"[LAUNCH THREAD] Fabric launch version: {launch_version}"
+                    )
                 except Exception as e:
                     raise Exception(f"Fabric loader error: {str(e)}")
 
             elif self.loader_type == "quilt":
                 logging.info("[LAUNCH THREAD] Processing Quilt version...")
                 from minecraft_launcher_lib.quilt import get_quilt_profile
+
                 profile = get_quilt_profile(self.version_id, MINECRAFT_DIR)
                 launch_version = profile["version"]
 
@@ -117,11 +121,11 @@ class LaunchThread(QThread):
                     minecraft_directory=MINECRAFT_DIR,
                     callback={
                         "setStatus": lambda text: (
-                            print(f"[INSTALL] {text}"),
+                            print(f"[INSTALL] {text}", end="\r"),
                             self.progress_update_signal.emit(0, 100, text),
                         ),
                         "setProgress": lambda value: (
-                            print(f"[INSTALL] Progress: {value}%"),
+                            print(f"[INSTALL] Progress: {value}%", end="\r"),
                             self.progress_update_signal.emit(value, 100, ""),
                         ),
                         "setMax": lambda value: (
@@ -164,16 +168,17 @@ class LaunchThread(QThread):
             logging.error(f"Launch thread failed: {traceback.format_exc()}")
             self.state_update_signal.emit(False)
 
-    def is_legacy_version(self, version):
+    @staticmethod
+    def is_legacy_version(version: str):
         """Проверяет, является ли версия старой (до 1.7.5)"""
         try:
             major, minor, patch = re.match(r"(\d+)\.(\d+)\.?(\d+)?", version).groups()
-            if int(major) == 1 and int(minor) < 7:
-                return True
-            if int(major) == 1 and int(minor) == 7 and int(patch or 0) < 5:
+            if int(major) == 1 and (
+                int(minor) < 7 or (int(minor) == 7 and int(patch or 0) < 5)
+            ):
                 return True
             return False
-        except:
+        except Exception:
             return False
 
     def setup_authlib(self, options):
@@ -185,8 +190,9 @@ class LaunchThread(QThread):
         options["jvmArguments"].append(f"-javaagent:{AUTHLIB_JAR_PATH}=ely.by")
         options["jvmArguments"].append(
             "-Dauthlibinjector.yggdrasil.prefetched={...}"
-        )  # Добавьте данные из docs.ely.by
+        )
 
+    @staticmethod
     def download_authlib(self):
         """Скачивает authlib-injector"""
         try:
@@ -200,18 +206,17 @@ class LaunchThread(QThread):
             logging.error(f"Authlib download failed: {str(e)}")
             return False
 
-    def apply_legacy_patch(self, version):
+    @staticmethod
+    def apply_legacy_patch(version: str):
         """Применяет патч для старых версий"""
         jar_path = os.path.join(MINECRAFT_DIR, "versions", version, f"{version}.jar")
 
         if not os.path.exists(jar_path):
             raise Exception("JAR file not found")
 
-        # Скачиваем патч с ely.by
         patch_url = "https://ely.by/load/legacy-patch.jar"  # Пример URL
         patch_data = requests.get(patch_url).content
 
-        # Модифицируем JAR-файл
         with zipfile.ZipFile(jar_path, "a") as jar:
             with zipfile.ZipFile(io.BytesIO(patch_data)) as patch:
                 for file in patch.namelist():
@@ -221,9 +226,8 @@ class LaunchThread(QThread):
     def _set_status(self, text):
         self.progress_update_signal.emit(self.current_step, self.total_steps, text)
 
-    def _set_progress(self, sub_value):
-        # Преобразуем sub_value в глобальный прогресс (например, 0–20%)
-        percent_of_stage = 20  # каждый этап = 20% общего
+    def _set_progress(self, sub_value: int):
+        percent_of_stage = 20
         global_progress = self.progress_step * percent_of_stage + (
             sub_value * percent_of_stage // 100
         )

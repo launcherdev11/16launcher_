@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import (
 from ...util import load_settings, save_settings, resource_path
 from ...config import MINECRAFT_DIR, MODS_DIR
 
+
 class SettingsTab(QWidget):
     def __init__(self, translator, parent=None):
         super().__init__(parent)

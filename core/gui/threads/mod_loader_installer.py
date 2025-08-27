@@ -14,7 +14,7 @@ from minecraft_launcher_lib.fabric import install_fabric as fabric_install
 from minecraft_launcher_lib.forge import find_forge_version, install_forge_version
 from minecraft_launcher_lib.utils import get_version_list
 
-from ...config import MINECRAFT_DIR
+from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS
 from ...util import get_quilt_versions
 
 
@@ -162,11 +162,8 @@ class ModLoaderInstaller(QThread):
         except:
             pass
 
-        # Попытка 3: Версии Vanilla Minecraft
         try:
-            vanilla_versions = get_version_list()
-            versions = [v["id"] for v in vanilla_versions if v["type"] == "release"]
-            return versions
+            return MINECRAFT_VERSIONS
         except:
             pass
 
@@ -183,6 +180,7 @@ class ModLoaderInstaller(QThread):
             if mc_version in v:
                 return v
         return None
+
     @staticmethod
     def install_quilt_version(
         minecraft_version: str, loader_version: str, install_dir: str, callback: dict

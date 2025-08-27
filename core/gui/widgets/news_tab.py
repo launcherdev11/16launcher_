@@ -1,4 +1,5 @@
 import logging
+import threading
 
 import requests
 from PyQt5.QtCore import Qt
@@ -69,8 +70,10 @@ class NewsTab(QWidget):
         layout.addWidget(scroll)
 
     def load_news(self):
-        self.load_minecraft_news()
-        self.load_launcher_news()
+        thread = threading.Thread(target=self.load_minecraft_news)
+        thread.start()
+        thread = threading.Thread(target=self.load_launcher_news)
+        thread.start()
 
     def load_minecraft_news(self):
         try:
@@ -84,8 +87,8 @@ class NewsTab(QWidget):
             """
 
             for item in news["entries"][
-                :5
-            ]:  # Берем 5 последних новостей (меньше для скорости)
+                :50
+            ]:  # Берем 50 последних новостей (меньше для скорости)
                 try:
                     # Обработка даты
                     date = item["date"][:10] if "date" in item else "Дата не указана"
@@ -119,10 +122,8 @@ class NewsTab(QWidget):
 
     def load_launcher_news(self):
         try:
-            # Загружаем новости с GitHub
             response = requests.get(
                 "https://raw.githubusercontent.com/16steyy/launcher-news/refs/heads/main/launcher_news.json",
-                # ЗАМЕНИ на свою ссылку!
                 timeout=10,
             )
             news = response.json()
