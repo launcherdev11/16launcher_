@@ -30,7 +30,7 @@ setup: sync pre-commit
 
 run:
 	@echo "Starting 16Launcher..."
-	uv run src/main.py
+	uv run main.py
 
 test:
 	@echo "Running tests..."
@@ -38,13 +38,13 @@ test:
 
 lint:
 	@echo "Checking code..."
-	uv run ruff check src/
-	uv run mypy src/
+	uv run ruff check core/
+	uv run mypy core/
 
 fmt:
 	@echo "Formatting code..."
-	uv run ruff format src/
-	uv run ruff check --fix src/
+	uv run ruff format core/
+	uv run ruff check --fix core/
 
 build:
 	@echo "Building project..."
