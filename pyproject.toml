@@ -84,6 +84,7 @@ ignore = [
     "E501",  # Line too long
     "W191",  # Indentation contains tabs
     "C901",  # Function is too complex
+    "D",
 ]
 line-length = 140
 target-version = "py312"
