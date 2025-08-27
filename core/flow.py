@@ -1,5 +1,7 @@
+import asyncio
+import logging
+import multiprocessing
 from threading import Thread, Lock as TLock
-import asyncio, multiprocessing
 
 
 def dedicated(f):
@@ -8,7 +10,7 @@ def dedicated(f):
         t.daemon = True
         t.start()
         return t
-    
+
     return wrapper
 
 
@@ -22,19 +24,21 @@ def dedicate(func, *args, **kwargs):
 def adedicate(func):
     asyncio.run(func)
 
+
 class Mutex:
     def __init__(self):
         self.tlock = TLock()
-    
+
     def lock(self):
         self.tlock.acquire(True)
-    
+
     def unlock(self):
         self.tlock.release()
-    
+
     def sync(self):
         self.lock()
         self.unlock()
+
 
 def pdedicate(func):
     def wrapper(*args, **kwargs):
@@ -42,20 +46,21 @@ def pdedicate(func):
         p.daemon = True
         p.start()
         return p
-    
+
     return wrapper
 
 
 __logged_level = 0
 
+
 def logged(func):
     def wrapper(*args, **kwargs):
         global __logged_level
-        print(" " * 4 * __logged_level + f"Running {func.__name__}")
+        logging.debug(" " * 4 * __logged_level + f"Running {func.__name__}")
         __logged_level += 1
         r = func(*args, **kwargs)
         __logged_level -= 1
-        print(" " * 4 * __logged_level + f"Finished {func.__name__}")
+        logging.debug(" " * 4 * __logged_level + f"Finished {func.__name__}")
         return r
-    
+
     return wrapper
