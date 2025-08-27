@@ -2,26 +2,28 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
       - id: check-yaml
-        exclude: (version.txt|CHANGELOG.md|requirements.txt)
       - id: check-added-large-files
-        exclude: (version.txt|CHANGELOG.md|requirements.txt)
-
-  - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.13
-    hooks:
-      - id: uv-lock
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-toml
+      - id: debug-statements
+      - id: detect-private-key
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.12.10
     hooks:
-      - id: ruff-check
-        args: [ --fix ]
+      - id: ruff
+        args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.17.1
     hooks:
       - id: mypy
-        args: [ --config=pyproject.toml ]
-        files: ^src/
+        additional_dependencies: [types-requests]
+        args: [--ignore-missing-imports]
