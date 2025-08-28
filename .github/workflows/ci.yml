@@ -6,35 +6,41 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
-    name: Lint Code
+  lint-and-test:
+    name: Lint and Test Code
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.12', '3.13' ]
+        python-version: [ '3.12' ]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: Install uv and set Python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
+          enable-cache: true
 
-      - name: Install linting tools
-        run: pip install black isort flake8 mypy pydocstyle pylint pre-commit
-      - name: Run black
-        run: black --check core/
-      - name: Run isort
-        run: isort --check-only core/
-      - name: Run flake8
-        run: flake8 core/
-      - name: Run mypy
-        run: mypy core/
-      - name: Run pydocstyle
-        run: pydocstyle core/
-      - name: Run pylint
-        run: |
-          find core/ -name "*.py" -exec pylint --fail-under=9.0 {} +
-      - name: Run pre-commit
-        run: pre-commit run --all-files
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Run Ruff linting
+        run: uv run ruff check src/
+
+      - name: Run Ruff formatting check
+        run: uv run ruff format --check src/
+
+      - name: Run MyPy type checking
+        run: uv run mypy src/
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
