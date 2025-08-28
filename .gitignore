@@ -47,3 +47,4 @@ quilix_*
 *.bat
 /installer_build/
 /config/
+*.egg-info
