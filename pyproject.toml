@@ -5,6 +5,7 @@ description = "16Launcher - Minecraft game launcher."
 authors = [
     { name = "binobinos", email = "binobinos.dev@gmail.com" },
     { name = "nnnLik", email = "rslmakhmudov@gmail.com" },
+    { name = "16steyy", email = "pavlovkamil73@gmail.com" },
 ]
 readme = "README.md"
 license = { text = "MIT" }
@@ -32,8 +33,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/16steyy/16launcher_"
-Issues = "https://github.com/16steyy/16launcher_/issues"
+Homepage = "https://github.com/16steyy/16Launcher"
+Issues = "https://github.com/16steyy/16Launcher/issues"
 
 [build-system]
 requires = ["setuptools==69.0.0", "wheel"]
@@ -81,9 +82,9 @@ changelog_exclude_commits = [
 [tool.ruff]
 select = ["ALL"]
 ignore = [
-    "E501",  # Line too long
-    "W191",  # Indentation contains tabs
-    "C901",  # Function is too complex
+    "E501",
+    "W191",
+    "C901",
     "D",
 ]
 line-length = 140
