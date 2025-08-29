@@ -17,8 +17,8 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
-        logging.StreamHandler(sys.stderr),  # Вывод в консоль
-        logging.FileHandler(LOG_FILE)  # Запись в файл
+        logging.StreamHandler(sys.stderr),
+        logging.FileHandler(LOG_FILE)
     ]
 )
 

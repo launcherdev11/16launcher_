@@ -5,7 +5,7 @@ import shutil
 import time
 import zipfile
 
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, pyqtSignal
 from PyQt5.QtGui import QPixmap, QFont, QIcon, QCursor
 from PyQt5.QtWidgets import (
     QWidget,
@@ -30,6 +30,9 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFormLayout,
     QStackedWidget,
+    QCheckBox,
+    QGroupBox,
+    QTabWidget,
 )
 from minecraft_launcher_lib.utils import get_version_list
 
@@ -45,7 +48,7 @@ class ModpackTab(QWidget):
         self.modpacks_dir = os.path.join(MINECRAFT_DIR, "modpacks")
         self.icons_dir = os.path.join(
             MINECRAFT_DIR, "modpack_icons"
-        )  # Директория для иконок
+        ) 
         os.makedirs(self.modpacks_dir, exist_ok=True)
         os.makedirs(self.icons_dir, exist_ok=True)
         self.setup_ui()
@@ -57,10 +60,8 @@ class ModpackTab(QWidget):
         layout.setContentsMargins(15, 15, 15, 15)
         layout.setSpacing(15)
 
-        # Header Section
         header = QHBoxLayout()
 
-        # Title with icon
         title_layout = QHBoxLayout()
         icon_label = QLabel()
         icon_label.setPixmap(
@@ -74,7 +75,6 @@ class ModpackTab(QWidget):
         title_layout.addStretch()
         header.addLayout(title_layout)
 
-        # Action Buttons
         btn_layout = QHBoxLayout()
         self.create_btn = self.create_tool_button(
             "Создать", "add.png", self.show_creation_dialog
@@ -93,7 +93,6 @@ class ModpackTab(QWidget):
 
         layout.addLayout(header)
 
-        # Filter Section
         filter_layout = QHBoxLayout()
         self.search_bar = QLineEdit()
         self.search_bar.setPlaceholderText("Поиск по названию...")
@@ -102,13 +101,12 @@ class ModpackTab(QWidget):
         filter_layout.addWidget(self.search_bar)
 
         self.filter_combo = QComboBox()
-        self.filter_combo.addItems(["Все", "Forge", "Fabric", "OptiFine", "Vanilla"])
+        self.filter_combo.addItems(["Все", "Forge", "Fabric"])
         self.filter_combo.setCurrentIndex(0)
         self.filter_combo.currentIndexChanged.connect(self.filter_modpacks)
         filter_layout.addWidget(self.filter_combo)
         layout.addLayout(filter_layout)
 
-        # Modpacks Grid
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget()
@@ -119,13 +117,11 @@ class ModpackTab(QWidget):
         self.scroll_area.setWidget(self.scroll_content)
         layout.addWidget(self.scroll_area)
 
-        # Status Label
         self.status_label = QLabel()
         self.status_label.setAlignment(Qt.AlignCenter)
         self.status_label.setStyleSheet("color: #AAAAAA; font-size: 14px;")
         layout.addWidget(self.status_label)
 
-        # Styling
         self.setStyleSheet("""
             QWidget {
                 background-color: #2D2D2D;
@@ -195,7 +191,6 @@ class ModpackTab(QWidget):
         layout.setContentsMargins(15, 15, 15, 15)
         layout.setSpacing(10)
 
-        # Header
         header = QHBoxLayout()
         header.addWidget(icon)
 
@@ -212,7 +207,6 @@ class ModpackTab(QWidget):
         header.addLayout(title_layout)
         layout.addLayout(header)
 
-        # Details
         details = QLabel(f"""
             <div style='color: #CCCCCC; font-size: 12px;'>
                 <b>Тип:</b> {pack_data["loader"]}<br>
@@ -222,7 +216,6 @@ class ModpackTab(QWidget):
         """)
         layout.addWidget(details)
 
-        # Action Buttons
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(5)
 
@@ -287,13 +280,11 @@ class ModpackTab(QWidget):
         )
 
     def load_modpacks(self):
-        # Clear existing cards
         while self.grid_layout.count():
             item = self.grid_layout.takeAt(0)
             if item.widget():
                 item.widget().deleteLater()
 
-        # Load modpacks
         modpacks = []
         for file in os.listdir(self.modpacks_dir):
             if file.endswith(".json"):
@@ -309,7 +300,6 @@ class ModpackTab(QWidget):
             self.status_label.setText("🎮 Создайте свою первую сборку!")
             return
 
-        # Create cards
         row, col = 0, 0
         for pack in sorted(modpacks, key=lambda x: x["name"].lower()):
             card = self.create_modpack_card(pack)
@@ -318,7 +308,7 @@ class ModpackTab(QWidget):
             self.grid_layout.addWidget(card, row, col)
 
             col += 1
-            if col > 3:  # 4 columns
+            if col > 3: 
                 col = 0
                 row += 1
 
@@ -403,14 +393,12 @@ class ModpackTab(QWidget):
 
         layout = QVBoxLayout()
 
-        # Существующие поля
         name_layout = QHBoxLayout()
         name_label = QLabel("Название:")
         self.name_edit = QLineEdit(pack_data["name"])
         name_layout.addWidget(name_label)
         name_layout.addWidget(self.name_edit)
 
-        # Поля версии и лоадера
         version_layout = QHBoxLayout()
         version_label = QLabel("Версия:")
         self.version_combo = QComboBox()
@@ -422,7 +410,7 @@ class ModpackTab(QWidget):
         loader_layout = QHBoxLayout()
         loader_label = QLabel("Модлоадер:")
         self.loader_combo = QComboBox()
-        self.loader_combo.addItems(["Vanilla", "Forge", "Fabric", "OptiFine"])
+        self.loader_combo.addItems(["Forge", "Fabric"])
         self.loader_combo.setCurrentText(pack_data["loader"])
         loader_layout.addWidget(loader_label)
         loader_layout.addWidget(self.loader_combo)
@@ -447,13 +435,12 @@ class ModpackTab(QWidget):
         mods_layout.addWidget(self.mods_list)
         mods_layout.addLayout(mod_buttons)
 
-        # Добавляем все элементы в layout
+        #  layout
         layout.addLayout(name_layout)
         layout.addLayout(version_layout)
         layout.addLayout(loader_layout)
         layout.addLayout(mods_layout)
 
-        # Кнопки сохранения/отмены
         button_box = QDialogButtonBox(QDialogButtonBox.Save | QDialogButtonBox.Cancel)
         button_box.accepted.connect(
             lambda: self.save_modpack_changes(pack_data, dialog)
@@ -471,7 +458,6 @@ class ModpackTab(QWidget):
             self.mods_list.takeItem(row)
 
     def add_mods_to_pack(self, pack_data):
-        # Диалог выбора модов
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         file_dialog.setNameFilter("Mod files (*.jar *.zip)")
@@ -484,11 +470,9 @@ class ModpackTab(QWidget):
                 mod_name = os.path.basename(file_path)
                 dest_path = os.path.join(mods_dir, mod_name)
 
-                # Копируем мод в папку сборки
                 if not os.path.exists(dest_path):
                     shutil.copyfile(file_path, dest_path)
 
-                # Добавляем в список, если еще нет
                 if not self.mods_list.findItems(mod_name, Qt.MatchExactly):
                     self.mods_list.addItem(mod_name)
 
@@ -499,17 +483,14 @@ class ModpackTab(QWidget):
         new_version = self.version_combo.currentText()
         new_loader = self.loader_combo.currentText()
 
-        # Получаем обновленный список модов
         new_mods = []
         for i in range(self.mods_list.count()):
             new_mods.append(self.mods_list.item(i).text())
 
         try:
-            # Удаляем старый файл
             old_path = os.path.join(self.modpacks_dir, old_pack["filename"])
             os.remove(old_path)
 
-            # Создаем новый
             new_filename = f"{new_name}.json"
             new_pack = {
                 "name": new_name,
@@ -532,10 +513,10 @@ class ModpackTab(QWidget):
     def delete_modpack(self, pack_data):
         confirm = QMessageBox.question(
             self,
-            "Удаление сборки",  # Исправлен заголовок
-            f"Вы уверены, что хотите удалить сборку '{pack_data['name']}'?",  # Исправлен текст
-            QMessageBox.Yes | QMessageBox.No,  # Правильные константы кнопок
-            QMessageBox.No,  # Кнопка по умолчанию
+            "Удаление сборки", 
+            f"Вы уверены, что хотите удалить сборку '{pack_data['name']}'?",
+            QMessageBox.Yes | QMessageBox.No,  
+            QMessageBox.No,  
         )
 
         if confirm == QMessageBox.Yes:
@@ -550,6 +531,7 @@ class ModpackTab(QWidget):
     def setup_drag_drop(self):
         self.setAcceptDrops(True)
         self.scroll_area.setAcceptDrops(True)
+        self.scroll_content.setAcceptDrops(True)
         self.scroll_area.viewport().setAcceptDrops(True)
 
     def dragEnterEvent(self, event):
@@ -656,64 +638,217 @@ class ModpackTab(QWidget):
     def show_creation_dialog(self):
         dialog = QDialog(self)
         dialog.setWindowTitle("Создание сборки")
-        dialog.setFixedSize(500, 400)
+        dialog.setFixedSize(900, 750)
+        dialog.setStyleSheet("""
+            QDialog {
+                background-color: #2D2D2D;
+                color: #FFFFFF;
+            }
+        """)
 
-        layout = QVBoxLayout()
-        self.steps = QStackedWidget()
+        layout = QVBoxLayout(dialog)
+        layout.setSpacing(15)
+        layout.setContentsMargins(20, 20, 20, 20)
 
-        # Шаг 1: Основная информация
-        step1 = QWidget()
-        form = QFormLayout()
+        title_label = QLabel("Создание новой сборки")
+        title_label.setFont(QFont("Arial", 16, QFont.Bold))
+        title_label.setStyleSheet("color: #FFFFFF;")
+        layout.addWidget(title_label)
+
+        info_group = QGroupBox("Основная информация")
+        info_group.setStyleSheet("""
+            QGroupBox {
+                font-weight: bold;
+                border: 1px solid #555555;
+                border-radius: 5px;
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px 0 5px;
+                color: #CCCCCC;
+            }
+        """)
+        
+        info_layout = QFormLayout()
+        info_layout.setSpacing(10)
+
         self.pack_name = QLineEdit()
-        self.pack_version = QComboBox()
-        self.pack_loader = QComboBox()
+        self.pack_name.setPlaceholderText("Введите название сборки")
+        self.pack_name.setStyleSheet("""
+            QLineEdit {
+                background-color: #404040;
+                border: 1px solid #555555;
+                border-radius: 5px;
+                padding: 8px;
+                font-size: 14px;
+            }
+        """)
 
+        self.pack_version = QComboBox()
         versions = get_version_list()
         for v in versions:
             if v["type"] == "release":
                 self.pack_version.addItem(v["id"])
-        self.pack_loader.addItems(["Vanilla", "Forge", "Fabric", "OptiFine"])
+        self.pack_version.setStyleSheet("""
+            QComboBox {
+                background-color: #404040;
+                border: 1px solid #555555;
+                border-radius: 5px;
+                padding: 5px;
+            }
+        """)
 
-        form.addRow("Название сборки:", self.pack_name)
-        form.addRow("Версия Minecraft:", self.pack_version)
-        form.addRow("Модлоадер:", self.pack_loader)
-        step1.setLayout(form)
+        self.pack_loader = QComboBox()
+        self.pack_loader.addItems(["Forge", "Fabric"])
+        self.pack_loader.setStyleSheet("""
+            QComboBox {
+                background-color: #404040;
+                border: 1px solid #555555;
+                border-radius: 5px;
+                padding: 5px;
+            }
+        """)
 
-        # Шаг 2: Выбор модов
-        step2 = QWidget()
-        mods_layout = QVBoxLayout()
-        self.mods_selection = QListWidget()
-        self.mods_selection.setSelectionMode(QListWidget.MultiSelection)
+        info_layout.addRow("Название сборки:", self.pack_name)
+        info_layout.addRow("Версия Minecraft:", self.pack_version)
+        info_layout.addRow("Модлоадер:", self.pack_loader)
+        info_group.setLayout(info_layout)
+        layout.addWidget(info_group)
+
+        tabs = QTabWidget()
+        tabs.setStyleSheet("""
+            QTabWidget::pane {
+                border: 1px solid #555555;
+                border-radius: 5px;
+                background-color: #2D2D2D;
+            }
+            QTabBar::tab {
+                background-color: #404040;
+                color: #CCCCCC;
+                padding: 8px 16px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            QTabBar::tab:selected {
+                background-color: #505050;
+                color: #FFFFFF;
+            }
+        """)
+
+        # Вкладка модов
+        mods_dir = os.path.join(MODS_DIR, self.pack_version.currentText())
+        self.mods_tab = ContentTab(mods_dir, [".jar"], self)
+        tabs.addTab(self.mods_tab, "Моды")
+
+        # Вкладка текстур
+        textures_dir = os.path.join(MINECRAFT_DIR, "resourcepacks")
+        self.textures_tab = ContentTab(textures_dir, [".zip"], self)
+        tabs.addTab(self.textures_tab, "Текстуры")
+
+        # Вкладка шейдеров
+        shaders_dir = os.path.join(MINECRAFT_DIR, "shaderpacks")
+        self.shaders_tab = ContentTab(shaders_dir, [".zip"], self)
+        tabs.addTab(self.shaders_tab, "Шейдеры")
+
+        layout.addWidget(tabs)
+
+        # Кнопки
+        button_layout = QHBoxLayout()
+        
+        cancel_btn = QPushButton("Отмена")
+        cancel_btn.setFixedSize(100, 35)
+        cancel_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #505050;
+                color: white;
+                border-radius: 4px;
+                font-size: 15px;
+            }
+            QPushButton:hover {
+                background-color: #606060;
+            }
+        """)
+        cancel_btn.clicked.connect(dialog.reject)
+        
+        save_btn = QPushButton("Создать сборку")
+        save_btn.setFixedSize(150, 40)
+        save_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50;
+                color: white;
+                border-radius: 4px;
+                font-size: 15px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+        """)
+        save_btn.clicked.connect(lambda: self.save_new_modpack(dialog))
+        
+        button_layout.addStretch()
+        button_layout.addWidget(cancel_btn)
+        button_layout.addWidget(save_btn)
+        
+        layout.addLayout(button_layout)
+
+        self.pack_version.currentTextChanged.connect(self.update_content_tabs)
+
+        dialog.exec_()
+
+    def update_content_tabs(self, version):
+        mods_dir = os.path.join(MODS_DIR, version)
+        self.mods_tab.target_dir = mods_dir
+        self.mods_tab.refresh_list()
+
+    def save_new_modpack(self, dialog):
+        name = self.pack_name.text().strip()
+        if not name:
+            QMessageBox.warning(self, "Ошибка", "Введите название сборки!")
+            return
 
         version = self.pack_version.currentText()
-        mods = ModManager.get_mods_list(version)
-        self.mods_selection.addItems(mods)
+        loader = self.pack_loader.currentText()
+        
+        all_mods = [self.mods_tab.file_list.item(i).text() for i in range(self.mods_tab.file_list.count())]
+        all_textures = [self.textures_tab.file_list.item(i).text() for i in range(self.textures_tab.file_list.count())]
+        all_shaders = [self.shaders_tab.file_list.item(i).text() for i in range(self.shaders_tab.file_list.count())]
 
-        mods_layout.addWidget(QLabel("Выберите моды:"))
-        mods_layout.addWidget(self.mods_selection)
-        step2.setLayout(mods_layout)
+        pack_data = {
+            "name": name,
+            "version": version,
+            "loader": loader,
+            "mods": all_mods,
+            "textures": all_textures,
+            "shaders": all_shaders,
+        }
 
-        self.steps.addWidget(step1)
-        self.steps.addWidget(step2)
+        try:
+            os.makedirs(self.modpacks_dir, exist_ok=True)
+            pack_path = os.path.join(self.modpacks_dir, f"{name}.json")
+            
+            if os.path.exists(pack_path):
+                reply = QMessageBox.question(
+                    self,
+                    "Сборка уже существует",
+                    f"Сборка с именем '{name}' уже существует. Перезаписать?",
+                    QMessageBox.Yes | QMessageBox.No
+                )
+                if reply == QMessageBox.No:
+                    return
 
-        # Навигация
-        nav_buttons = QHBoxLayout()
-        self.prev_btn = QPushButton("Назад")
-        self.next_btn = QPushButton("Далее")
-        self.prev_btn.clicked.connect(lambda: self.steps.setCurrentIndex(0))
-        self.next_btn.clicked.connect(lambda: self.steps.setCurrentIndex(1))
-        nav_buttons.addWidget(self.prev_btn)
-        nav_buttons.addWidget(self.next_btn)
+            with open(pack_path, "w", encoding="utf-8") as f:
+                json.dump(pack_data, f, indent=4, ensure_ascii=False)
 
-        # Сохранение
-        save_btn = QPushButton("Сохранить")
-        save_btn.clicked.connect(lambda: self.save_modpack(dialog))
-
-        layout.addWidget(self.steps)
-        layout.addLayout(nav_buttons)
-        layout.addWidget(save_btn)
-        dialog.setLayout(layout)
-        dialog.exec_()
+            QMessageBox.information(self, "Успех", f"Сборка '{name}' успешно создана!")
+            self.load_modpacks()
+            dialog.accept()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", f"Не удалось создать сборку: {str(e)}")
 
     def select_icon(self):
         file_path, _ = QFileDialog.getOpenFileName(
@@ -729,8 +864,14 @@ class ModpackTab(QWidget):
         loader = self.pack_loader.currentText()
         selected_mods = [item.text() for item in self.mods_selection.selectedItems()]
 
+        selected_textures = []
+        selected_shaders = []
+        if hasattr(self, "textures_selection") and self.use_textures_cb.isChecked():
+            selected_textures = [item.text() for item in self.textures_selection.selectedItems()]
+        if hasattr(self, "shaders_selection") and self.use_shaders_cb.isChecked():
+            selected_shaders = [item.text() for item in self.shaders_selection.selectedItems()]
+
         icon_name = None
-        # Проверяем, существует ли атрибут и путь
         if hasattr(self, "selected_icon") and self.selected_icon:
             try:
                 icon_name = f"{name}_{int(time.time())}.png"
@@ -745,13 +886,317 @@ class ModpackTab(QWidget):
             "version": version,
             "loader": loader,
             "mods": selected_mods,
+            "textures": selected_textures,
+            "shaders": selected_shaders,
         }
-        # Добавляем иконку, только если она есть
         if icon_name:
             pack_data["icon"] = icon_name
 
-        with open(os.path.join(self.modpacks_dir, f"{name}.json"), "w") as f:
-            json.dump(pack_data, f)
+        try:
+            with open(os.path.join(self.modpacks_dir, f"{name}.json"), "w") as f:
+                json.dump(pack_data, f, indent=4, ensure_ascii=False)
 
-        self.load_modpacks()
-        dialog.close()
+            self.load_modpacks()
+            dialog.close()
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", f"Не удалось сохранить сборку: {str(e)}")
+            
+class ContentTab(QWidget):
+    def __init__(self, target_dir, file_exts, parent=None):
+        super().__init__(parent)
+        self.target_dir = target_dir
+        self.file_exts = file_exts
+        self.parent = parent
+        self.setup_ui()
+
+    def setup_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+        
+        # Область drag&drop
+        self.drag_drop = DragDropArea("Перетащите файлы сюда или выберите ниже")
+        self.drag_drop.browse_btn.clicked.connect(self.browse_files)
+        self.drag_drop.filesDropped.connect(self.handle_dropped_files)
+        layout.addWidget(self.drag_drop)
+        
+        # Заголовок списка файлов
+        list_header = QHBoxLayout()
+        list_label = QLabel("Добавленные файлы:")
+        list_label.setStyleSheet("color: #CCCCCC; font-size: 12px;")
+        
+        self.select_all_btn = QPushButton("Выделить все")
+        self.select_all_btn.setFixedSize(105, 35)
+        self.select_all_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #505050;
+                color: white;
+                border-radius: 7px;
+                font-size: 13px;
+            }
+            QPushButton:hover {
+                background-color: #606060;
+            }
+        """)
+        self.select_all_btn.clicked.connect(self.select_all_files)
+        
+        list_header.addWidget(list_label)
+        list_header.addStretch()
+        list_header.addWidget(self.select_all_btn)
+        layout.addLayout(list_header)
+        
+        # Список файлов
+        self.file_list = QListWidget()
+        self.file_list.setSelectionMode(QListWidget.MultiSelection)
+        self.file_list.setStyleSheet("""
+            QListWidget {
+                background-color: #404040;
+                border: 1px solid #555555;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+            QListWidget::item {
+                padding: 5px;
+                border-bottom: 1px solid #555555;
+            }
+            QListWidget::item:selected {
+                background-color: #505050;
+            }
+        """)
+        
+        self.file_list.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.file_list.customContextMenuRequested.connect(self.show_list_context_menu)
+        
+        layout.addWidget(self.file_list)
+        
+        # Кнопка открытия папки
+        self.open_folder_btn = QPushButton("Выбрать файлы")
+        self.open_folder_btn.setFixedSize(150, 40)
+        self.open_folder_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #505050;
+                border-radius: 5px;
+                font-size: 15px;
+            }
+            QPushButton:hover {
+                background-color: #606060;
+            }
+        """)
+        self.open_folder_btn.clicked.connect(self.browse_files)
+        layout.addWidget(self.open_folder_btn, 0, Qt.AlignCenter)
+        
+        self.refresh_list()
+
+    def show_list_context_menu(self, position):
+        menu = QMenu()
+        delete_action = menu.addAction("Удалить выбранное")
+        delete_action.triggered.connect(self.delete_selected_files)
+        menu.exec_(self.file_list.mapToGlobal(position))
+
+    def delete_selected_files(self):
+        selected_items = self.file_list.selectedItems()
+        if not selected_items:
+            return
+            
+        reply = QMessageBox.question(
+            self, 
+            "Подтверждение удаления", 
+            f"Удалить {len(selected_items)} выбранных файлов?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if reply == QMessageBox.Yes:
+            for item in selected_items:
+                file_name = item.text()
+                file_path = os.path.join(self.target_dir, file_name)
+                try:
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                except Exception as e:
+                    QMessageBox.critical(self, "Ошибка", f"Не удалось удалить файл {file_name}: {str(e)}")
+            
+            self.refresh_list()
+
+    def select_all_files(self):
+        self.file_list.selectAll()
+
+    def handle_dropped_files(self, file_paths):
+        for file_path in file_paths:
+            self.add_file(file_path)
+        self.refresh_list()
+
+    def browse_files(self):
+        file_dialog = QFileDialog()
+        file_dialog.setFileMode(QFileDialog.ExistingFiles)
+        file_filter = "Файлы (" + " ".join([f"*{ext}" for ext in self.file_exts]) + ")"
+        file_dialog.setNameFilter(file_filter)
+        
+        if file_dialog.exec_():
+            for file_path in file_dialog.selectedFiles():
+                self.add_file(file_path)
+            self.refresh_list()
+
+    def add_file(self, file_path):
+        try:
+            os.makedirs(self.target_dir, exist_ok=True)
+            file_name = os.path.basename(file_path)
+            dest_path = os.path.join(self.target_dir, file_name)
+            
+            if os.path.exists(dest_path):
+                reply = QMessageBox.question(
+                    self, 
+                    "Файл уже существует", 
+                    f"Файл {file_name} уже существует. Заменить?",
+                    QMessageBox.Yes | QMessageBox.No
+                )
+                if reply == QMessageBox.No:
+                    return
+            
+            shutil.copy2(file_path, dest_path)
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", f"Не удалось добавить файл: {str(e)}")
+
+    def refresh_list(self):
+        self.file_list.clear()
+        if os.path.exists(self.target_dir):
+            for file in os.listdir(self.target_dir):
+                if any(file.lower().endswith(ext.lower()) for ext in self.file_exts):
+                    self.file_list.addItem(file)
+
+    def get_selected_files(self):
+        return [item.text() for item in self.file_list.selectedItems()]
+            
+class DragDropArea(QFrame):
+    filesDropped = pyqtSignal(list)
+    
+    def __init__(self, text, parent=None):
+        super().__init__(parent)
+        self.setAcceptDrops(True)
+        self.setFrameShape(QFrame.StyledPanel)
+        self.setFixedHeight(150)
+        
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignCenter)
+        
+        icon_label = QLabel()
+        icon_label.setPixmap(QPixmap(resource_path("assets/upload.png")).scaled(48, 48))
+        icon_label.setAlignment(Qt.AlignCenter)
+        
+        text_label = QLabel(text)
+        text_label.setAlignment(Qt.AlignCenter)
+        text_label.setStyleSheet("color: #CCCCCC; font-size: 14px; margin: 10px;")
+        
+        self.browse_btn = QPushButton("Выбрать файлы")
+        self.browse_btn.setFixedSize(120, 35)
+        self.browse_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #505050;
+                color: white;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #606060;
+            }
+        """)
+        
+        layout.addWidget(icon_label)
+        layout.addWidget(text_label)
+        layout.addWidget(self.browse_btn, 0, Qt.AlignCenter)
+        
+        self.setLayout(layout)
+        self.setStyleSheet("""
+            DragDropArea {
+                background-color: #404040;
+                border: 2px dashed #666666;
+                border-radius: 10px;
+            }
+            DragDropArea:hover {
+                border-color: #888888;
+                background-color: #484848;
+            }
+        """)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+            self.setStyleSheet("""
+                DragDropArea {
+                    background-color: #484848;
+                    border: 2px dashed #888888;
+                    border-radius: 10px;
+                }
+            """)
+
+    def dragLeaveEvent(self, event):
+        self.setStyleSheet("""
+            DragDropArea {
+                background-color: #404040;
+                border: 2px dashed #666666;
+                border-radius: 10px;
+            }
+        """)
+
+    def dropEvent(self, event):
+        self.setStyleSheet("""
+            DragDropArea {
+                background-color: #404040;
+                border: 2px dashed #666666;
+                border-radius: 10px;
+            }
+        """)
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+            file_paths = []
+            for url in event.mimeData().urls():
+                file_paths.append(url.toLocalFile())
+            self.filesDropped.emit(file_paths)  
+
+class DraggableListWidget(QListWidget):
+    def __init__(self, target_dir, file_exts, parent=None):
+        super().__init__(parent)
+        self.target_dir = target_dir
+        self.file_exts = file_exts
+        self.setAcceptDrops(True)
+        self.setSelectionMode(QListWidget.MultiSelection)
+        os.makedirs(target_dir, exist_ok=True)
+        self.refresh_list()  
+        
+    def refresh_list(self):
+        self.clear()
+        if os.path.exists(self.target_dir):
+            for file in os.listdir(self.target_dir):
+                if any(file.lower().endswith(ext) for ext in self.file_exts):
+                    self.addItem(file)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            urls = event.mimeData().urls()
+            if any(url.toLocalFile().lower().endswith(tuple(self.file_exts)) for url in urls):
+                event.acceptProposedAction()
+            else:
+                event.ignore()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        if event.mimeData().hasUrls():
+            for url in event.mimeData().urls():
+                file_path = url.toLocalFile()
+                if file_path.lower().endswith(tuple(self.file_exts)):
+                    try:
+                        os.makedirs(self.target_dir, exist_ok=True)
+                        file_name = os.path.basename(file_path)
+                        dest_path = os.path.join(self.target_dir, file_name)
+
+                        if not os.path.exists(dest_path):
+                            shutil.copyfile(file_path, dest_path)
+
+                    except Exception as e:
+                        QMessageBox.critical(self, "Ошибка", f"Не удалось добавить файл: {str(e)}")
+            
+            self.refresh_list()  
+            event.acceptProposedAction()
+        else:
+            event.ignore()
+
