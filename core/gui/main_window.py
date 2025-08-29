@@ -10,8 +10,8 @@ import webbrowser
 
 import requests
 from minecraft_launcher_lib.utils import get_version_list
-from PySide6.QtCore import QSize, Qt, QTimer
-from PySide6.QtGui import QIcon, QKeySequence
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -38,6 +38,7 @@ from core.ely_by_skin_manager import ElyBySkinManager
 from core.ely_skin_manager import ElySkinManager
 from core.translator import Translator
 from core.util import download_authlib_injector, generate_random_username, load_settings, resource_path, save_settings
+
 from .custom_line_edit import CustomLineEdit
 from .threads.launch_thread import LaunchThread
 from .widgets.mod_loader_tab import ModLoaderTab

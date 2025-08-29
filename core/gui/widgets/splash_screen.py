@@ -1,6 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QProgressBar, QApplication
+from PySide6.QtWidgets import QApplication, QLabel, QProgressBar, QVBoxLayout, QWidget
 
 from core.util import resource_path
 
@@ -8,7 +8,7 @@ from core.util import resource_path
 class SplashScreen(QWidget):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle("16Launcher")
+        self.setWindowTitle('16Launcher')
         self.setFixedSize(600, 400)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -21,7 +21,7 @@ class SplashScreen(QWidget):
 
         # Фоновый виджет
         self.background: QWidget = QWidget(self)
-        self.background.setObjectName("splashBackground")
+        self.background.setObjectName('splashBackground')
         self.background.setStyleSheet("""
             #splashBackground {
                 background-color: #1A1A1A;
@@ -35,8 +35,11 @@ class SplashScreen(QWidget):
         content_layout.setSpacing(20)
 
         self.logo = QLabel()
-        pixmap = QPixmap(resource_path("assets/icon.ico")).scaled(
-            200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation
+        pixmap = QPixmap(resource_path('assets/icon.ico')).scaled(
+            200,
+            200,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation,
         )
         self.logo.setPixmap(pixmap)
         self.logo.setAlignment(Qt.AlignCenter)
@@ -61,15 +64,15 @@ class SplashScreen(QWidget):
         content_layout.addWidget(self.progress)
 
         # Статус
-        self.status_label = QLabel("Инициализация...")
+        self.status_label = QLabel('Инициализация...')
         self.status_label.setAlignment(Qt.AlignCenter)
-        self.status_label.setStyleSheet("color: #AAAAAA; font-size: 14px;")
+        self.status_label.setStyleSheet('color: #AAAAAA; font-size: 14px;')
         content_layout.addWidget(self.status_label)
 
         # Версия
-        version_label = QLabel("Версия 1.0.2")
+        version_label = QLabel('Версия 1.0.2')
         version_label.setAlignment(Qt.AlignCenter)
-        version_label.setStyleSheet("color: #666666; font-size: 12px;")
+        version_label.setStyleSheet('color: #666666; font-size: 12px;')
         content_layout.addWidget(version_label)
 
         layout.addWidget(self.background)

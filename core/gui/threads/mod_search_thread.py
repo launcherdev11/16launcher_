@@ -23,7 +23,7 @@ class ModSearchThread(QThread):
                 self.loader,
                 self.category,
                 self.sort_by,
-                "modrinth",
+                'modrinth',
             )
             self.search_finished.emit(mods, self.query)
         except Exception as e:

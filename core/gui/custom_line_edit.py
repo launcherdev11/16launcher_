@@ -20,8 +20,6 @@ class CustomLineEdit(QLineEdit):
 
             frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
             rect = self.rect()
-            x = (
-                rect.right() - self._button.width() - frame_width - 2
-            )  # Уменьшили отступ
+            x = rect.right() - self._button.width() - frame_width - 2  # Уменьшили отступ
             y = (rect.height() - self._button.height()) // 2
             self._button.move(x, y)

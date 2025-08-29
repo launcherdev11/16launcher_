@@ -29,7 +29,7 @@ class ModsTab(QWidget):
         self.parent_window = parent
         self.search_thread = None
         self.popular_mods_thread = None
-        self.current_search_query = ""
+        self.current_search_query = ''
         self.current_page = 1
         self.total_pages = 1
         self.mods_data = []
@@ -38,7 +38,7 @@ class ModsTab(QWidget):
         self.is_loaded = False  # Флаг загрузки данных
 
         # Добавляем надпись о загрузке
-        self.loading_label = QLabel("Моды загружаются, подождите...")
+        self.loading_label = QLabel('Моды загружаются, подождите...')
         self.loading_label.setAlignment(Qt.AlignCenter)
         self.loading_label.setStyleSheet("""
             QLabel {
@@ -75,7 +75,7 @@ class ModsTab(QWidget):
         # Поисковая строка
         search_layout = QHBoxLayout()
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Поиск модов...")
+        self.search_input.setPlaceholderText('Поиск модов...')
         self.search_input.setStyleSheet("""
             QLineEdit {
                 background-color: #444444;
@@ -93,7 +93,7 @@ class ModsTab(QWidget):
         search_layout.addWidget(self.search_input)
 
         self.search_button = QPushButton()
-        self.search_button.setIcon(QIcon(resource_path("assets/search.png")))
+        self.search_button.setIcon(QIcon(resource_path('assets/search.png')))
         self.search_button.setIconSize(QSize(24, 24))
         self.search_button.setFixedSize(40, 40)
         self.search_button.setStyleSheet("""
@@ -115,7 +115,7 @@ class ModsTab(QWidget):
 
         # Версия Minecraft
         version_layout = QVBoxLayout()
-        version_layout.addWidget(QLabel("Версия Minecraft:"))
+        version_layout.addWidget(QLabel('Версия Minecraft:'))
 
         # Используем слайдер для выбора версии
         self.version_slider = QSlider(Qt.Horizontal)
@@ -152,10 +152,10 @@ class ModsTab(QWidget):
 
         # Модлоадер
         loader_layout = QVBoxLayout()
-        loader_layout.addWidget(QLabel("Модлоадер:"))
+        loader_layout.addWidget(QLabel('Модлоадер:'))
         self.loader_combo = QComboBox()
         self.loader_combo.setFixedWidth(200)
-        self.loader_combo.addItems(["Любой", "Fabric", "Forge", "Quilt"])
+        self.loader_combo.addItems(['Любой', 'Fabric', 'Forge', 'Quilt'])
         combo_style = """
             QComboBox {
                 background-color: #444444;
@@ -174,20 +174,20 @@ class ModsTab(QWidget):
 
         # Категория
         category_layout = QVBoxLayout()
-        category_layout.addWidget(QLabel("Категория:"))
+        category_layout.addWidget(QLabel('Категория:'))
         self.category_combo = QComboBox()
         self.category_combo.setFixedWidth(200)
-        self.category_combo.addItem("Все категории")
+        self.category_combo.addItem('Все категории')
         self.category_combo.setStyleSheet(combo_style)
         category_layout.addWidget(self.category_combo)
         filters_layout.addLayout(category_layout)
 
         # Сортировка
         sort_layout = QVBoxLayout()
-        sort_layout.addWidget(QLabel("Сортировка:"))
+        sort_layout.addWidget(QLabel('Сортировка:'))
         self.sort_combo = QComboBox()
         self.sort_combo.setFixedWidth(200)
-        self.sort_combo.addItems(["По релевантности", "По загрузкам", "По дате"])
+        self.sort_combo.addItems(['По релевантности', 'По загрузкам', 'По дате'])
         self.sort_combo.setStyleSheet(combo_style)
         sort_layout.addWidget(self.sort_combo)
         filters_layout.addLayout(sort_layout)
@@ -236,7 +236,7 @@ class ModsTab(QWidget):
         """)
         pagination_layout = QHBoxLayout(pagination_widget)
 
-        self.prev_page_button = QPushButton("←")
+        self.prev_page_button = QPushButton('←')
         self.prev_page_button.setFixedSize(40, 40)
         self.prev_page_button.setStyleSheet("""
             QPushButton {
@@ -257,11 +257,11 @@ class ModsTab(QWidget):
         self.prev_page_button.clicked.connect(self.prev_page)
         pagination_layout.addWidget(self.prev_page_button)
 
-        self.page_label = QLabel("Страница 1 из 1")
-        self.page_label.setStyleSheet("color: white;")
+        self.page_label = QLabel('Страница 1 из 1')
+        self.page_label.setStyleSheet('color: white;')
         pagination_layout.addWidget(self.page_label)
 
-        self.next_page_button = QPushButton("→")
+        self.next_page_button = QPushButton('→')
         self.next_page_button.setFixedSize(40, 40)
         self.next_page_button.setStyleSheet(self.prev_page_button.styleSheet())
         self.next_page_button.clicked.connect(self.next_page)
@@ -296,16 +296,17 @@ class ModsTab(QWidget):
         # Иконка
         icon_label = QLabel()
         icon_label.setFixedSize(90, 90)
-        icon_label.setStyleSheet("background-color: #444444; border-radius: 5px;")
+        icon_label.setStyleSheet('background-color: #444444; border-radius: 5px;')
         icon_url = ModManager.get_mod_icon(
-            mod.get("project_id", mod.get("id")), "modrinth"
+            mod.get('project_id', mod.get('id')),
+            'modrinth',
         )
         if icon_url:
             pixmap = QPixmap()
             try:
                 pixmap.loadFromData(requests.get(icon_url).content)
                 icon_label.setPixmap(
-                    pixmap.scaled(90, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    pixmap.scaled(90, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation),
                 )
             except:
                 pass
@@ -315,21 +316,21 @@ class ModsTab(QWidget):
         info_layout = QVBoxLayout()
 
         # Название
-        name_label = QLabel(mod.get("title", mod.get("name", "N/A")))
-        name_label.setStyleSheet("color: white; font-size: 16px; font-weight: bold;")
+        name_label = QLabel(mod.get('title', mod.get('name', 'N/A')))
+        name_label.setStyleSheet('color: white; font-size: 16px; font-weight: bold;')
         info_layout.addWidget(name_label)
 
         # Описание
-        desc_label = QLabel(mod.get("description", "Нет описания"))
-        desc_label.setStyleSheet("color: #aaaaaa;")
+        desc_label = QLabel(mod.get('description', 'Нет описания'))
+        desc_label.setStyleSheet('color: #aaaaaa;')
         desc_label.setWordWrap(True)
         desc_label.setMaximumHeight(40)
         info_layout.addWidget(desc_label)
 
         # Статистика
         stats_layout = QHBoxLayout()
-        downloads_label = QLabel(f"📥 {mod.get('downloads', 0)}")
-        downloads_label.setStyleSheet("color: #aaaaaa;")
+        downloads_label = QLabel(f'📥 {mod.get("downloads", 0)}')
+        downloads_label.setStyleSheet('color: #aaaaaa;')
         stats_layout.addWidget(downloads_label)
         stats_layout.addStretch()
         info_layout.addLayout(stats_layout)
@@ -337,10 +338,10 @@ class ModsTab(QWidget):
         layout.addLayout(info_layout)
 
         # Кнопка установки
-        install_button = QPushButton("Установить")
+        install_button = QPushButton('Установить')
         install_button.setFixedWidth(100)
         install_button.clicked.connect(
-            lambda: self.install_modrinth_mod(mod["project_id"])
+            lambda: self.install_modrinth_mod(mod['project_id']),
         )
         layout.addWidget(install_button)
 
@@ -369,17 +370,17 @@ class ModsTab(QWidget):
         # Получаем параметры поиска
         version = self.get_selected_version()
         loader = self.loader_combo.currentText()
-        if loader == "Любой":
+        if loader == 'Любой':
             loader = None
         category = self.category_combo.currentText()
-        if category == "Все категории":
+        if category == 'Все категории':
             category = None
         sort_by = self.sort_combo.currentText()
 
         # Создаем и запускаем поток поиска
         self.search_thread = ModSearchThread(query, version, loader, category, sort_by)
         self.search_thread.search_finished.connect(
-            lambda mods, q: self.handle_search_results(mods, q)
+            lambda mods, q: self.handle_search_results(mods, q),
         )
         self.search_thread.error_occurred.connect(self.handle_search_error)
         self.search_thread.start()
@@ -394,7 +395,7 @@ class ModsTab(QWidget):
             # Получаем параметры
             version = self.get_selected_version()
             loader = self.loader_combo.currentText()
-            if loader == "Любой":
+            if loader == 'Любой':
                 loader = None
 
             # Создаем и запускаем поток
@@ -416,9 +417,9 @@ class ModsTab(QWidget):
 
     def handle_popular_mods_error(self, error_message):
         """Обрабатывает ошибки загрузки"""
-        self.loading_label.setText(f"Ошибка загрузки: {error_message}")
+        self.loading_label.setText(f'Ошибка загрузки: {error_message}')
         QTimer.singleShot(5000, lambda: self.loading_label.setVisible(False))
-        logging.error(f"Ошибка загрузки популярных модов: {error_message}")
+        logging.error(f'Ошибка загрузки популярных модов: {error_message}')
 
     def handle_search_results(self, mods, query):
         """Обрабатывает результаты поиска"""
@@ -434,7 +435,9 @@ class ModsTab(QWidget):
         """Обрабатывает ошибки поиска"""
         self.hide_loading_indicator()
         QMessageBox.critical(
-            self, "Ошибка", f"Не удалось выполнить поиск: {error_message}"
+            self,
+            'Ошибка',
+            f'Не удалось выполнить поиск: {error_message}',
         )
 
     def prev_page(self):
@@ -451,7 +454,7 @@ class ModsTab(QWidget):
 
     def show_loading_indicator(self):
         """Показывает индикатор загрузки"""
-        self.loading_label = QLabel("Загрузка...")
+        self.loading_label = QLabel('Загрузка...')
         self.loading_label.setAlignment(Qt.AlignCenter)
         self.loading_label.setStyleSheet("""
             QLabel {
@@ -464,12 +467,12 @@ class ModsTab(QWidget):
 
     def hide_loading_indicator(self):
         """Скрывает индикатор загрузки"""
-        if hasattr(self, "loading_label"):
+        if hasattr(self, 'loading_label'):
             self.loading_label.deleteLater()
 
     def show_no_results_message(self):
         """Показывает сообщение об отсутствии результатов"""
-        no_results_label = QLabel("Ничего не найдено")
+        no_results_label = QLabel('Ничего не найдено')
         no_results_label.setAlignment(Qt.AlignCenter)
         no_results_label.setStyleSheet("""
             QLabel {
@@ -495,7 +498,7 @@ class ModsTab(QWidget):
 
         # Обновляем информацию о странице
         self.total_pages = (len(self.mods_data) + 9) // 10  # Округляем вверх
-        self.page_label.setText(f"Страница {self.current_page} из {self.total_pages}")
+        self.page_label.setText(f'Страница {self.current_page} из {self.total_pages}')
         self.prev_page_button.setEnabled(self.current_page > 1)
         self.next_page_button.setEnabled(self.current_page < self.total_pages)
 
@@ -523,7 +526,7 @@ class ModsTab(QWidget):
         """Обновляет метку с выбранной версией"""
         if self.minecraft_versions:
             index = self.version_slider.value()
-            self.version_label.setText(f"Выбрано: {self.minecraft_versions[index]}")
+            self.version_label.setText(f'Выбрано: {self.minecraft_versions[index]}')
 
     def get_selected_version(self):
         """Возвращает выбранную версию"""
@@ -537,7 +540,7 @@ class ModsTab(QWidget):
             # Получаем выбранную версию Minecraft
             version = self.get_selected_version()
             if not version:
-                QMessageBox.warning(self, "Ошибка", "Выберите версию Minecraft")
+                QMessageBox.warning(self, 'Ошибка', 'Выберите версию Minecraft')
                 return
 
             # Показываем индикатор загрузки
@@ -551,11 +554,11 @@ class ModsTab(QWidget):
 
             # Показываем результат
             if success:
-                QMessageBox.information(self, "Успех", message)
+                QMessageBox.information(self, 'Успех', message)
             else:
-                QMessageBox.critical(self, "Ошибка", message)
+                QMessageBox.critical(self, 'Ошибка', message)
 
         except Exception as e:
             self.hide_loading_indicator()
-            QMessageBox.critical(self, "Ошибка", f"Не удалось установить мод: {str(e)}")
-            logging.error(f"Ошибка установки мода: {str(e)}")
+            QMessageBox.critical(self, 'Ошибка', f'Не удалось установить мод: {e!s}')
+            logging.exception(f'Ошибка установки мода: {e!s}')

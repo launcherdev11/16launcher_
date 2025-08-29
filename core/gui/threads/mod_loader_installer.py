@@ -7,12 +7,11 @@ import traceback
 import urllib.request
 
 import requests
-from PySide6.QtCore import QThread, Signal
-from minecraft_launcher_lib.fabric import get_all_minecraft_versions
-from minecraft_launcher_lib.fabric import get_latest_loader_version
+from minecraft_launcher_lib.fabric import get_all_minecraft_versions, get_latest_loader_version
 from minecraft_launcher_lib.fabric import install_fabric as fabric_install
 from minecraft_launcher_lib.forge import find_forge_version, install_forge_version
 from minecraft_launcher_lib.utils import get_version_list
+from PySide6.QtCore import QThread, Signal
 
 from ...config import MINECRAFT_DIR
 from ...util import get_quilt_versions
@@ -30,51 +29,52 @@ class ModLoaderInstaller(QThread):
 
     def run(self):
         try:
-            if self.loader_type == "fabric":
+            if self.loader_type == 'fabric':
                 self.install_fabric()
-            elif self.loader_type == "forge":
+            elif self.loader_type == 'forge':
                 self.install_forge()
-            elif self.loader_type == "optifine":
+            elif self.loader_type == 'optifine':
                 self.install_optifine()
-            elif self.loader_type == "quilt":
+            elif self.loader_type == 'quilt':
                 self.install_quilt()
-            elif self.loader_type == "neoforge":
+            elif self.loader_type == 'neoforge':
                 self.install_neoforge()
-            elif self.loader_type == "forgeoptifine":
+            elif self.loader_type == 'forgeoptifine':
                 self.install_forge_optifine()
             else:
                 self.finished_signal.emit(
-                    False, f"Неизвестный тип модлоадера: {self.loader_type}"
+                    False,
+                    f'Неизвестный тип модлоадера: {self.loader_type}',
                 )
         except Exception as e:
-            self.finished_signal.emit(False, f"Критическая ошибка: {str(e)}")
+            self.finished_signal.emit(False, f'Критическая ошибка: {e!s}')
             logging.error(
-                f"Ошибка установки {self.loader_type}: {str(e)}", exc_info=True
+                f'Ошибка установки {self.loader_type}: {e!s}',
+                exc_info=True,
             )
 
     def install_optifine(self):
         """Установка OptiFine"""
         try:
             # Скачивание установщика
-            download_url = (
-                f"https://optifine.net/adloadx?f=OptiFine_{self.mc_version}.jar"
-            )
-            optifine_path = os.path.join(MINECRAFT_DIR, "OptiFine.jar")
+            download_url = f'https://optifine.net/adloadx?f=OptiFine_{self.mc_version}.jar'
+            optifine_path = os.path.join(MINECRAFT_DIR, 'OptiFine.jar')
 
             with requests.get(download_url, stream=True) as r:
-                with open(optifine_path, "wb") as f:
+                with open(optifine_path, 'wb') as f:
                     shutil.copyfileobj(r.raw, f)
 
             # Запуск установщика
-            command = ["java", "-jar", optifine_path, "--install", MINECRAFT_DIR]
+            command = ['java', '-jar', optifine_path, '--install', MINECRAFT_DIR]
             subprocess.run(command, check=True)
 
             self.finished_signal.emit(
-                True, f"OptiFine для {self.mc_version} установлен!"
+                True,
+                f'OptiFine для {self.mc_version} установлен!',
             )
 
         except Exception as e:
-            self.finished_signal.emit(False, f"Ошибка установки OptiFine: {str(e)}")
+            self.finished_signal.emit(False, f'Ошибка установки OptiFine: {e!s}')
 
     def install_quilt(self):
         try:
@@ -83,9 +83,9 @@ class ModLoaderInstaller(QThread):
             # Получаем последнюю версию лоадера для выбранной версии MC
             quilt_versions = get_quilt_versions(self.mc_version)
             if not quilt_versions:
-                raise ValueError(f"Quilt для {self.mc_version} не найден")
+                raise ValueError(f'Quilt для {self.mc_version} не найден')
 
-            loader_version = quilt_versions[0]["version"]
+            loader_version = quilt_versions[0]['version']
 
             quilt_install(
                 minecraft_version=self.mc_version,
@@ -94,11 +94,12 @@ class ModLoaderInstaller(QThread):
                 callback=self.get_callback(),
             )
             self.finished_signal.emit(
-                True, f"Quilt {loader_version} для {self.mc_version} установлен!"
+                True,
+                f'Quilt {loader_version} для {self.mc_version} установлен!',
             )
 
         except Exception as e:
-            self.finished_signal.emit(False, f"Ошибка установки Quilt: {str(e)}")
+            self.finished_signal.emit(False, f'Ошибка установки Quilt: {e!s}')
 
     def install_fabric(self):
         try:
@@ -113,21 +114,22 @@ class ModLoaderInstaller(QThread):
             )
 
             self.finished_signal.emit(
-                True, f"Fabric {loader_version} для {self.mc_version} установлен!"
+                True,
+                f'Fabric {loader_version} для {self.mc_version} установлен!',
             )
 
         except Exception as e:
-            self.finished_signal.emit(False, f"Ошибка установки Fabric: {str(e)}")
-            logging.error(f"Fabric install error: {traceback.format_exc()}")
+            self.finished_signal.emit(False, f'Ошибка установки Fabric: {e!s}')
+            logging.exception(f'Fabric install error: {traceback.format_exc()}')
 
     def _check_internet_connection(self):
         """Проверка соединения с серверами Fabric"""
         try:
-            urllib.request.urlopen("https://meta.fabricmc.net", timeout=5)
+            urllib.request.urlopen('https://meta.fabricmc.net', timeout=5)
             return True
         except:
             try:
-                urllib.request.urlopen("https://google.com", timeout=5)
+                urllib.request.urlopen('https://google.com', timeout=5)
                 return False  # Есть интернет, но Fabric недоступен
             except:
                 return False  # Нет интернета
@@ -140,9 +142,7 @@ class ModLoaderInstaller(QThread):
         try:
             versions_data = get_all_minecraft_versions()
             if versions_data:
-                versions = [
-                    v["id"] for v in versions_data if isinstance(v, dict) and "id" in v
-                ]
+                versions = [v['id'] for v in versions_data if isinstance(v, dict) and 'id' in v]
                 if versions:
                     return versions
         except:
@@ -151,12 +151,10 @@ class ModLoaderInstaller(QThread):
         # Попытка 2: Альтернативный источник (GitHub)
         try:
             with urllib.request.urlopen(
-                "https://raw.githubusercontent.com/FabricMC/fabric-meta/main/data/game_versions.json"
+                'https://raw.githubusercontent.com/FabricMC/fabric-meta/main/data/game_versions.json',
             ) as response:
                 data = json.loads(response.read().decode())
-                versions = [
-                    v["version"] for v in data if isinstance(v, dict) and "version" in v
-                ]
+                versions = [v['version'] for v in data if isinstance(v, dict) and 'version' in v]
                 if versions:
                     return versions
         except:
@@ -165,7 +163,7 @@ class ModLoaderInstaller(QThread):
         # Попытка 3: Версии Vanilla Minecraft
         try:
             vanilla_versions = get_version_list()
-            versions = [v["id"] for v in vanilla_versions if v["type"] == "release"]
+            versions = [v['id'] for v in vanilla_versions if v['type'] == 'release']
             return versions
         except:
             pass
@@ -176,41 +174,46 @@ class ModLoaderInstaller(QThread):
     def find_neoforge_version(mc_version: str):
         """Поиск версии NeoForge для указанной версии MC"""
         response = requests.get(
-            "https://maven.neoforged.net/api/maven/versions/releases/net.neoforged/neoforge"
+            'https://maven.neoforged.net/api/maven/versions/releases/net.neoforged/neoforge',
         )
-        versions = response.json()["versions"]
+        versions = response.json()['versions']
         for v in versions:
             if mc_version in v:
                 return v
         return None
+
     @staticmethod
     def install_quilt_version(
-        minecraft_version: str, loader_version: str, install_dir: str, callback: dict
+        minecraft_version: str,
+        loader_version: str,
+        install_dir: str,
+        callback: dict,
     ):
         """Установка Quilt"""
         quilt_profile = {
-            "mainClass": "org.quiltmc.loader.impl.launch.knot.KnotClient",
-            "libraries": [
+            'mainClass': 'org.quiltmc.loader.impl.launch.knot.KnotClient',
+            'libraries': [
                 {
-                    "name": f"org.quiltmc:quilt-loader:{loader_version}",
-                    "url": "https://maven.quiltmc.org/repository/release/",
-                }
+                    'name': f'org.quiltmc:quilt-loader:{loader_version}',
+                    'url': 'https://maven.quiltmc.org/repository/release/',
+                },
             ],
         }
 
         # Создание профиля Quilt
         version_dir = os.path.join(
             str(install_dir),
-            "versions",
-            f"quilt-loader-{loader_version}-{minecraft_version}",
+            'versions',
+            f'quilt-loader-{loader_version}-{minecraft_version}',
         )
         os.makedirs(version_dir, exist_ok=True)
 
         with open(
             os.path.join(
-                version_dir, f"quilt-loader-{loader_version}-{minecraft_version}.json"
+                version_dir,
+                f'quilt-loader-{loader_version}-{minecraft_version}.json',
             ),
-            "w",
+            'w',
         ) as f:
             json.dump(quilt_profile, f)
 
@@ -221,11 +224,9 @@ class ModLoaderInstaller(QThread):
             loader_version = get_latest_loader_version()
             if not loader_version:
                 # Если не получается определить последнюю версию, пробуем конкретную
-                loader_version = (
-                    "0.15.7"  # Актуальная стабильная версия на момент написания
-                )
+                loader_version = '0.15.7'  # Актуальная стабильная версия на момент написания
         except:
-            loader_version = "0.15.7"
+            loader_version = '0.15.7'
 
         # Установка
         try:
@@ -237,10 +238,10 @@ class ModLoaderInstaller(QThread):
             )
             self.finished_signal.emit(
                 True,
-                f"Fabric {loader_version} для {self.mc_version} успешно установлен!",
+                f'Fabric {loader_version} для {self.mc_version} успешно установлен!',
             )
         except Exception as e:
-            raise ValueError(f"Ошибка установки: {str(e)}")
+            raise ValueError(f'Ошибка установки: {e!s}')
 
     def install_forge(self):
         """Установка Forge"""
@@ -248,23 +249,26 @@ class ModLoaderInstaller(QThread):
             forge_version = find_forge_version(self.mc_version)
             if not forge_version:
                 self.finished_signal.emit(
-                    False, f"Forge для {self.mc_version} не найден"
+                    False,
+                    f'Forge для {self.mc_version} не найден',
                 )
                 return
 
             install_forge_version(
-                forge_version, MINECRAFT_DIR, callback=self.get_callback()
+                forge_version,
+                MINECRAFT_DIR,
+                callback=self.get_callback(),
             )
-            self.finished_signal.emit(True, f"Forge {forge_version} установлен!")
+            self.finished_signal.emit(True, f'Forge {forge_version} установлен!')
 
         except Exception as e:
-            self.finished_signal.emit(False, f"Ошибка установки Forge: {str(e)}")
-            logging.error(f"Forge install failed: {str(e)}", exc_info=True)
+            self.finished_signal.emit(False, f'Ошибка установки Forge: {e!s}')
+            logging.error(f'Forge install failed: {e!s}', exc_info=True)
 
     def get_callback(self):
         """Генератор callback-функций для отслеживания прогресса"""
         return {
-            "setStatus": lambda text: self.progress_signal.emit(0, 100, text),
-            "setProgress": lambda value: self.progress_signal.emit(value, 100, ""),
-            "setMax": lambda value: self.progress_signal.emit(0, value, ""),
+            'setStatus': lambda text: self.progress_signal.emit(0, 100, text),
+            'setProgress': lambda value: self.progress_signal.emit(value, 100, ''),
+            'setMax': lambda value: self.progress_signal.emit(0, value, ''),
         }
