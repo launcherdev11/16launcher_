@@ -1,98 +1,15 @@
-[build-system]
-requires = ["setuptools>=61.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.black]
-line-length = 140
-target-version = ['py312']
-include = '\.pyi?$'
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-line_length = 140
-known_first_party = ["core"]
-
-[tool.pydocstyle]
-ignore = [
-    "D100",
-    "D203",
-    "D212",
-    "D213",
-    "D413",
-    "D407",
-    "D406",
-    "D102",
-    "D101",
-]
-match = "(?!_).*"
-match-dir = "(?!_).*"
-
-[tool.mypy]
-python_version = "3.12"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-show_error_codes = true
-ignore_missing_imports = true
-
-[tool.flake8]
-max-line-length = 140
-extend-ignore = "E203"
-max-complexity = 18
-select = "B,C,E,F,W,T4,B9"
-exclude = ".git,__pycache__,build,dist,.venv,venv"
-filename = "*.py"
-
-[tool.pylint]
-max-line-length = 140
-disable = [
-    "missing-docstring",
-    "too-few-public-methods",
-    "import-error",
-    "protected-access",
-    "duplicate-code"
-]
-
-[tool.semantic_release]
-version_source = "tag"
-version_variable = "pyproject.toml:version"
-commit_parser = "conventional"
-major_tag = "major"
-minor_tag = "minor"
-patch_tag = "patch"
-changelog_capitalize = true
-changelog_scope = true
-upload_to_release = true
-upload_to_pypi = false
-
-changelog_exclude_commits = [
-    "typo",
-    "style",
-    "refactor"
-]
-
-[tool.pytest.ini_options]
-testpaths = ["tests", "core/tests"]
-python_files = "test_*.py"
-python_classes = "Test*"
-python_functions = "test_*"
-addopts = "-v --cov=core --cov-report=xml"
-
 [project]
 name = "16launcher"
 dynamic = ["version"]
 description = "16Launcher - Minecraft game launcher."
 authors = [
     { name = "binobinos", email = "binobinos.dev@gmail.com" },
+    { name = "nnnLik", email = "rslmakhmudov@gmail.com" },
+    { name = "16steyy", email = "pavlovkamil73@gmail.com" },
 ]
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.12"
+requires-python = "==3.12.*"
 keywords = ["minecraft", "launcher", "game", "gaming", "minecraft-launcher", "java", "minecraft-client"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -116,17 +33,94 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/16steyy/16launcher_"
-Issues = "https://github.com/16steyy/16launcher_/issues"
+Homepage = "https://github.com/16steyy/16Launcher"
+Issues = "https://github.com/16steyy/16Launcher/issues"
 
-[project.optional-dependencies]
-dev = [
-    "black",
-    "isort",
-    "pytest",
-    "pytest-cov",
-    "mypy",
-    "flake8",
-    "pylint",
-    "pydocstyle"
+[build-system]
+requires = ["setuptools==69.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.txt", "*.md"]
+
+[dependency-groups]
+prod = [
+    "minecraft-launcher-lib==7.1",
+    "requests==2.32.5",
+    "pyqt5==5.15.11",
+    "pyqt5-qt5==5.15.2",
 ]
+dev = [
+    "mypy==1.17.1",
+    "pre-commit==4.3.0",
+    "pytest==8.4.1",
+    "pytest-cov==6.2.1",
+    "ruff==0.12.10",
+]
+
+[tool.semantic_release]
+version_source = "tag"
+version_variable = "pyproject.toml:version"
+commit_parser = "conventional"
+major_tag = "major"
+minor_tag = "minor"
+patch_tag = "patch"
+changelog_capitalize = true
+changelog_scope = true
+upload_to_release = true
+upload_to_pypi = false
+
+changelog_exclude_commits = [
+    "typo",
+    "style",
+    "refactor",
+]
+
+[tool.ruff]
+select = ["ALL"]
+ignore = [
+    "E501",
+    "W191",
+    "C901",
+    "D",
+]
+line-length = 140
+target-version = "py312"
+fixable = ["ALL"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    "venv",
+    "node_modules",
+]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "src/tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=core --cov-report=xml"
