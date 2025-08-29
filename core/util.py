@@ -3,8 +3,9 @@ import logging
 import os
 import random
 import shutil
-from typing import Any
 import webbrowser
+from pathlib import Path
+from typing import Any
 
 import requests
 
@@ -42,11 +43,9 @@ def save_settings(settings: dict[str, Any]) -> None:
     try:
         with open(SETTINGS_PATH, 'w', encoding='utf-8') as f:
             json.dump(settings, f, indent=4, ensure_ascii=False)
+        logging.debug('Настройки успешно сохранены')
     except Exception as e:
         logging.exception(f'Ошибка при сохранении настроек: {e}')
-        return None
-
-    logging.debug('Настройки успешно сохранены')
 
     if 'export_path' not in settings:
         settings['export_path'] = os.path.expanduser('~/Desktop')
@@ -64,11 +63,11 @@ def generate_random_username() -> str:
 def download_authlib_injector() -> bool:
     """Скачивает последнюю версию Authlib Injector"""
     try:
-        response = requests.get(AUTHLIB_INJECTOR_URL)
+        response = requests.get(AUTHLIB_INJECTOR_URL, timeout=30)
         data = response.json()
         download_url = data['download_url']
 
-        response = requests.get(download_url, stream=True)
+        response = requests.get(download_url, stream=True, timeout=30)
         with open(AUTHLIB_JAR_PATH, 'wb') as f:
             shutil.copyfileobj(response.raw, f)
         return True
@@ -78,9 +77,10 @@ def download_authlib_injector() -> bool:
 
 
 def download_optifine(version: str) -> tuple[str | None, str | None]:
+    """Скачивает OptiFine для указанной версии"""
     try:
         url = 'https://optifine.net/downloads'
-        response = requests.get(url)
+        response = requests.get(url, timeout=30)
         if response.status_code != 200:
             return None, 'Не удалось получить страницу загрузки OptiFine.'
 
@@ -95,6 +95,7 @@ def download_optifine(version: str) -> tuple[str | None, str | None]:
 
 
 def install_optifine(version: str) -> tuple[bool, str | None]:
+    """Устанавливает OptiFine для указанной версии"""
     link, error = download_optifine(version)
     if error:
         return False, error
@@ -104,6 +105,7 @@ def install_optifine(version: str) -> tuple[bool, str | None]:
         return True, f'Открой сайт и скачай OptiFine {version} вручную.'
     else:
         return False, 'Ссылка для загрузки OptiFine не найдена.'
+
 
 def get_quilt_versions(mc_version: str) -> list[dict[str, Any]]:
     """Получает версии Quilt через официальное API"""
@@ -153,15 +155,21 @@ def authenticate_ely_by(username: str, password: str) -> dict[str, Any] | None:
 
 def resource_path(relative_path: str) -> str:
     """Универсальная функция для получения путей ресурсов"""
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-    return os.path.join(base_path, relative_path)
+    return str((Path(__file__).resolve()).parent.parent / relative_path)
 
 
 def read(path: str) -> dict[str, Any]:
-    with open(path) as f:
-        return json.load(f)
+    try:
+        with open(path, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        logging.exception(f'Ошибка чтения файла {path}: {e}')
+        return {}
 
 
 def write(path: str, data: dict[str, Any]) -> None:
-    with open(path, 'w') as f:
-        json.dump(data, f, indent=4)
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+    except Exception as e:
+        logging.exception(f'Ошибка записи в файл {path}: {e}')

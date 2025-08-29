@@ -33,6 +33,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from core import ely
 from core.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
 from core.ely_by_skin_manager import ElyBySkinManager
 from core.ely_skin_manager import ElySkinManager
@@ -228,7 +229,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка-свёртка (вне панели!)
         self.toggle_sidebar_button = QPushButton()
-        self.toggle_sidebar_button.setIcon(QIcon(resource_path('assets/toggle.png')))
+        self.toggle_sidebar_button.setIcon(QIcon(resource_path('assets/toggle_open.png')))
         self.toggle_sidebar_button.setIconSize(QSize(24, 24))
         self.toggle_sidebar_button.setFixedSize(30, 30)
         self.toggle_sidebar_button.setStyleSheet("""
@@ -410,7 +411,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка "Открыть папку"
         self.open_folder_button = QPushButton()
-        self.open_folder_button.setIcon(QIcon(resource_path(' assets/folder.png')))
+        self.open_folder_button.setIcon(QIcon(resource_path('assets/folder.png')))
         self.open_folder_button.setToolTip('Открыть папку с игрой')
         self.open_folder_button.setIconSize(QSize(24, 24))
         self.open_folder_button.setCursor(Qt.PointingHandCursor)
@@ -1450,7 +1451,7 @@ class MainWindow(QMainWindow):
             self.settings['last_version'] = current_version
             self.settings['last_loader'] = self.loader_select.currentData()
             self.settings['show_snapshots'] = self.settings_tab.show_snapshots_checkbox.isChecked()
-            self.settings['show_motd'] = self.settings_tab.motd_checkbox.isChecked()
+            # self.settings['show_motd'] = self.settings_tab.motd_checkbox.isChecked()  # TODO: Добавить motd_checkbox
 
         self.settings['last_username'] = self.username.text().strip()
         save_settings(self.settings)

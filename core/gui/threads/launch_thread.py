@@ -1,4 +1,5 @@
 import io
+import json
 import logging
 import os
 import re
@@ -13,12 +14,13 @@ from minecraft_launcher_lib.fabric import get_latest_loader_version
 from minecraft_launcher_lib.forge import find_forge_version
 from minecraft_launcher_lib.install import install_minecraft_version
 from PySide6.QtCore import QThread, Signal
+from PySide6.QtWidgets import QWidget
 
 from core.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
 
 class LaunchThread(QThread):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.parent_window = parent
         self.version_id = ''
@@ -34,12 +36,12 @@ class LaunchThread(QThread):
 
     def launch_setup(
         self,
-        version_id,
-        username,
-        loader_type,
-        memory_mb,
-        close_on_launch,
-    ):
+        version_id: str,
+        username: str,
+        loader_type: str,
+        memory_mb: int,
+        close_on_launch: bool = True,
+    ) -> None:
         self.version_id = version_id
         self.username = username
         self.loader_type = loader_type

@@ -3,13 +3,13 @@ import logging
 import os
 import shutil
 import time
+from typing import Callable
 import zipfile
 
 from minecraft_launcher_lib.utils import get_version_list
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QCursor, QFont, QIcon, QPixmap
+from PySide6.QtGui import QAction, QCursor, QFont, QIcon, QPixmap
 from PySide6.QtWidgets import (
-    QAction,
     QApplication,
     QComboBox,
     QDialog,
@@ -39,7 +39,7 @@ from core.util import resource_path
 
 
 class ModpackTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.parent_window = parent
         self.modpacks_dir = os.path.join(MINECRAFT_DIR, 'modpacks')
@@ -53,7 +53,7 @@ class ModpackTab(QWidget):
         self.load_modpacks()
         self.setup_drag_drop()
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         layout = QVBoxLayout(self)
         layout.setContentsMargins(15, 15, 15, 15)
         layout.setSpacing(15)
@@ -65,7 +65,7 @@ class ModpackTab(QWidget):
         title_layout = QHBoxLayout()
         icon_label = QLabel()
         icon_label.setPixmap(
-            QPixmap(resource_path('assets/modpack_icon.png')).scaled(32, 32),
+            QPixmap(resource_path('assets/folder.png')).scaled(32, 32),
         )
         title_layout.addWidget(icon_label)
 
@@ -158,7 +158,7 @@ class ModpackTab(QWidget):
             }
         """)
 
-    def create_tool_button(self, text: str, icon: str, callback):
+    def create_tool_button(self, text: str, icon: str, callback: Callable) -> QToolButton:
         btn = QToolButton()
         btn.setText(text)
         btn.setIcon(QIcon(resource_path(f'assets/{icon}')))
@@ -347,21 +347,21 @@ class ModpackTab(QWidget):
         menu = QMenu(self)
 
         export_action = QAction(
-            QIcon(resource_path('assets/export.png')),
+            QIcon(resource_path('assets/folder.png')),
             'Экспорт',
             self,
         )
         export_action.triggered.connect(lambda: self.export_modpack(pack_data))
 
         duplicate_action = QAction(
-            QIcon(resource_path('assets/copy.png')),
+            QIcon(resource_path('assets/change_name.png')),
             'Дублировать',
             self,
         )
         duplicate_action.triggered.connect(lambda: self.duplicate_modpack(pack_data))
 
         delete_action = QAction(
-            QIcon(resource_path('assets/delete.png')),
+            QIcon(resource_path('assets/support64.png')),
             'Удалить',
             self,
         )
