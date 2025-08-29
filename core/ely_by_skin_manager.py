@@ -5,22 +5,22 @@ import webbrowser
 from base64 import b64encode
 
 import requests
-from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import (
+from PySide6.QtCore import QTimer
+from PySide6.QtWidgets import (
     QDialog,
-    QVBoxLayout,
+    QHBoxLayout,
     QLabel,
     QLineEdit,
-    QHBoxLayout,
     QPushButton,
+    QVBoxLayout,
 )
 
-from .config import ELYBY_SKINS_URL, SKINS_DIR, ELYBY_AUTH_URL
+from core.config import ELYBY_AUTH_URL, ELYBY_SKINS_URL, SKINS_DIR
 
 
 class ElyBySkinManager:
     @staticmethod
-    def get_skin_url(username):
+    def get_skin_url(username: str) -> str | None:
         """Получаем URL скина для указанного пользователя"""
         try:
             response = requests.get(

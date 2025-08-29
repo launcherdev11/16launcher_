@@ -5,37 +5,37 @@ import shutil
 import time
 import zipfile
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QPixmap, QFont, QIcon, QCursor
-from PyQt5.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QComboBox,
-    QScrollArea,
-    QGridLayout,
-    QToolButton,
-    QFrame,
-    QPushButton,
+from minecraft_launcher_lib.utils import get_version_list
+from PySide6.QtCore import Qt, QSize
+from PySide6.QtGui import QPixmap, QFont, QIcon, QCursor
+from PySide6.QtWidgets import (
     QAction,
-    QMenu,
-    QInputDialog,
-    QMessageBox,
+    QApplication,
+    QComboBox,
     QDialog,
     QDialogButtonBox,
-    QListWidget,
     QFileDialog,
-    QApplication,
     QFormLayout,
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QInputDialog,
+    QLabel,
+    QLineEdit,
+    QListWidget,
+    QMenu,
+    QMessageBox,
+    QPushButton,
+    QScrollArea,
     QStackedWidget,
+    QToolButton,
+    QVBoxLayout,
+    QWidget,
 )
-from minecraft_launcher_lib.utils import get_version_list
 
-from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
-from ...mod_manager import ModManager
-from ...util import resource_path
+from core.config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
+from core.mod_manager import ModManager
+from core.util import resource_path
 
 
 class ModpackTab(QWidget):

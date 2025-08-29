@@ -1,30 +1,30 @@
 import logging
 
 import requests
-from PyQt5.QtCore import QSize, Qt, QTimer
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QLineEdit,
-    QPushButton,
-    QSlider,
-    QLabel,
-    QScrollArea,
-    QMessageBox,
+from PySide6.QtCore import QSize, Qt, QTimer
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import (
     QComboBox,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QScrollArea,
+    QSlider,
+    QVBoxLayout,
+    QWidget,
 )
 
-from ..threads.mod_search_thread import ModSearchThread
-from ..threads.popular_mods_thread import PopularModsThread
-from ...config import MINECRAFT_VERSIONS
-from ...mod_manager import ModManager
-from ...util import resource_path
+from core.config import MINECRAFT_VERSIONS
+from core.gui.threads.mod_search_thread import ModSearchThread
+from core.gui.threads.popular_mods_thread import PopularModsThread
+from core.mod_manager import ModManager
+from core.util import resource_path
 
 
 class ModsTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.parent_window = parent
         self.search_thread = None

@@ -8,13 +8,13 @@ import zipfile
 from uuid import uuid1
 
 import requests
-from PyQt5.QtCore import QThread, pyqtSignal
 from minecraft_launcher_lib.command import get_minecraft_command
 from minecraft_launcher_lib.fabric import get_latest_loader_version
 from minecraft_launcher_lib.forge import find_forge_version
 from minecraft_launcher_lib.install import install_minecraft_version
+from PySide6.QtCore import QThread, Signal
 
-from ...config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
+from core.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
 
 class LaunchThread(QThread):
@@ -27,10 +27,10 @@ class LaunchThread(QThread):
         self.memory_mb = 4096
         self.close_on_launch = False
 
-    launch_setup_signal = pyqtSignal(str, str, str, int, bool)
-    progress_update_signal = pyqtSignal(int, int, str)
-    state_update_signal = pyqtSignal(bool)
-    close_launcher_signal = pyqtSignal()
+    launch_setup_signal = Signal(str, str, str, int, bool)
+    progress_update_signal = Signal(int, int, str)
+    state_update_signal = Signal(bool)
+    close_launcher_signal = Signal()
 
     def launch_setup(
         self, version_id, username, loader_type, memory_mb, close_on_launch

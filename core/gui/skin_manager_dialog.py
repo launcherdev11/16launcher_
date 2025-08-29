@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QPushButton, QFileDialog
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QPushButton, QFileDialog
 
 from ..ely_skin_manager import ElySkinManager
 

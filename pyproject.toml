@@ -50,8 +50,7 @@ include = ["core*"]
 prod = [
     "minecraft-launcher-lib==7.1",
     "requests==2.32.5",
-    "pyqt5==5.15.11",
-    "pyqt5-qt5==5.15.2",
+    "pyside6==6.6.1",
 ]
 dev = [
     "mypy==1.17.1",

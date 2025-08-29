@@ -7,7 +7,7 @@ import traceback
 import urllib.request
 
 import requests
-from PyQt5.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 from minecraft_launcher_lib.fabric import get_all_minecraft_versions
 from minecraft_launcher_lib.fabric import get_latest_loader_version
 from minecraft_launcher_lib.fabric import install_fabric as fabric_install
@@ -19,8 +19,8 @@ from ...util import get_quilt_versions
 
 
 class ModLoaderInstaller(QThread):
-    progress_signal = pyqtSignal(int, int, str)
-    finished_signal = pyqtSignal(bool, str)
+    progress_signal = Signal(int, int, str)
+    finished_signal = Signal(bool, str)
 
     def __init__(self, loader_type, version, mc_version=None):
         super().__init__()

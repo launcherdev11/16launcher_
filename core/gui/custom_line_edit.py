@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QLineEdit
+from PySide6.QtWidgets import QLineEdit
 
 
 class CustomLineEdit(QLineEdit):
@@ -16,7 +16,7 @@ class CustomLineEdit(QLineEdit):
 
     def update_button_position(self):
         if self._button:
-            from PyQt5.QtWidgets import QStyle
+            from PySide6.QtWidgets import QStyle
 
             frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
             rect = self.rect()

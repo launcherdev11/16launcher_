@@ -2,8 +2,15 @@ import logging
 import sys
 import time
 
-from PyQt5.QtWidgets import (
+from PySide6.QtWidgets import (
     QApplication,
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
+    QProgressBar,
+    QPushButton,
+    QMessageBox,
 )
 
 from core.config import LOG_FILE
@@ -11,15 +18,14 @@ from core.gui.main_window import MainWindow
 from core.gui.widgets.splash_screen import SplashScreen
 from core.util import setup_directories
 
-
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
         logging.StreamHandler(sys.stderr),  # Вывод в консоль
-        logging.FileHandler(LOG_FILE)  # Запись в файл
-    ]
+        logging.FileHandler(LOG_FILE),  # Запись в файл
+    ],
 )
 
 if __name__ == "__main__":

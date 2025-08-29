@@ -1,17 +1,21 @@
 import requests
-from PyQt5.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 
 
 class PopularModsThread(QThread):
-    finished = pyqtSignal(list)
-    error = pyqtSignal(str)
+    finished = Signal(list)
+    error = Signal(str)
 
-    def __init__(self, version=None, loader=None):
+    def __init__(
+        self,
+        version: str | None = None,
+        loader: str | None = None,
+    ) -> None:
         super().__init__()
         self.version = version
         self.loader = loader
 
-    def run(self):
+    def run(self) -> None:
         try:
             # Формируем параметры запроса для популярных модов
             params = {

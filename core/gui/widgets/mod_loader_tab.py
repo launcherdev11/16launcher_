@@ -1,23 +1,23 @@
 import logging
 
-from PyQt5.QtWidgets import (
-    QWidget,
-    QComboBox,
-    QLabel,
-    QVBoxLayout,
-    QPushButton,
-    QProgressBar,
-    QMessageBox,
-)
 from minecraft_launcher_lib.forge import find_forge_version
 from minecraft_launcher_lib.utils import get_version_list
+from PySide6.QtWidgets import (
+    QComboBox,
+    QLabel,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
-from ..threads.mod_loader_installer import ModLoaderInstaller
-from ...util import get_quilt_versions
+from core.gui.threads.mod_loader_installer import ModLoaderInstaller
+from core.util import get_quilt_versions
 
 
 class ModLoaderTab(QWidget):
-    def __init__(self, loader_type, parent=None):
+    def __init__(self, loader_type: str, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.loader_type = loader_type
         self.setup_ui()

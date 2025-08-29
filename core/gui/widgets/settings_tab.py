@@ -2,9 +2,9 @@ import logging
 import os
 import subprocess
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (
+from PySide6.QtCore import Qt, QSize
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import (
     QWidget,
     QApplication,
     QVBoxLayout,
