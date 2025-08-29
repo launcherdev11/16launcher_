@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
-from core.config import ELYBY_AUTH_URL, ELYBY_SKINS_URL, SKINS_DIR
+from src.config import ELYBY_AUTH_URL, ELYBY_SKINS_URL, SKINS_DIR
 
 
 class ElyBySkinManager:

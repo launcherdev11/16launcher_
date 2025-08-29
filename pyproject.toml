@@ -41,7 +41,7 @@ requires = ["setuptools==69.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["core*"]
+include = ["src*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.json", "*.txt", "*.md"]
@@ -123,4 +123,4 @@ testpaths = ["tests", "src/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
-addopts = "-v --cov=core --cov-report=xml"
+addopts = "-v --cov=src --cov-report=xml"

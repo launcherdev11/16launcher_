@@ -33,12 +33,12 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from core import ely
-from core.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
-from core.ely_by_skin_manager import ElyBySkinManager
-from core.ely_skin_manager import ElySkinManager
-from core.translator import Translator
-from core.util import download_authlib_injector, generate_random_username, load_settings, resource_path, save_settings
+from src import ely
+from src.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
+from src.ely_by_skin_manager import ElyBySkinManager
+from src.ely_skin_manager import ElySkinManager
+from src.translator import Translator
+from src.util import download_authlib_injector, generate_random_username, load_settings, resource_path, save_settings
 
 from .custom_line_edit import CustomLineEdit
 from .threads.launch_thread import LaunchThread

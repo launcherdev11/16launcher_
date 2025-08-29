@@ -1,6 +1,6 @@
 from PySide6.QtCore import QThread, Signal
 
-from core.mod_manager import ModManager
+from src.mod_manager import ModManager
 
 
 class ModSearchThread(QThread):

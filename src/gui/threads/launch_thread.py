@@ -16,7 +16,7 @@ from minecraft_launcher_lib.install import install_minecraft_version
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QWidget
 
-from core.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
+from src.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
 
 class LaunchThread(QThread):

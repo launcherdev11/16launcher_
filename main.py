@@ -6,10 +6,10 @@ from PySide6.QtWidgets import (
     QApplication,
 )
 
-from core.config import LOG_FILE
-from core.gui.main_window import MainWindow
-from core.gui.widgets.splash_screen import SplashScreen
-from core.util import setup_directories
+from src.config import LOG_FILE
+from src.gui.main_window import MainWindow
+from src.gui.widgets.splash_screen import SplashScreen
+from src.util import setup_directories
 
 logging.basicConfig(
     level=logging.DEBUG,

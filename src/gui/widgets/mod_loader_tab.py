@@ -12,8 +12,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from core.gui.threads.mod_loader_installer import ModLoaderInstaller
-from core.util import get_quilt_versions
+from src.gui.threads.mod_loader_installer import ModLoaderInstaller
+from src.util import get_quilt_versions
 
 
 class ModLoaderTab(QWidget):

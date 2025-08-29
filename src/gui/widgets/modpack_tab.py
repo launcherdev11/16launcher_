@@ -33,9 +33,9 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from core.config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
-from core.mod_manager import ModManager
-from core.util import resource_path
+from src.config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
+from src.mod_manager import ModManager
+from src.util import resource_path
 
 
 class ModpackTab(QWidget):

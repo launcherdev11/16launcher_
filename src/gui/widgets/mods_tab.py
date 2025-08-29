@@ -16,11 +16,11 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from core.config import MINECRAFT_VERSIONS
-from core.gui.threads.mod_search_thread import ModSearchThread
-from core.gui.threads.popular_mods_thread import PopularModsThread
-from core.mod_manager import ModManager
-from core.util import resource_path
+from src.config import MINECRAFT_VERSIONS
+from src.gui.threads.mod_search_thread import ModSearchThread
+from src.gui.threads.popular_mods_thread import PopularModsThread
+from src.mod_manager import ModManager
+from src.util import resource_path
 
 
 class ModsTab(QWidget):
