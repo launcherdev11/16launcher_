@@ -41,7 +41,7 @@ requires = ["setuptools==69.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["core*"]
+include = ["src*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.json", "*.txt", "*.md"]
@@ -50,8 +50,7 @@ include = ["core*"]
 prod = [
     "minecraft-launcher-lib==7.1",
     "requests==2.32.5",
-    "pyqt5==5.15.11",
-    "pyqt5-qt5==5.15.2",
+    "pyside6==6.6.1",
 ]
 dev = [
     "mypy==1.17.1",
@@ -85,6 +84,7 @@ ignore = [
     "E501",
     "W191",
     "C901",
+    "Q000",
     "D",
 ]
 line-length = 140
@@ -123,4 +123,4 @@ testpaths = ["tests", "src/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
-addopts = "-v --cov=core --cov-report=xml"
+addopts = "-v --cov=src --cov-report=xml"

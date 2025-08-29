@@ -40,13 +40,6 @@ lint:
 	@echo "Checking code..."
 	uv run ruff check core/
 	uv run mypy core/
-    uv run bandit -r ./core
-    uv run pydocstyle ./core
-    uv run radon cc -s -a
-
-cloc:
-    @echo "Calculating cloc..."
-    cloc ./core
 
 fmt:
 	@echo "Formatting code..."

@@ -1,11 +1,11 @@
-from PyQt5.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 
-from ...mod_manager import ModManager
+from src.mod_manager import ModManager
 
 
 class ModSearchThread(QThread):
-    search_finished = pyqtSignal(list, str)
-    error_occurred = pyqtSignal(str)
+    search_finished = Signal(list, str)
+    error_occurred = Signal(str)
 
     def __init__(self, query, version, loader, category, sort_by):
         super().__init__()
@@ -23,7 +23,7 @@ class ModSearchThread(QThread):
                 self.loader,
                 self.category,
                 self.sort_by,
-                "modrinth",
+                'modrinth',
             )
             self.search_finished.emit(mods, self.query)
         except Exception as e:

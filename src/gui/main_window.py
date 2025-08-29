@@ -10,9 +10,9 @@ import webbrowser
 
 import requests
 from minecraft_launcher_lib.utils import get_version_list
-from PyQt5.QtCore import QSize, Qt, QTimer
-from PyQt5.QtGui import QIcon, QKeySequence
-from PyQt5.QtWidgets import (
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
     QDialog,
@@ -26,7 +26,6 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QProgressBar,
     QPushButton,
-    QShortcut,
     QStackedWidget,
     QTabWidget,
     QToolButton,
@@ -34,18 +33,13 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from .. import ely
-from ..config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
-from ..ely_by_skin_manager import ElyBySkinManager
-from ..ely_skin_manager import ElySkinManager
-from ..translator import Translator
-from ..util import (
-    download_authlib_injector,
-    generate_random_username,
-    load_settings,
-    resource_path,
-    save_settings,
-)
+from src import ely
+from src.config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
+from src.ely_by_skin_manager import ElyBySkinManager
+from src.ely_skin_manager import ElySkinManager
+from src.translator import Translator
+from src.util import download_authlib_injector, generate_random_username, load_settings, resource_path, save_settings
+
 from .custom_line_edit import CustomLineEdit
 from .threads.launch_thread import LaunchThread
 from .widgets.mod_loader_tab import ModLoaderTab
@@ -55,7 +49,7 @@ from .widgets.settings_tab import SettingsTab
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.ely_session = None
         self.setWindowTitle('16Launcher 1.0.2')
@@ -91,19 +85,6 @@ class MainWindow(QMainWindow):
         self.launch_thread.state_update_signal.connect(self.state_update)
         self.launch_thread.progress_update_signal.connect(self.update_progress)
         self.launch_thread.close_launcher_signal.connect(self.close_launcher)
-
-        # Добавляем хоткей Ctrl+D
-        self.ctrl_d_shortcut = QShortcut(QKeySequence('Ctrl+D'), self)
-        self.ctrl_d_shortcut.activated.connect(self.show_funny_message)
-
-        self.ctrl_d_shortcut = QShortcut(QKeySequence('Ctrl+Q'), self)
-        self.ctrl_d_shortcut.activated.connect(self.show_funny_message_1)
-
-        self.ctrl_d_shortcut = QShortcut(QKeySequence('Ctrl+R'), self)
-        self.ctrl_d_shortcut.activated.connect(self.show_funny_message_2)
-
-        self.ctrl_d_shortcut = QShortcut(QKeySequence('Ctrl+G'), self)
-        self.ctrl_d_shortcut.activated.connect(self.show_funny_message_3)
 
         self.main_container = QWidget(self)
         self.setCentralWidget(self.main_container)
@@ -248,7 +229,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка-свёртка (вне панели!)
         self.toggle_sidebar_button = QPushButton()
-        self.toggle_sidebar_button.setIcon(QIcon(resource_path('assets/toggle.png')))
+        self.toggle_sidebar_button.setIcon(QIcon(resource_path('assets/toggle_open.png')))
         self.toggle_sidebar_button.setIconSize(QSize(24, 24))
         self.toggle_sidebar_button.setFixedSize(30, 30)
         self.toggle_sidebar_button.setStyleSheet("""
@@ -430,7 +411,7 @@ class MainWindow(QMainWindow):
 
         # Кнопка "Открыть папку"
         self.open_folder_button = QPushButton()
-        self.open_folder_button.setIcon(QIcon(resource_path(' assets/folder.png')))
+        self.open_folder_button.setIcon(QIcon(resource_path('assets/folder.png')))
         self.open_folder_button.setToolTip('Открыть папку с игрой')
         self.open_folder_button.setIconSize(QSize(24, 24))
         self.open_folder_button.setCursor(Qt.PointingHandCursor)
@@ -947,30 +928,6 @@ class MainWindow(QMainWindow):
     def get_selected_memory(self):
         """Возвращает выбранное количество памяти в мегабайтах"""
         return self.settings_tab.memory_slider.value() * 1024  # Конвертируем ГБ в МБ
-
-    def show_funny_message(self):
-        """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText('💬 <i>Юля писька</i>')
-        # Через 3 секунды возвращаем случайное сообщение
-        QTimer.singleShot(3000, self.show_message_of_the_day)
-
-    def show_funny_message_1(self):
-        """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText('💬 <i>Еру Тукаш</i>')
-        # Через 3 секунды возвращаем случайное сообщение
-        QTimer.singleShot(3000, self.show_message_of_the_day)
-
-    def show_funny_message_2(self):
-        """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText('💬 <i>Sosun TheNerfi</i>')
-        # Через 3 секунды возвращаем случайное сообщение
-        QTimer.singleShot(3000, self.show_message_of_the_day)
-
-    def show_funny_message_3(self):
-        """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText('💬 <i>Марат педик</i>')
-        # Через 3 секунды возвращаем случайное сообщение
-        QTimer.singleShot(3000, self.show_message_of_the_day)
 
     def load_skin(self):
         # Создаем диалоговое окно выбора источника скина
@@ -1494,7 +1451,7 @@ class MainWindow(QMainWindow):
             self.settings['last_version'] = current_version
             self.settings['last_loader'] = self.loader_select.currentData()
             self.settings['show_snapshots'] = self.settings_tab.show_snapshots_checkbox.isChecked()
-            self.settings['show_motd'] = self.settings_tab.motd_checkbox.isChecked()
+            # self.settings['show_motd'] = self.settings_tab.motd_checkbox.isChecked()  # TODO: Добавить motd_checkbox
 
         self.settings['last_username'] = self.username.text().strip()
         save_settings(self.settings)
