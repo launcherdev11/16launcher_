@@ -10,9 +10,9 @@ from PyQt5.QtWidgets import (
     QMessageBox,
 )
 from minecraft_launcher_lib.forge import find_forge_version
-from minecraft_launcher_lib.utils import get_version_list
 
 from ..threads.mod_loader_installer import ModLoaderInstaller
+from ...config import MINECRAFT_VERSIONS
 from ...util import get_quilt_versions
 
 
@@ -22,14 +22,6 @@ class ModLoaderTab(QWidget):
         self.loader_type = loader_type
         self.setup_ui()
         self.load_mc_versions()
-
-        # Для Quilt - выбор версии лоадера
-        if self.loader_type == "quilt":
-            self.loader_version_combo = QComboBox()
-            self.layout().insertWidget(2, QLabel("Версия Quilt:"))
-            self.layout().insertWidget(3, self.loader_version_combo)
-            self.mc_version_combo.currentTextChanged.connect(self.update_quilt_versions)
-            self.update_quilt_versions()
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
@@ -46,6 +38,13 @@ class ModLoaderTab(QWidget):
             layout.addWidget(self.forge_version_combo)
             self.mc_version_combo.currentTextChanged.connect(self.update_forge_versions)
             self.update_forge_versions()
+
+        if self.loader_type == "quilt":
+            self.loader_version_combo = QComboBox()
+            layout.addWidget(QLabel("Версия Quilt:"))
+            layout.addWidget(self.loader_version_combo)
+            self.mc_version_combo.currentTextChanged.connect(self.update_quilt_versions)
+            self.update_quilt_versions()
 
         # Кнопка установки
         self.install_btn = QPushButton(f"Установить {self.loader_type}")
@@ -65,10 +64,8 @@ class ModLoaderTab(QWidget):
     def load_mc_versions(self):
         """Загружает версии Minecraft"""
         self.mc_version_combo.clear()
-        versions = get_version_list()
-        for version in versions:
-            if version["type"] == "release":
-                self.mc_version_combo.addItem(version["id"])
+        for version in MINECRAFT_VERSIONS:
+            self.mc_version_combo.addItem(version)
 
     def update_forge_versions(self):
         """Обновляет список версий Forge при изменении версии MC"""
@@ -107,19 +104,18 @@ class ModLoaderTab(QWidget):
     def install_loader(self):
         mc_version = self.mc_version_combo.currentText()
 
-        if self.loader_type == "quilt":
+        if self.loader_type == "forge":
+            forge_version = self.forge_version_combo.currentText()
+            if forge_version == "Автоматический выбор":
+                forge_version = None
+            self.install_thread = ModLoaderInstaller("forge", forge_version, mc_version)
+        elif self.loader_type == "quilt":
             loader_version = self.loader_version_combo.currentText()
             self.install_thread = ModLoaderInstaller(
                 "quilt",
                 loader_version,  # Передаем версию лоадера
                 mc_version,
             )
-
-        if self.loader_type == "forge":
-            forge_version = self.forge_version_combo.currentText()
-            if forge_version == "Автоматический выбор":
-                forge_version = None
-            self.install_thread = ModLoaderInstaller("forge", forge_version, mc_version)
         else:
             self.install_thread = ModLoaderInstaller(self.loader_type, None, mc_version)
 

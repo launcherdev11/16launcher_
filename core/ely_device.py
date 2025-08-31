@@ -10,7 +10,7 @@ from .config import DEVICE_CODE_URL, CLIENT_ID, headers, TOKEN_URL
 def get_device_code():
     response = requests.post(
         DEVICE_CODE_URL,
-        json={  # Используем json= вместо data=
+        json={
             "client_id": CLIENT_ID,
             "scope": "profile",
         },

@@ -3,8 +3,8 @@ import logging
 import os
 import random
 import shutil
-from typing import Any
 import webbrowser
+from typing import Any
 
 import requests
 
@@ -44,7 +44,7 @@ def save_settings(settings: dict[str, Any]) -> None:
             json.dump(settings, f, indent=4, ensure_ascii=False)
     except Exception as e:
         logging.exception(f'Ошибка при сохранении настроек: {e}')
-        return None
+        return
 
     logging.debug('Настройки успешно сохранены')
 
@@ -105,6 +105,7 @@ def install_optifine(version: str) -> tuple[bool, str | None]:
     else:
         return False, 'Ссылка для загрузки OptiFine не найдена.'
 
+
 def get_quilt_versions(mc_version: str) -> list[dict[str, Any]]:
     """Получает версии Quilt через официальное API"""
     try:
@@ -116,7 +117,7 @@ def get_quilt_versions(mc_version: str) -> list[dict[str, Any]]:
         return [
             {
                 'version': loader['version'],
-                'minecraft_version': loader['separator'],  # Исправлено с metadata
+                'minecraft_version': loader['separator'],
                 'stable': not loader['version'].lower().startswith('beta'),
             }
             for loader in data
@@ -151,9 +152,11 @@ def authenticate_ely_by(username: str, password: str) -> dict[str, Any] | None:
     print('Ошибка авторизации:', response.text)
     return None
 
+
 def resource_path(relative_path: str) -> str:
     """Универсальная функция для получения путей ресурсов"""
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
+    print(os.path.join(base_path, relative_path))
     return os.path.join(base_path, relative_path)
 
 

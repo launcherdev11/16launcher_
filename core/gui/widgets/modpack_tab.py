@@ -34,8 +34,6 @@ from PyQt5.QtWidgets import (
     QGroupBox,
     QTabWidget,
 )
-from minecraft_launcher_lib.utils import get_version_list
-
 from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
 from ...mod_manager import ModManager
 from ...util import resource_path
@@ -688,29 +686,13 @@ class ModpackTab(QWidget):
         """)
 
         self.pack_version = QComboBox()
+        self.pack_loader = QComboBox()
+
         versions = get_version_list()
         for v in versions:
             if v["type"] == "release":
                 self.pack_version.addItem(v["id"])
-        self.pack_version.setStyleSheet("""
-            QComboBox {
-                background-color: #404040;
-                border: 1px solid #555555;
-                border-radius: 5px;
-                padding: 5px;
-            }
-        """)
-
-        self.pack_loader = QComboBox()
-        self.pack_loader.addItems(["Forge", "Fabric"])
-        self.pack_loader.setStyleSheet("""
-            QComboBox {
-                background-color: #404040;
-                border: 1px solid #555555;
-                border-radius: 5px;
-                padding: 5px;
-            }
-        """)
+        self.pack_loader.addItems(["Vanilla", "Forge", "Fabric", "OptiFine"])
 
         info_layout.addRow("Название сборки:", self.pack_name)
         info_layout.addRow("Версия Minecraft:", self.pack_version)

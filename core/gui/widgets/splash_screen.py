@@ -6,7 +6,7 @@ from ...util import resource_path
 
 
 class SplashScreen(QWidget):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("16Launcher")
         self.setFixedSize(600, 400)
@@ -15,7 +15,7 @@ class SplashScreen(QWidget):
 
         self.setup_ui()
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
@@ -74,7 +74,7 @@ class SplashScreen(QWidget):
 
         layout.addWidget(self.background)
 
-    def update_progress(self, value, message):
+    def update_progress(self, value: int, message: str) -> None:
         self.progress.setValue(value)
         self.status_label.setText(message)
         QApplication.processEvents()
