@@ -17,6 +17,8 @@ logging.basicConfig(
     handlers=[
         logging.StreamHandler(sys.stderr),
         logging.FileHandler(LOG_FILE)
+        logging.StreamHandler(sys.stderr),
+        logging.FileHandler(LOG_FILE)
     ]
 )
 

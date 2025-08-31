@@ -176,6 +176,7 @@ class MainWindow(QMainWindow):
         logging.debug("Создаем UI элементы")
         self.splash.update_progress(23, "Создаем UI элементы")
         self.launch_thread = LaunchThread(self)
+        self.launch_thread.log_signal.connect(self.append_console_log)
         self.launch_thread.state_update_signal.connect(self.state_update)
         self.launch_thread.progress_update_signal.connect(self.update_progress)
         self.launch_thread.close_launcher_signal.connect(self.close_launcher)
@@ -391,7 +392,52 @@ class MainWindow(QMainWindow):
 
         self.main_layout.addWidget(self.sidebar_container)
 
-    def setup_game_tab(self) -> None:
+    def update_login_button_text(self):
+        if hasattr(self, 'access_token') and self.access_token:
+            self.ely_login_button.setText('Выйти из Ely.by')
+        else:
+            self.ely_login_button.setText('Войти с Ely.by')
+
+    def show_game_tab(self):
+        """Переключает на вкладку с игрой"""
+        self.stacked_widget.setCurrentIndex(0)
+        self.tabs.setCurrentIndex(
+            0,
+        )  # Убедимся, что выбрана первая вкладка (Запуск игры)
+
+    def toggle_theme(self):
+        current_theme = getattr(self, 'current_theme', 'dark')
+        new_theme = 'light' if current_theme == 'dark' else 'dark'
+
+        # Применяем новую тему
+        self.apply_theme(new_theme == 'dark')
+
+        # Обновляем иконки во всех местах
+        icon_path = 'assets/sun.png' if new_theme == 'light' else 'assets/moon.png'
+        self.theme_button.setIcon(QIcon(resource_path(icon_path)))
+
+        # Если есть кнопка в настройках, обновляем и её
+        if hasattr(self.settings_tab, 'theme_button'):
+            self.settings_tab.theme_button.setIcon(QIcon(resource_path(icon_path)))
+            self.settings_tab.theme_button.setText(
+                'Светлая тема' if new_theme == 'light' else 'Тёмная тема',
+            )
+
+        # Сохраняем выбор темы
+        self.settings['theme'] = new_theme
+        save_settings(self.settings)
+
+    def show_settings_tab(self):
+        """Переключает на вкладку с настройками"""
+        self.stacked_widget.setCurrentIndex(1)
+
+    def append_console_log(self, message: str):
+        """Добавляет строку в консоль загрузки"""
+        if hasattr(self, "console_output"):
+            self.console_output.appendPlainText(message)
+
+
+    def setup_game_tab(self):
         layout = QVBoxLayout(self.game_tab)
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
@@ -399,6 +445,7 @@ class MainWindow(QMainWindow):
         form_layout = QVBoxLayout()
         form_layout.setSpacing(15)
 
+        # Первая строка — имя игрока
         top_row = QHBoxLayout()
         top_row.setSpacing(10)
 
@@ -406,34 +453,20 @@ class MainWindow(QMainWindow):
         self.username.setPlaceholderText("Введите имя")
         self.username.setMinimumHeight(40)
         self.username.setText(self.last_username)
-
-        self.username.setStyleSheet("padding-right: 80px;")
+        self.username.setStyleSheet('padding-right: 80px;')
         top_row.addWidget(self.username)
 
         self.random_name_button = QToolButton(self.username)
-        self.random_name_button.setIcon(QIcon(resource_path("assets/random.png")))
+        self.random_name_button.setIcon(QIcon(resource_path('assets/random.png')))
         self.random_name_button.setIconSize(QSize(45, 45))
         self.random_name_button.setCursor(Qt.PointingHandCursor)
-        self.random_name_button.setStyleSheet("""
-            QToolButton {
-                background-color: transparent;
-                border: none;
-                padding: 0;
-            }
-            QToolButton:hover {
-                background-color: #666;
-                border-radius: 3px;
-            }
-        """)
-        self.random_name_button.setFixedSize(60, 30)  
+        self.random_name_button.setFixedSize(60, 30)
         self.random_name_button.clicked.connect(self.set_random_username)
-
         self.username.set_button(self.random_name_button)
 
         form_layout.addLayout(top_row)
 
-        form_layout.addLayout(top_row)
-
+        # Вторая строка — версия/модлоадер
         version_row = QHBoxLayout()
         version_row.setSpacing(10)
 
@@ -461,10 +494,9 @@ class MainWindow(QMainWindow):
         self.version_select = QComboBox(self.game_tab)
         self.version_select.setMinimumHeight(45)
         self.version_select.setFixedWidth(250)
-        self.version_select.setSizeAdjustPolicy(QComboBox.AdjustToContents)
         version_row.addWidget(self.version_select)
 
-        self.favorite_button = QPushButton("★")
+        self.favorite_button = QPushButton('★')
         self.favorite_button.setFixedSize(45, 45)
         self.favorite_button.setCheckable(True)
         self.favorite_button.clicked.connect(self.toggle_favorite)
@@ -472,13 +504,9 @@ class MainWindow(QMainWindow):
 
         form_layout.addLayout(version_row)
 
+        # Третья строка — кнопки
         bottom_row = QHBoxLayout()
         bottom_row.setSpacing(10)
-
-        self.change_skin_button = QPushButton("Сменить скин (Ely.by)")
-        self.change_skin_button.setMinimumHeight(50)
-        self.change_skin_button.clicked.connect(self.change_ely_skin)
-        self.change_skin_button.setVisible(False)
 
         self.start_button = QPushButton("Играть")
         self.start_button.setMinimumHeight(50)
@@ -487,8 +515,8 @@ class MainWindow(QMainWindow):
 
         self.change_skin_button = QPushButton("Сменить скин (Ely.by)")
         self.change_skin_button.setMinimumHeight(50)
-        self.change_skin_button.clicked.connect(self.change_ely_skin)
         self.change_skin_button.setVisible(False)
+        self.change_skin_button.clicked.connect(self.change_ely_skin)
 
         self.ely_login_button = QPushButton("Войти с Ely.by")
         self.ely_login_button.setMinimumHeight(50)
@@ -497,43 +525,34 @@ class MainWindow(QMainWindow):
         bottom_row.addWidget(self.change_skin_button)
         bottom_row.addWidget(self.ely_login_button)
 
-        self.open_folder_button = QPushButton()
-        self.open_folder_button.setIcon(QIcon(resource_path(" assets/folder.png")))
-        self.open_folder_button.setToolTip("Открыть папку с игрой")
-        self.open_folder_button.setIconSize(QSize(24, 24))
-        self.open_folder_button.setCursor(Qt.PointingHandCursor)
-        self.open_folder_button.setFixedSize(50, 50)
-        self.open_folder_button.setStyleSheet("""
-            QPushButton {
-                background-color: transparent;
-                border: none;
-            }
-            QPushButton:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-            }
-        """)
-        self.open_folder_button.clicked.connect(open_root_folder)
-        bottom_row.addWidget(self.open_folder_button)
-
-        self.motd_label = QLabel()
-        self.motd_label.setAlignment(Qt.AlignCenter)
-        self.motd_label.setStyleSheet("""
-            color: #aaaaaa; 
-            font-style: italic; 
-            font-size: 14px;
-            background: transparent;
-            padding: 5px;
-        """)
-        layout.addWidget(self.motd_label)
-        layout.addStretch()
-
-        self.show_message_of_the_day()
-
-        form_layout.addLayout(bottom_row)
-
         layout.addLayout(form_layout)
+        layout.addLayout(bottom_row)
+        
+        #консоль
+        from PyQt5.QtWidgets import QPlainTextEdit, QSizePolicy
+        self.console_output = QPlainTextEdit(self.game_tab)
+        self.console_output.setReadOnly(True)
+        self.console_output.setVisible(False)
+        self.console_output.setFixedHeight(100)
+        self.console_output.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.console_output.setStyleSheet("""
+            QPlainTextEdit {
+                background-color: #1e1e1e;
+                color: #FFFFFF;
+                font-family: Consolas, monospace;
+                font-size: 11px;
+                border: 1px solid #444;
+                border-radius: 5px;
+                padding: 4px;
+            }
+        """)
 
+        console_container = QVBoxLayout()
+        console_container.addWidget(self.console_output)
+        layout.addLayout(console_container)
+
+
+        # Прогресс-бар
         self.start_progress_label = QLabel(self.game_tab)
         self.start_progress_label.setVisible(False)
         layout.addWidget(self.start_progress_label)
@@ -553,8 +572,11 @@ class MainWindow(QMainWindow):
         if loader_index >= 0:
             self.loader_select.setCurrentIndex(loader_index)
 
-    def setup_ely_auth(self) -> None:
+
+
+    def setup_ely_auth(self):
         """Проверяет сохранённую сессию"""
+        self.ely_session = None
         try:
             self.splash.update_progress(8, "Проверяем авторизацию")
             logging.debug("Проверяем авторизацию")
@@ -1223,8 +1245,6 @@ class MainWindow(QMainWindow):
 
     def launch_game(self) -> None:
         try:
-            logging.info("[LAUNCHER] Starting game launch process...")
-
             username = self.username.text().strip()
             if not username:
                 QMessageBox.warning(self, "Ошибка", "Введите имя игрока!")
@@ -1235,57 +1255,32 @@ class MainWindow(QMainWindow):
             memory_mb = self.get_selected_memory()
             close_on_launch = self.settings_tab.close_on_launch_checkbox.isChecked()
 
-            logging.info(
-                f"[LAUNCHER] Launch parameters: "
-                f"User: {username}, "
-                f"Version: {version}, "
-                f"Loader: {loader_type}, "
-                f"Memory: {memory_mb}MB, "
-                f"Close on launch: {close_on_launch}"
-            )
-
-            if not hasattr(self, "ely_session"):
-                self.ely_session = None
-                logging.info("[LAUNCHER] No Ely.by session found")
-
-            skin_path = os.path.join(SKINS_DIR, f"{username}.png")
-            if os.path.exists(skin_path):
-                logging.info("[LAUNCHER] Found skin, copying...")
-                assets_dir = os.path.join(MINECRAFT_DIR, "assets", "skins")
-                os.makedirs(assets_dir, exist_ok=True)
-                shutil.copy(skin_path, os.path.join(assets_dir, f"{username}.png"))
-
-            if hasattr(self, "ely_session") and self.ely_session:
-                logging.info("[LAUNCHER] Ely.by session detected, checking authlib...")
-                if not os.path.exists(AUTHLIB_JAR_PATH):
-                    logging.info("[LAUNCHER] Downloading authlib-injector...")
-                    if not download_authlib_injector():
-                        QMessageBox.critical(
-                            self, "Ошибка", "Не удалось загрузить Authlib Injector"
-                        )
-                        return
-
-            self.settings["last_version"] = version
-            self.settings["last_loader"] = loader_type
+            # Сохраняем последние настройки
+            self.settings['last_version'] = version
+            self.settings['last_loader'] = loader_type
             save_settings(self.settings)
 
-            self.start_progress_label.setText("Подготовка к запуску...")
+            # Показываем консоль только при запуске
+            if self.settings.get("enable_console", False):
+                self.console_output.clear()
+                self.console_output.setVisible(True)
+
+            # Показываем прогресс
+            self.start_progress_label.setText('Подготовка к запуску...')
             self.start_progress_label.setVisible(True)
             self.start_progress.setVisible(True)
-            QApplication.processEvents()  
+            QApplication.processEvents()
 
-            logging.info("[LAUNCHER] Starting launch thread...")
+            # Запускаем поток
             self.launch_thread.launch_setup(
+                version, username, loader_type, memory_mb, close_on_launch
                 version, username, loader_type, memory_mb, close_on_launch
             )
             self.launch_thread.start()
 
         except Exception as e:
-            logging.error(f"[ERROR] Launch failed: {str(e)}")
-            logging.error(f"Game launch failed: {traceback.format_exc()}")
-            QMessageBox.critical(
-                self, "Ошибка запуска", f"Не удалось запустить игру: {str(e)}"
-            )
+            QMessageBox.critical(self, 'Ошибка запуска', str(e))
+
 
     def update_progress(self, current: int, total: int, text: str) -> None:
         self.start_progress.setMaximum(total)
@@ -1301,8 +1296,13 @@ class MainWindow(QMainWindow):
             self.start_progress_label.setVisible(False)
             self.start_progress.setVisible(False)
 
-    def show_message_of_the_day(self) -> None:
-        if hasattr(self, "motd_label") and self.settings.get("show_motd", True):
+            # Если консоль включена и включено "убирать после запуска"
+            if self.settings.get("enable_console", False) and \
+            self.settings.get("hide_console_after_launch", False):
+                self.console_output.setVisible(False)
+
+    def show_message_of_the_day(self):
+        if hasattr(self, 'motd_label') and self.settings.get('show_motd', True):
             message = random.choice(self.motd_messages)
             self.motd_label.setText(f"💬 <i>{message}</i>")
         else:

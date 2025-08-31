@@ -28,6 +28,7 @@ class SettingsTab(QWidget):
     def __init__(self, translator, parent=None):
         super().__init__(parent)
         self.parent_window = parent
+        self.translator = translator
         self.setup_ui()
 
     def setup_ui(self):
@@ -55,7 +56,7 @@ class SettingsTab(QWidget):
         main_layout.setSpacing(10)
         main_layout.setContentsMargins(10, 10, 10, 10)
 
-        # Создаем скролл-область
+        # Скролл
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -80,12 +81,12 @@ class SettingsTab(QWidget):
             }
         """)
 
-        # Контейнер для всех настроек
+        # Контейнер всех настроек
         settings_container = QWidget()
         settings_layout = QVBoxLayout(settings_container)
         settings_layout.setSpacing(10)
 
-        # Стили для карточек
+        # Стили карточек
         card_style = """
             QWidget {
                 background-color: #232323;
@@ -93,9 +94,7 @@ class SettingsTab(QWidget):
                 padding: 8px 10px 8px 10px;
             }
         """
-        header_style = (
-            "font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 2px;"
-        )
+        header_style = "font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 2px;"
 
         # Внешний вид
         appearance_card = QWidget()
@@ -155,7 +154,7 @@ class SettingsTab(QWidget):
 
         settings_layout.addWidget(appearance_card)
 
-        # Игровые настройки
+        #настройки игры
         game_card = QWidget()
         game_card.setStyleSheet(card_style)
         game_layout = QVBoxLayout(game_card)
@@ -199,7 +198,7 @@ class SettingsTab(QWidget):
         memory_layout.addWidget(self.memory_value_label)
         game_layout.addLayout(memory_layout)
 
-        # Чекбокс закрытия
+        # Чекбокс закрытия лаунчера
         self.close_on_launch_checkbox = QCheckBox("Закрывать лаунчер при запуске игры")
         self.close_on_launch_checkbox.setStyleSheet("""
             QCheckBox {
@@ -223,7 +222,31 @@ class SettingsTab(QWidget):
 
         settings_layout.addWidget(game_card)
 
-        # Директории
+        #Консоль
+        console_card = QWidget()
+        console_card.setStyleSheet(card_style)
+        console_layout = QVBoxLayout(console_card)
+        console_layout.setSpacing(7)
+
+        console_header = QLabel("Консоль")
+        console_header.setStyleSheet(header_style)
+        console_layout.addWidget(console_header)
+
+        self.enable_console_checkbox = QCheckBox("Включить консоль")
+        self.enable_console_checkbox.setStyleSheet(self.close_on_launch_checkbox.styleSheet())
+        console_layout.addWidget(self.enable_console_checkbox)
+
+        self.hide_console_after_launch_checkbox = QCheckBox("Убирать консоль после запуска игры")
+        self.hide_console_after_launch_checkbox.setStyleSheet(self.close_on_launch_checkbox.styleSheet())
+        console_layout.addWidget(self.hide_console_after_launch_checkbox)
+
+        # Связки сигналов — сохраняем мгновенно
+        self.enable_console_checkbox.stateChanged.connect(self.on_enable_console_changed)
+        self.hide_console_after_launch_checkbox.stateChanged.connect(self.on_hide_console_changed)
+
+        settings_layout.addWidget(console_card)
+
+        #Директории
         directories_card = QWidget()
         directories_card.setStyleSheet(card_style)
         directories_layout = QVBoxLayout(directories_card)
@@ -233,7 +256,6 @@ class SettingsTab(QWidget):
         directories_header.setStyleSheet(header_style)
         directories_layout.addWidget(directories_header)
 
-        # Стиль для полей ввода и кнопок
         input_style = """
             QLineEdit {
                 background-color: #3d3d3d;
@@ -294,7 +316,7 @@ class SettingsTab(QWidget):
         directories_layout.addLayout(mods_dir_layout)
         settings_layout.addWidget(directories_card)
 
-        # Версии Minecraft
+        #Версии
         versions_card = QWidget()
         versions_card.setStyleSheet(card_style)
         versions_layout = QVBoxLayout(versions_card)
@@ -303,24 +325,7 @@ class SettingsTab(QWidget):
         versions_header.setStyleSheet(header_style)
         versions_layout.addWidget(versions_header)
         self.show_snapshots_checkbox = QCheckBox("Показывать Снапшоты")
-        self.show_snapshots_checkbox.setStyleSheet("""
-            QCheckBox {
-                color: #ffffff;
-                spacing: 6px;
-                font-size: 15px;
-            }
-            QCheckBox::indicator {
-                width: 16px;
-                height: 16px;
-                border: 1px solid #555555;
-                border-radius: 2px;
-                background: #3d3d3d;
-            }
-            QCheckBox::indicator:checked {
-                background: #0078d7;
-                border: 1px solid #0078d7;
-            }
-        """)
+        self.show_snapshots_checkbox.setStyleSheet(self.close_on_launch_checkbox.styleSheet())
         if "show_snapshots" in self.parent_window.settings:
             self.show_snapshots_checkbox.setChecked(
                 self.parent_window.settings["show_snapshots"]
@@ -331,7 +336,7 @@ class SettingsTab(QWidget):
         versions_layout.addWidget(self.show_snapshots_checkbox)
         settings_layout.addWidget(versions_card)
 
-        # Аккаунт Ely.by
+        # Ely.by
         if (
             hasattr(self.parent_window, "ely_session")
             and self.parent_window.ely_session
@@ -361,7 +366,7 @@ class SettingsTab(QWidget):
             ely_layout.addWidget(self.ely_logout_button)
             settings_layout.addWidget(ely_card)
 
-        # Сборки
+        #Сборки
         builds_card = QWidget()
         builds_card.setStyleSheet(card_style)
         builds_layout = QVBoxLayout(builds_card)
@@ -387,17 +392,16 @@ class SettingsTab(QWidget):
         builds_layout.addLayout(export_path_layout)
         settings_layout.addWidget(builds_card)
 
-        # Добавляем растягивающийся элемент в конец
+        # Растяжка вниз
         settings_layout.addStretch()
 
-        # Устанавливаем контейнер в скролл
+        # Скролл → окно
         scroll.setWidget(settings_container)
         main_layout.addWidget(scroll)
 
-        # Загружаем настройки
-        settings = (
-            self.parent_window.settings if self.parent_window else load_settings()
-        )
+        #Загрузка насроек
+        settings = self.parent_window.settings if self.parent_window else load_settings()
+
         if "close_on_launch" in settings:
             self.close_on_launch_checkbox.setChecked(settings["close_on_launch"])
         if "memory" in settings:
@@ -407,13 +411,41 @@ class SettingsTab(QWidget):
         if "mods_directory" in settings:
             self.mods_directory_edit.setText(settings["mods_directory"])
 
-        # Принудительно обновляем стили
+        # Консоль — дефолт: выкл.
+        self.enable_console_checkbox.setChecked(settings.get("enable_console", False))
+        self.hide_console_after_launch_checkbox.setChecked(
+            settings.get("hide_console_after_launch", False)
+        )
+        # Видимость второго чекбокса
+        self.hide_console_after_launch_checkbox.setVisible(self.enable_console_checkbox.isChecked())
+
+        # Принудительное обновление стилей
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
 
     def update_memory_label(self):
         self.memory_value_label.setText(f"{self.memory_slider.value()} ГБ")
+
+    def on_enable_console_changed(self, state: int):
+        enabled = state == Qt.Checked
+        if self.parent_window:
+            self.parent_window.settings["enable_console"] = enabled
+            if not enabled:
+                self.parent_window.settings["hide_console_after_launch"] = False
+                self.hide_console_after_launch_checkbox.blockSignals(True)
+                self.hide_console_after_launch_checkbox.setChecked(False)
+                self.hide_console_after_launch_checkbox.blockSignals(False)
+        save_settings(self.parent_window.settings if self.parent_window else {"enable_console": enabled})
+
+        # Управляем видимостью второго чекбокса
+        self.hide_console_after_launch_checkbox.setVisible(enabled)
+
+    def on_hide_console_changed(self, state: int):
+        hide_after = state == Qt.Checked
+        if self.parent_window:
+            self.parent_window.settings["hide_console_after_launch"] = hide_after
+        save_settings(self.parent_window.settings if self.parent_window else {"hide_console_after_launch": hide_after})
 
     def choose_mods_directory(self):
         """Выбор директории для модов"""
@@ -423,7 +455,6 @@ class SettingsTab(QWidget):
             )
             if directory:
                 self.mods_directory_edit.setText(directory)
-                MODS_DIR = directory
                 # Сохраняем в настройках
                 if self.parent_window:
                     self.parent_window.settings["mods_directory"] = directory
@@ -454,20 +485,15 @@ class SettingsTab(QWidget):
             self.show_error_message("Ошибка при открытии директории модов")
 
     def setup_language_selector(self):
-        # Добавляем в layout настроек
         self.language_combo = QComboBox()
         self.language_combo.addItem("Русский", "ru")
         self.language_combo.addItem("English", "en")
         self.language_combo.currentIndexChanged.connect(self.change_language)
-
-        # Добавляем в layout настроек
         language_layout = QHBoxLayout()
         language_label = QLabel("Язык:")
         language_label.setStyleSheet("color: #ffffff;")
         language_layout.addWidget(language_label)
         language_layout.addWidget(self.language_combo)
-
-        # Добавляем в начало appearance_layout
         appearance_layout = self.findChild(QVBoxLayout)
         if appearance_layout:
             appearance_layout.insertLayout(0, language_layout)
@@ -481,14 +507,8 @@ class SettingsTab(QWidget):
         """Переключает тему между светлой и темной"""
         current_theme = getattr(self.parent_window, "current_theme", "dark")
         new_theme = "light" if current_theme == "dark" else "dark"
-
-        # Применяем новую тему
-        self.parent_window.apply_dark_theme(
-            new_theme == "dark"
-        )  # <- Исправлено на apply_dark_theme
+        self.parent_window.apply_dark_theme(new_theme == "dark")
         self.update_theme_button_icon()
-
-        # Сохраняем выбор темы
         self.parent_window.settings["theme"] = new_theme
         save_settings(self.parent_window.settings)
 
@@ -512,7 +532,6 @@ class SettingsTab(QWidget):
             self.ely_logout_button.setVisible(True)
         else:
             self.ely_logout_button.setVisible(False)
-        # Принудительно обновляем layout
         self.layout().update()
 
     def choose_directory(self):
@@ -522,9 +541,9 @@ class SettingsTab(QWidget):
             )
             if directory:
                 self.directory_edit.setText(directory)
-                MINECRAFT_DIR = directory
-                SETTINGS_PATH = os.path.join(MINECRAFT_DIR, "settings.json")
-                LOG_FILE = os.path.join(MINECRAFT_DIR, "launcher_log.txt")
+                if self.parent_window:
+                    self.parent_window.settings["minecraft_directory"] = directory
+                    save_settings(self.parent_window.settings)
         except Exception as e:
             logging.error(f"Ошибка при выборе директории: {e}")
             self.show_error_message("Ошибка при выборе директории")
@@ -543,13 +562,13 @@ class SettingsTab(QWidget):
         QMessageBox.critical(self, "Ошибка", message)
 
     def closeEvent(self, event):
-        # Сохраняем настройки через главное окно
         if self.parent_window:
-            self.parent_window.settings = {
+            self.parent_window.settings.update({
                 "close_on_launch": self.close_on_launch_checkbox.isChecked(),
                 "memory": self.memory_slider.value(),
                 "minecraft_directory": self.directory_edit.text(),
                 "mods_directory": self.mods_directory_edit.text(),
-                # Убрали сохранение last_username здесь
-            }
+                "enable_console": self.enable_console_checkbox.isChecked(),
+                "hide_console_after_launch": self.hide_console_after_launch_checkbox.isChecked(),
+            })
             save_settings(self.parent_window.settings)
