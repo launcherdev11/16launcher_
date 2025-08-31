@@ -7,7 +7,14 @@ class ModSearchThread(QThread):
     search_finished = Signal(list, str)
     error_occurred = Signal(str)
 
-    def __init__(self, query, version, loader, category, sort_by):
+    def __init__(
+        self,
+        query: str,
+        version: str,
+        loader: str,
+        category: str,
+        sort_by: str,
+    ) -> None:
         super().__init__()
         self.query = query
         self.version = version
@@ -15,7 +22,7 @@ class ModSearchThread(QThread):
         self.category = category
         self.sort_by = sort_by
 
-    def run(self):
+    def run(self) -> None:
         try:
             mods = ModManager.cached_search(
                 self.query,

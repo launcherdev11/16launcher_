@@ -1,3 +1,5 @@
+from typing import Any
+
 import logging
 
 import requests
@@ -14,7 +16,7 @@ class AuthError(Exception):
 
 
 @logged
-def auth(login, password):
+def auth(login: str, password: str) -> dict[str, Any]:
     data = _auth(login, password)
     return {
         "username": data["selectedProfile"]["name"],
@@ -24,7 +26,7 @@ def auth(login, password):
 
 
 @logged
-def _auth(login, password):
+def _auth(login: str, password: str) -> dict[str, Any]:
     data = {
         "username": login,
         "password": password,
@@ -38,7 +40,7 @@ def _auth(login, password):
 
 
 @logged
-def username(val=None):
+def username(val: str | None = None) -> str | None:
     if val is None:
         return read("../data/login.json")["username"]
     dat = read("../data/login.json")
@@ -48,7 +50,7 @@ def username(val=None):
 
 
 @logged
-def uuid(val=None):
+def uuid(val: str | None = None) -> str | None:
     if val is None:
         return read("../data/login.json")["uuid"]
     dat = read("../data/login.json")
@@ -58,7 +60,7 @@ def uuid(val=None):
 
 
 @logged
-def token(val=None):
+def token(val: str | None = None) -> str | None:
     if val is None:
         return read("../data/login.json")["token"]
     dat = read("../data/login.json")
@@ -68,7 +70,7 @@ def token(val=None):
 
 
 @logged
-def logged_in(val=None):
+def logged_in(val: bool | None = None) -> bool | None:
     if val is None:
         return read("../data/login.json")["logged_in"]
     dat = read("../data/login.json")
@@ -77,7 +79,7 @@ def logged_in(val=None):
     return None
 
 
-def auth_device_code():
+def auth_device_code() -> dict[str, Any]:
     """Аутентификация через device code"""
     try:
         token_data = authorize_via_device_code()
@@ -94,7 +96,7 @@ def auth_device_code():
         raise AuthError(f"Device code auth failed: {str(e)}")
 
 
-def write_login_data(data):
+def write_login_data(data: dict[str, Any]) -> None:
     """Сохраняет данные авторизации"""
     login_data = {
         "username": data["username"],
@@ -105,7 +107,7 @@ def write_login_data(data):
     write("../data/login.json", login_data)
 
 
-def is_logged_in():
+def is_logged_in() -> bool:
     """Проверяет, есть ли активная сессия"""
     try:
         data = read("../data/login.json")
@@ -114,12 +116,12 @@ def is_logged_in():
         return False
 
 
-def logout():
+def logout() -> None:
     """Выход из системы"""
     write_login_data({"username": "", "uuid": "", "token": "", "logged_in": False})
 
 
-def auth_password(email, password):
+def auth_password(email: str, password: str) -> dict[str, Any]:
     """Аутентификация через логин/пароль"""
     url = "https://authserver.ely.by/auth/authenticate"
     payload = {
@@ -141,13 +143,13 @@ def auth_password(email, password):
     }
 
 
-def get_skin_url(username):
+def get_skin_url(username: str) -> str | None:
     """Получает URL скина пользователя"""
     response = requests.get(f"https://skinsystem.ely.by/skins/{username}.png")
     return response.url if response.status_code == 200 else None
 
 
-def upload_skin(file_path, token, variant="classic"):
+def upload_skin(file_path: str, token: str, variant: str = "classic") -> bool:
     """
     Загружает скин на Ely.by через официальный API.
     :param file_path: путь к PNG-файлу

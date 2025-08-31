@@ -9,9 +9,9 @@ from .config import MINECRAFT_DIR, SKINS_DIR
 
 class ElySkinManager:
     @staticmethod
-    def apply_skin(username, version, is_legacy):
+    def apply_skin(username: str, version: str, is_legacy: bool) -> bool:
         """Применяет скин с учетом версии"""
-        skin_url = ElySkinManager.get_skin_url(username)
+        skin_url = ElySkinManager.get_skin_image_url(username)
         if not skin_url:
             return False
 
@@ -26,7 +26,7 @@ class ElySkinManager:
             return ElySkinManager.inject_legacy_skin(skin_path, version)
 
     @staticmethod
-    def inject_legacy_skin(skin_path, version):
+    def inject_legacy_skin(skin_path: str, version: str) -> bool:
         """Внедряет скин в файлы игры для legacy-версий"""
         try:
             assets_dir = os.path.join(MINECRAFT_DIR, "assets", "skins")
@@ -38,7 +38,7 @@ class ElySkinManager:
             return False
 
     @staticmethod
-    def get_skin_texture_url(username):
+    def get_skin_texture_url(username: str) -> str | None:
         """Получаем URL текстуры скина через текстуры-прокси"""
         try:
             response = requests.get(f"https://skinsystem.ely.by/textures/{username}")
@@ -51,12 +51,12 @@ class ElySkinManager:
             return None
 
     @staticmethod
-    def get_skin_image_url(username):
+    def get_skin_image_url(username: str) -> str:
         """Получаем URL изображения скина"""
         return f"https://skinsystem.ely.by/skins/{username}.png"
 
     @staticmethod
-    def download_skin(username):
+    def download_skin(username: str) -> bool:
         """Скачиваем скин с Ely.by"""
         try:
             skin_url = ElySkinManager.get_skin_image_url(username)
@@ -73,7 +73,7 @@ class ElySkinManager:
         return False
 
     @staticmethod
-    def upload_skin(file_path, access_token, variant="classic"):
+    def upload_skin(file_path: str, access_token: str, variant: str = "classic") -> tuple[bool, str]:
         """
         Загружает скин на Ely.by
         :param file_path: путь к файлу скина
@@ -102,7 +102,7 @@ class ElySkinManager:
             return False, f"Ошибка загрузки: {str(e)}"
 
     @staticmethod
-    def reset_skin(access_token):
+    def reset_skin(access_token: str) -> tuple[bool, str]:
         """Сбрасывает скин на стандартный"""
         try:
             headers = {"Authorization": f"Bearer {access_token}"}
