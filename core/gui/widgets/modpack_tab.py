@@ -31,8 +31,6 @@ from PyQt5.QtWidgets import (
     QFormLayout,
     QStackedWidget,
 )
-from minecraft_launcher_lib.utils import get_version_list
-
 from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
 from ...mod_manager import ModManager
 from ...util import resource_path
@@ -668,10 +666,8 @@ class ModpackTab(QWidget):
         self.pack_version = QComboBox()
         self.pack_loader = QComboBox()
 
-        versions = get_version_list()
-        for v in versions:
-            if v["type"] == "release":
-                self.pack_version.addItem(v["id"])
+        for v in MINECRAFT_VERSIONS:
+            self.pack_version.addItem(v)
         self.pack_loader.addItems(["Vanilla", "Forge", "Fabric", "OptiFine"])
 
         form.addRow("Название сборки:", self.pack_name)

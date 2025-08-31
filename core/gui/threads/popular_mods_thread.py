@@ -36,7 +36,6 @@ class PopularModsThread(QThread):
 
             # Выполняем запрос
             response = requests.get("https://api.modrinth.com/v2/search", params=params)
-
             if response.status_code == 200:
                 self.finished.emit(response.json().get("hits", []))
             else:
