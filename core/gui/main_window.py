@@ -41,7 +41,7 @@ from .widgets.mods_tab import ModsTab
 from .widgets.settings_tab import SettingsTab
 from .widgets.splash_screen import SplashScreen
 from .. import ely
-from ..config import MINECRAFT_DIR, AUTHLIB_JAR_PATH, SKINS_DIR, VERSIONS, main_message
+from ..config import MINECRAFT_DIR, AUTHLIB_JAR_PATH, SKINS_DIR, VERSIONS, main_message, light_theme_css, dark_theme_css
 from ..ely_by_skin_manager import ElyBySkinManager
 from ..ely_skin_manager import ElySkinManager
 from ..translator import Translator
@@ -80,7 +80,6 @@ def get_ely_skin(username: str) -> str | None:
 
 
 class MainWindow(QMainWindow):
-
     __slots__ = (
         "random_name_button",
         "motd_messages",
@@ -107,6 +106,13 @@ class MainWindow(QMainWindow):
     )
 
     def __init__(self) -> None:
+        self.current_theme = None
+        self.change_skin_button = None
+        self.start_button = None
+        self.favorite_button = None
+        self.version_select = None
+        self.loader_select = None
+        self.version_type_select = None
         self.random_name_button = None
         self.motd_messages = main_message
         self.ely_login_button = None
@@ -405,9 +411,7 @@ class MainWindow(QMainWindow):
         top_row.addWidget(self.username)
 
         self.random_name_button = QToolButton(self.username)
-        self.random_name_button.setIcon(
-            QIcon(resource_path("assets/random.png"))
-        )  # Путь к вашей иконке
+        self.random_name_button.setIcon(QIcon(resource_path("assets/random.png")))
         self.random_name_button.setIconSize(QSize(45, 45))
         self.random_name_button.setCursor(Qt.PointingHandCursor)
         self.random_name_button.setStyleSheet("""
@@ -421,10 +425,7 @@ class MainWindow(QMainWindow):
                 border-radius: 3px;
             }
         """)
-        self.random_name_button.setFixedSize(
-            60, 30
-        )  # Размер можно подобрать под вашу иконку
-        self.random_name_button.setFixedSize(60, 30)
+        self.random_name_button.setFixedSize(60, 30)  
         self.random_name_button.clicked.connect(self.set_random_username)
 
         self.username.set_button(self.random_name_button)
@@ -436,7 +437,6 @@ class MainWindow(QMainWindow):
         version_row = QHBoxLayout()
         version_row.setSpacing(10)
 
-        # 1. Все/Избранные
         self.version_type_select = QComboBox(self.game_tab)
         self.version_type_select.setMinimumHeight(45)
         self.version_type_select.setFixedWidth(250)
@@ -445,7 +445,6 @@ class MainWindow(QMainWindow):
         self.version_type_select.currentTextChanged.connect(self.update_version_list)
         version_row.addWidget(self.version_type_select)
 
-        # 2. Модлоадер
         self.loader_select = QComboBox(self.game_tab)
         self.loader_select.setMinimumHeight(45)
         self.loader_select.setFixedWidth(250)
@@ -459,14 +458,12 @@ class MainWindow(QMainWindow):
             self.loader_select.setCurrentIndex(loader_index)
         version_row.addWidget(self.loader_select)
 
-        # 3. Версия
         self.version_select = QComboBox(self.game_tab)
         self.version_select.setMinimumHeight(45)
         self.version_select.setFixedWidth(250)
         self.version_select.setSizeAdjustPolicy(QComboBox.AdjustToContents)
         version_row.addWidget(self.version_select)
 
-        # 4. Кнопка избранного
         self.favorite_button = QPushButton("★")
         self.favorite_button.setFixedSize(45, 45)
         self.favorite_button.setCheckable(True)
@@ -475,7 +472,6 @@ class MainWindow(QMainWindow):
 
         form_layout.addLayout(version_row)
 
-        # Третья строка — Играть и Сменить скин
         bottom_row = QHBoxLayout()
         bottom_row.setSpacing(10)
 
@@ -501,7 +497,6 @@ class MainWindow(QMainWindow):
         bottom_row.addWidget(self.change_skin_button)
         bottom_row.addWidget(self.ely_login_button)
 
-        # Кнопка "Открыть папку"
         self.open_folder_button = QPushButton()
         self.open_folder_button.setIcon(QIcon(resource_path(" assets/folder.png")))
         self.open_folder_button.setToolTip("Открыть папку с игрой")
@@ -521,7 +516,6 @@ class MainWindow(QMainWindow):
         self.open_folder_button.clicked.connect(open_root_folder)
         bottom_row.addWidget(self.open_folder_button)
 
-        # --- Сообщение дня ---
         self.motd_label = QLabel()
         self.motd_label.setAlignment(Qt.AlignCenter)
         self.motd_label.setStyleSheet("""
@@ -532,7 +526,7 @@ class MainWindow(QMainWindow):
             padding: 5px;
         """)
         layout.addWidget(self.motd_label)
-        layout.addStretch()  # Добавляем растягивающееся пространство
+        layout.addStretch()
 
         self.show_message_of_the_day()
 
@@ -859,7 +853,6 @@ class MainWindow(QMainWindow):
         upload_btn.clicked.connect(lambda: self.upload_new_skin(dialog))
         layout.addWidget(upload_btn)
 
-        # Кнопка сброса скина
         reset_btn = QPushButton("Сбросить скин на стандартный")
         reset_btn.setStyleSheet("""
             QPushButton {
@@ -978,7 +971,6 @@ class MainWindow(QMainWindow):
 
         show_only_favorites = self.version_type_select.currentText() == "Избранные"
         show_snapshots = self.settings.get("show_snapshots", False)
-
         for v in VERSIONS:
             if v["type"] == "release" or (show_snapshots and v["type"] == "snapshot"):
                 version_id = v["id"]
@@ -1038,18 +1030,16 @@ class MainWindow(QMainWindow):
             % ("gold" if version in self.favorites else "gray")
         )
 
-    def get_selected_memory(self) -> None:
+    def get_selected_memory(self) -> int:
         """Возвращает выбранное количество памяти в мегабайтах"""
-        return self.settings_tab.memory_slider.value() * 1024  # Конвертируем ГБ в МБ
+        return self.settings_tab.memory_slider.value() * 1024  
 
     def show_funny_message(self) -> None:
         """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText("💬 <i>Юля писька</i>")
-        # Через 3 секунды возвращаем случайное сообщение
+        self.motd_label.setText("💬 <i>Binobinos привет!</i>")
         QTimer.singleShot(3000, self.show_message_of_the_day)
 
     def load_skin(self) -> None:
-        # Создаем диалоговое окно выбора источника скина
         source_dialog = QDialog(self)
         source_dialog.setWindowTitle("Выберите источник скина")
         source_dialog.setFixedSize(300, 200)
@@ -1140,305 +1130,11 @@ class MainWindow(QMainWindow):
         self.username.setText(generate_random_username())
 
     def apply_dark_theme(self, dark_theme: bool = True) -> None:
-        dark_theme_css = """
-        QMainWindow {
-            background-color: #2e2e2e;
-        }
-        QWidget {
-            background-color: #2e2e2e;
-            color: #f1f1f1;
-        }
-        QLineEdit {
-            background-color: #444444;
-            color: #f1f1f1;
-            border: 1px solid #555555;
-            padding: 10px 30px 10px 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QLineEdit:focus {
-            border-color: #a1a1a1;
-        }
-        QPushButton {
-            background-color: #444444;
-            color: #f1f1f1;
-            border: 1px solid #555555;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QPushButton:hover {
-            background-color: #666666;
-            transform: scale(1.1);
-        }
-        QPushButton:focus {
-            border-color: #a1a1a1;
-        }
-        QToolButton {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-        }
-        QToolButton:hover {
-            background-color: #666;
-            border-radius: 3px;
-        }
-        QComboBox {
-            background-color: #444444;
-            color: #f1f1f1;
-            border: 1px solid #555555;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QComboBox::drop-down {
-            subcontrol-origin: padding;
-            subcontrol-position: top right;
-            width: 30px;
-            border-left: 1px solid #555;
-            background: #555;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-        QComboBox QAbstractItemView {
-            background-color: #333;
-            color: #f1f1f1;
-            selection-background-color: #555;
-            border: 1px solid #444;
-            padding: 5px;
-            outline: none;
-        }
-        QProgressBar {
-            border: 1px solid #555555;
-            background-color: #333333;
-            color: #f1f1f1;
-        }
-        QSlider::groove:horizontal {
-            background: #383838;
-            height: 6px;
-            border-radius: 3px;
-        }
-
-        QSlider::sub-page:horizontal {
-            background: #505050;
-            border-radius: 3px;
-        }
-
-        QSlider::add-page:horizontal {
-            background: #282828;
-            border-radius: 3px;
-        }
-
-        QSlider::handle:horizontal {
-            background: #ffffff;
-            width: 16px;
-            height: 16px;
-            margin: -4px 0;
-            border-radius: 8px;
-            border: 2px solid #3a7bd5;
-        }
-
-        QSlider::handle:horizontal:hover {
-            background: #f0f0f0;
-        }
-        QTabWidget::pane {
-            border: 1px solid #444;
-            background: #333;
-        }
-        QTabBar::tab {
-            background: #444;
-            color: #fff;
-            padding: 8px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-        QTabBar::tab:selected {
-            background: #555;
-            border-color: #666;
-        }
-        QFrame {
-            background-color: #252525;
-            border-right: 1px solid #444;
-        }
-        QScrollBar:vertical {
-            border: none;
-            background: #2e2e2e;
-            width: 12px;
-            margin: 0px 0px 0px 0px;
-            border-radius: 6px;
-        }
-        QScrollBar::handle:vertical {
-            background: #555555;
-            min-height: 20px;
-            border-radius: 6px;
-        }
-        QScrollBar::handle:vertical:hover {
-            background: #777777;
-        }
-        """
-
-        vertical_slider_style = """
-        QSlider::groove:vertical {
-            background: #383838;
-            width: 8px;
-            border-radius: 4px;
-            margin: 4px 0;
-        }
-
-        QSlider::sub-page:vertical {
-            background: qlineargradient(x1:0, y1:1, x2:0, y2:0,
-                stop:0 #3a7bd5, stop:1 #00d2ff);
-            border-radius: 4px;
-        }
-
-        QSlider::handle:vertical {
-            background: #ffffff;
-            width: 20px;
-            height: 20px;
-            margin: 0 -6px;
-            border-radius: 10px;
-            border: 2px solid #3a7bd5;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-    """
-
-        light_theme_css = """
-        QMainWindow {
-            background-color: #f5f5f5;
-        }
-        QWidget {
-            background-color: #f5f5f5;
-            color: #333333;
-        }
-        QLineEdit {
-            background-color: #ffffff;
-            color: #333333;
-            border: 1px solid #cccccc;
-            padding: 10px 30px 10px 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QLineEdit:focus {
-            border-color: #66afe9;
-        }
-        QPushButton {
-            background-color: #e0e0e0;
-            color: #333333;
-            border: 1px solid #cccccc;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QPushButton:hover {
-            background-color: #d0d0d0;
-            transform: scale(1.1);
-        }
-        QPushButton:focus {
-            border-color: #66afe9;
-        }
-        QToolButton {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-        }
-        QToolButton:hover {
-            background-color: #d0d0d0;
-            border-radius: 3px;
-        }
-        QComboBox {
-            background-color: #ffffff;
-            color: #333333;
-            border: 1px solid #cccccc;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        QComboBox::drop-down {
-            subcontrol-origin: padding;
-            subcontrol-position: top right;
-            width: 30px;
-            border-left: 1px solid #cccccc;
-            background: #e0e0e0;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-        QComboBox QAbstractItemView {
-            background-color: #ffffff;
-            color: #333333;
-            selection-background-color: #e0e0e0;
-            border: 1px solid #cccccc;
-            padding: 5px;
-            outline: none;
-        }
-        QProgressBar {
-            border: 1px solid #cccccc;
-            background-color: #ffffff;
-            color: #333333;
-        }
-        QSlider::groove:horizontal {
-            background: #e0e0e0;
-            height: 6px;
-            border-radius: 3px;
-            border: 1px solid #cccccc;
-        }
-        QSlider::handle:horizontal {
-            background: qradialgradient(cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
-                                    stop:0 #f0f0f0, stop:0.5 #d0d0d0, stop:1 #f0f0f0);
-            width: 16px;
-            height: 16px;
-            margin: -6px 0;
-            border-radius: 8px;
-            border: 1px solid #aaaaaa;
-        }
-        QSlider::sub-page:horizontal {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                                    stop:0 #3a7bd5, stop:1 #00d2ff);
-            border-radius: 3px;
-        }
-        QTabWidget::pane {
-            border: 1px solid #cccccc;
-            background: #ffffff;
-        }
-        QTabBar::tab {
-            background: #e0e0e0;
-            color: #333333;
-            padding: 8px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-        QTabBar::tab:selected {
-            background: #ffffff;
-            border-color: #cccccc;
-        }
-        QFrame {
-            background-color: #f0f0f0;
-            border-right: 1px solid #cccccc;
-        }
-        QScrollBar:vertical {
-            border: none;
-            background: #f5f5f5;
-            width: 12px;
-            margin: 0px 0px 0px 0px;
-            border-radius: 6px;
-        }
-        QScrollBar::handle:vertical {
-            background: #c0c0c0;
-            min-height: 20px;
-            border-radius: 6px;
-        }
-        QScrollBar::handle:vertical:hover {
-            background: #a0a0a0;
-        }
-        """
-
-        # Применяем выбранную тему
         self.setStyleSheet(dark_theme_css if dark_theme else light_theme_css)
         self.current_theme = "dark" if dark_theme else "light"
 
-        # Меняем иконки в зависимости от темы
         icon_suffix = "" if dark_theme else "_dark"
 
-        # Обновляем иконки кнопок, если они существуют
         if hasattr(self, "theme_button"):
             self.theme_button.setIcon(
                 QIcon(resource_path(f"assets/sun{icon_suffix}.png"))
@@ -1486,20 +1182,15 @@ class MainWindow(QMainWindow):
                     % ("gold" if version in self.favorites else "gray")
                 )
         if hasattr(self, "ely_button"):
-            # Для кнопки Ely.by используем стандартную иконку
             self.ely_button.setIcon(QIcon(resource_path("assets/account.png")))
         if hasattr(self, "skin_button"):
-            # Для кнопки скина используем стандартную иконку
             self.skin_button.setIcon(QIcon(resource_path("assets/change_name.png")))
 
-        # Обновляем иконки в настройках
-        if hasattr(self, "settings_tab"):
-            if hasattr(self.settings_tab, "theme_button"):
-                self.settings_tab.theme_button.setIcon(
-                    QIcon(resource_path(f"assets/sun{icon_suffix}.png"))
-                )
+        if hasattr(self, "settings_tab") and hasattr(self.settings_tab, "theme_button"):
+            self.settings_tab.theme_button.setIcon(
+                QIcon(resource_path(f"assets/sun{icon_suffix}.png"))
+            )
 
-        # Обновляем цвет MOTD-сообщения
         if hasattr(self, "motd_label"):
             color = "#aaaaaa" if dark_theme else "#666666"
             self.motd_label.setStyleSheet(f"""
@@ -1553,12 +1244,10 @@ class MainWindow(QMainWindow):
                 f"Close on launch: {close_on_launch}"
             )
 
-            # Handle Ely.by session
             if not hasattr(self, "ely_session"):
                 self.ely_session = None
                 logging.info("[LAUNCHER] No Ely.by session found")
 
-            # Prepare skin
             skin_path = os.path.join(SKINS_DIR, f"{username}.png")
             if os.path.exists(skin_path):
                 logging.info("[LAUNCHER] Found skin, copying...")
@@ -1566,7 +1255,6 @@ class MainWindow(QMainWindow):
                 os.makedirs(assets_dir, exist_ok=True)
                 shutil.copy(skin_path, os.path.join(assets_dir, f"{username}.png"))
 
-            # Handle authlib for Ely.by
             if hasattr(self, "ely_session") and self.ely_session:
                 logging.info("[LAUNCHER] Ely.by session detected, checking authlib...")
                 if not os.path.exists(AUTHLIB_JAR_PATH):
@@ -1577,16 +1265,14 @@ class MainWindow(QMainWindow):
                         )
                         return
 
-            # Save last used settings
             self.settings["last_version"] = version
             self.settings["last_loader"] = loader_type
             save_settings(self.settings)
 
-            # Show progress UI
             self.start_progress_label.setText("Подготовка к запуску...")
             self.start_progress_label.setVisible(True)
             self.start_progress.setVisible(True)
-            QApplication.processEvents()  # Force UI update
+            QApplication.processEvents()  
 
             logging.info("[LAUNCHER] Starting launch thread...")
             self.launch_thread.launch_setup(

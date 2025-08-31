@@ -1,6 +1,5 @@
 import logging
 import sys
-import time
 
 from PyQt5.QtWidgets import (
     QApplication,
@@ -8,7 +7,6 @@ from PyQt5.QtWidgets import (
 
 from core.config import LOG_FILE
 from core.gui.main_window import MainWindow
-from core.gui.widgets.splash_screen import SplashScreen
 from core.util import setup_directories
 
 
@@ -17,8 +15,8 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
-        logging.StreamHandler(sys.stderr),  # Вывод в консоль
-        logging.FileHandler(LOG_FILE)  # Запись в файл
+        logging.StreamHandler(sys.stderr),
+        logging.FileHandler(LOG_FILE)
     ]
 )
 

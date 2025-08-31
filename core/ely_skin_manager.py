@@ -15,11 +15,9 @@ class ElySkinManager:
         if not skin_url:
             return False
 
-        # Для новых версий - через authlib
         if not is_legacy:
             return ElySkinManager.download_skin(username)
 
-        # Для старых версий - напрямую в файлы игры
         else:
             skin_path = os.path.join(MINECRAFT_DIR, "skins", f"{username}.png")
             ElySkinManager.download_skin_file(skin_url, skin_path)
