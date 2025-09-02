@@ -2,7 +2,7 @@ import os
 
 from minecraft_launcher_lib.utils import get_minecraft_directory, get_version_list
 
-MINECRAFT_VERSIONS: list[int] = [version['id'] for version in get_version_list() if version['type'] == 'release']
+MINECRAFT_VERSIONS: list[str] = [version['id'] for version in get_version_list() if version['type'] == 'release']
 ELY_CLIENT_ID = '16Launcher'
 RELEASE = False
 ELY_BY_INJECT = '-javaagent:{}=ely.by'

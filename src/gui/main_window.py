@@ -9,8 +9,9 @@ import traceback
 import webbrowser
 
 import requests
-from PyQt5.QtCore import QSize, Qt, QTimer
-from PyQt5.QtGui import QCloseEvent, QIcon, QKeySequence
+from minecraft_launcher_lib.utils import get_version_list
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QCloseEvent, QIcon
 from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
@@ -25,7 +26,6 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QProgressBar,
     QPushButton,
-    QShortcut,
     QStackedWidget,
     QTabWidget,
     QToolButton,
@@ -33,8 +33,10 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
+import constants
+
 from .. import ely
-from ..config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR, VERSIONS, main_message
+from ..config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
 from ..ely_by_skin_manager import ElyBySkinManager
 from ..ely_skin_manager import ElySkinManager
 from ..translator import Translator
@@ -87,8 +89,6 @@ class MainWindow(QMainWindow):
         'fabric_tab',
         'forge_tab',
         'motd_label',
-        'motd_messages',
-        'news_button',
         'open_folder_button',
         'optifine_tab',
         'play_button',
@@ -108,7 +108,6 @@ class MainWindow(QMainWindow):
 
     def __init__(self) -> None:
         self.random_name_button = None
-        self.motd_messages = main_message
         self.ely_login_button = None
         self.open_folder_button = None
         self.start_progress_label = None
@@ -118,7 +117,6 @@ class MainWindow(QMainWindow):
         self.toggle_sidebar_button = None
         self.support_button = None
         self.telegram_button = None
-        self.news_button = None
         self.settings_button = None
         self.quilt_tab = None
         self.optifine_tab = None
@@ -173,17 +171,6 @@ class MainWindow(QMainWindow):
         self.launch_thread.state_update_signal.connect(self.state_update)
         self.launch_thread.progress_update_signal.connect(self.update_progress)
         self.launch_thread.close_launcher_signal.connect(self.close_launcher)
-
-        logging.debug('Добавляем горячие клавиши')
-        self.splash.update_progress(24, 'Добавляем горячие клавиши')
-        self.ctrl_d_shortcut = QShortcut(QKeySequence('Ctrl+D'), self)
-        self.ctrl_d_shortcut.activated.connect(self.show_funny_message)
-        self.ctrl_q_shortcut = QShortcut(QKeySequence('Ctrl+Q'), self)
-        self.ctrl_q_shortcut.activated.connect(self.show_funny_message)
-        self.ctrl_r_shortcut = QShortcut(QKeySequence('Ctrl+R'), self)
-        self.ctrl_r_shortcut.activated.connect(self.show_funny_message)
-        self.ctrl_g_shortcut = QShortcut(QKeySequence('Ctrl+G'), self)
-        self.ctrl_g_shortcut.activated.connect(self.show_funny_message)
 
         logging.debug('Создаём основной контейнер')
         self.splash.update_progress(25, 'Создаём основной экран')
@@ -321,16 +308,6 @@ class MainWindow(QMainWindow):
         self.settings_button.setStyleSheet(self.play_button.styleSheet())
         self.settings_button.clicked.connect(self.show_settings_tab)
         sidebar_content_layout.addWidget(self.settings_button, alignment=Qt.AlignCenter)
-
-        logging.debug('Создаём кнопку новостей')
-        self.splash.update_progress(31, 'Создаём кнопку новостей')
-        self.news_button = QPushButton()
-        self.news_button.setIcon(QIcon(resource_path('assets/news64.png')))
-        self.news_button.setIconSize(QSize(64, 64))
-        self.news_button.setFixedSize(75, 75)
-        self.news_button.setStyleSheet(self.play_button.styleSheet())
-        self.news_button.clicked.connect(self.show_news_tab)
-        sidebar_content_layout.addWidget(self.news_button, alignment=Qt.AlignCenter)
 
         sidebar_content_layout.addStretch()
 
@@ -524,7 +501,7 @@ class MainWindow(QMainWindow):
 
         # --- Сообщение дня ---
         self.motd_label = QLabel()
-        self.motd_label.setAlignment(Qt.AlignCenter)
+        self.motd_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.motd_label.setStyleSheet("""
             color: #aaaaaa;
             font-style: italic;
@@ -676,10 +653,6 @@ class MainWindow(QMainWindow):
     def show_settings_tab(self) -> None:
         """Переключает на вкладку с настройками"""
         self.stacked_widget.setCurrentWidget(self.settings_tab)
-
-    def show_news_tab(self) -> None:
-        """Переключает на вкладку с новостями"""
-        self.stacked_widget.setCurrentWidget(self.news_tab)
 
     def update_ely_ui(self, logged_in: bool) -> None:
         """Обновляет UI в зависимости от статуса авторизации"""
@@ -1010,7 +983,7 @@ class MainWindow(QMainWindow):
         show_only_favorites = self.version_type_select.currentText() == 'Избранные'
         show_snapshots = self.settings.get('show_snapshots', False)
 
-        for v in VERSIONS:
+        for v in get_version_list():
             if v['type'] == 'release' or (show_snapshots and v['type'] == 'snapshot'):
                 version_id = v['id']
                 if not show_only_favorites or version_id in self.favorites:
@@ -1069,12 +1042,6 @@ class MainWindow(QMainWindow):
     def get_selected_memory(self) -> None:
         """Возвращает выбранное количество памяти в мегабайтах"""
         return self.settings_tab.memory_slider.value() * 1024  # Конвертируем ГБ в МБ
-
-    def show_funny_message(self) -> None:
-        """Показывает забавное сообщение при нажатии Ctrl+D"""
-        self.motd_label.setText('💬 <i>Юля писька</i>')
-        # Через 3 секунды возвращаем случайное сообщение
-        QTimer.singleShot(3000, self.show_message_of_the_day)
 
     def load_skin(self) -> None:
         # Создаем диалоговое окно выбора источника скина
@@ -1485,10 +1452,6 @@ class MainWindow(QMainWindow):
             self.settings_button.setIcon(
                 QIcon(resource_path(f'assets/set64{icon_suffix}.png')),
             )
-        if hasattr(self, 'news_button'):
-            self.news_button.setIcon(
-                QIcon(resource_path(f'assets/news64{icon_suffix}.png')),
-            )
         if hasattr(self, 'telegram_button'):
             self.telegram_button.setIcon(
                 QIcon(resource_path(f'assets/tg{icon_suffix}.png')),
@@ -1555,7 +1518,6 @@ class MainWindow(QMainWindow):
             self.settings['last_version'] = current_version
             self.settings['last_loader'] = self.loader_select.currentData()
             self.settings['show_snapshots'] = self.settings_tab.show_snapshots_checkbox.isChecked()
-            self.settings['show_motd'] = self.settings_tab.motd_checkbox.isChecked()
 
         self.settings['last_username'] = self.username.text().strip()
         save_settings(self.settings)
@@ -1660,7 +1622,7 @@ class MainWindow(QMainWindow):
 
     def show_message_of_the_day(self) -> None:
         if hasattr(self, 'motd_label') and self.settings.get('show_motd', True):
-            message = random.choice(self.motd_messages)
+            message = random.choice(constants.MOTD_MESSAGES)
             self.motd_label.setText(f'💬 <i>{message}</i>')
         else:
             self.motd_label.clear()
