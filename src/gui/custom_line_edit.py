@@ -1,5 +1,4 @@
-from PyQt5.QtWidgets import QLineEdit
-from PyQt5.QtWidgets import QStyle
+from PyQt5.QtWidgets import QLineEdit, QStyle
 
 
 class CustomLineEdit(QLineEdit):
@@ -19,6 +18,6 @@ class CustomLineEdit(QLineEdit):
         if self._button:
             frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
             rect = self.rect()
-            x = (rect.right() - self._button.width() - frame_width - 2)
+            x = rect.right() - self._button.width() - frame_width - 2
             y = (rect.height() - self._button.height()) // 2
             self._button.move(x, y)

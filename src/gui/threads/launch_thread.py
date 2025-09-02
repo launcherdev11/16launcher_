@@ -8,11 +8,11 @@ import zipfile
 from uuid import uuid1
 
 import requests
-from PyQt5.QtCore import QThread, pyqtSignal
 from minecraft_launcher_lib.command import get_minecraft_command
 from minecraft_launcher_lib.fabric import get_latest_loader_version
 from minecraft_launcher_lib.forge import find_forge_version
 from minecraft_launcher_lib.install import install_minecraft_version
+from PyQt5.QtCore import QThread, pyqtSignal
 
 from ...config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
@@ -26,14 +26,19 @@ class LaunchThread(QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent_window = parent
-        self.version_id = ""
-        self.username = ""
-        self.loader_type = "vanilla"
+        self.version_id = ''
+        self.username = ''
+        self.loader_type = 'vanilla'
         self.memory_mb = 4096
         self.close_on_launch = False
 
     def launch_setup(
-        self, version_id, username, loader_type, memory_mb, close_on_launch
+        self,
+        version_id,
+        username,
+        loader_type,
+        memory_mb,
+        close_on_launch,
     ):
         self.version_id = version_id
         self.username = username
@@ -43,139 +48,131 @@ class LaunchThread(QThread):
 
     def run(self):
         try:
-            logging.info("[LAUNCH THREAD] Starting Minecraft launch process...")
+            logging.info('[LAUNCH THREAD] Starting Minecraft launch process...')
             self.state_update_signal.emit(True)
 
             # 1. Определение базовых параметров
             launch_version = self.version_id
             is_legacy = self.is_legacy_version(self.version_id)
             options = {
-                "username": self.username,
-                "uuid": str(uuid1()),
-                "token": "",
-                "jvmArguments": [
-                    f"-Xmx{self.memory_mb}M",
-                    f"-Xms{min(self.memory_mb // 2, 2048)}M",
+                'username': self.username,
+                'uuid': str(uuid1()),
+                'token': '',
+                'jvmArguments': [
+                    f'-Xmx{self.memory_mb}M',
+                    f'-Xms{min(self.memory_mb // 2, 2048)}M',
                 ],
-                "launcherName": "16Launcher",
-                "launcherVersion": "1.0.2",
-                "demo": False,
-                "fullscreen": "false",
+                'launcherName': '16Launcher',
+                'launcherVersion': '1.0.2',
+                'demo': False,
+                'fullscreen': 'false',
             }
 
-            if (
-                hasattr(self.parent_window, "ely_session")
-                and self.parent_window.ely_session
-            ):
-                logging.info("[LAUNCH THREAD] Applying Ely.by session...")
-                options.update({
-                    "username": self.parent_window.ely_session["username"],
-                    "uuid": self.parent_window.ely_session["uuid"],
-                    "token": self.parent_window.ely_session["token"],
-                    "jvmArguments": options["jvmArguments"]
-                    + [f"-javaagent:{AUTHLIB_JAR_PATH}=ely.by"],
-                })
+            if hasattr(self.parent_window, 'ely_session') and self.parent_window.ely_session:
+                logging.info('[LAUNCH THREAD] Applying Ely.by session...')
+                options.update(
+                    {
+                        'username': self.parent_window.ely_session['username'],
+                        'uuid': self.parent_window.ely_session['uuid'],
+                        'token': self.parent_window.ely_session['token'],
+                        'jvmArguments': options['jvmArguments'] + [f'-javaagent:{AUTHLIB_JAR_PATH}=ely.by'],
+                    }
+                )
 
             # 3. Определение версии для модлоадеров
-            if self.loader_type == "forge":
-                logging.info("[LAUNCH THREAD] Processing Forge version...")
+            if self.loader_type == 'forge':
+                logging.info('[LAUNCH THREAD] Processing Forge version...')
                 forge_version = find_forge_version(self.version_id)
                 if not forge_version:
-                    raise Exception(f"Forge version for {self.version_id} not found")
-                launch_version = (
-                    f"{self.version_id}-forge-{forge_version.split('-')[-1]}"
-                )
-                logging.info(f"[LAUNCH THREAD] Forge launch version: {launch_version}")
+                    raise Exception(f'Forge version for {self.version_id} not found')
+                launch_version = f'{self.version_id}-forge-{forge_version.split("-")[-1]}'
+                logging.info(f'[LAUNCH THREAD] Forge launch version: {launch_version}')
 
-            elif self.loader_type == "fabric":
-                logging.info("[LAUNCH THREAD] Processing Fabric version...")
+            elif self.loader_type == 'fabric':
+                logging.info('[LAUNCH THREAD] Processing Fabric version...')
                 try:
                     loader_version = get_latest_loader_version()
-                    launch_version = f"fabric-loader-{loader_version}-{self.version_id}"
+                    launch_version = f'fabric-loader-{loader_version}-{self.version_id}'
                     logging.info(
-                        f"[LAUNCH THREAD] Fabric launch version: {launch_version}"
+                        f'[LAUNCH THREAD] Fabric launch version: {launch_version}',
                     )
                 except Exception as e:
-                    raise Exception(f"Fabric loader error: {str(e)}")
+                    raise Exception(f'Fabric loader error: {e!s}')
 
-            elif self.loader_type == "quilt":
-                logging.info("[LAUNCH THREAD] Processing Quilt version...")
+            elif self.loader_type == 'quilt':
+                logging.info('[LAUNCH THREAD] Processing Quilt version...')
                 from minecraft_launcher_lib.quilt import get_quilt_profile
 
                 profile = get_quilt_profile(self.version_id, MINECRAFT_DIR)
-                launch_version = profile["version"]
+                launch_version = profile['version']
 
             # 4. Патч для legacy версий
             if is_legacy:
-                print("[LAUNCH THREAD] Applying legacy patch...")
+                print('[LAUNCH THREAD] Applying legacy patch...')
                 self.apply_legacy_patch(launch_version)
 
             # 5. Установка версии если требуется
-            print(f"[LAUNCH THREAD] Checking version {launch_version}...")
+            print(f'[LAUNCH THREAD] Checking version {launch_version}...')
             if not os.path.exists(
-                os.path.join(MINECRAFT_DIR, "versions", launch_version)
+                os.path.join(MINECRAFT_DIR, 'versions', launch_version),
             ):
-                print("[LAUNCH THREAD] Installing version...")
+                print('[LAUNCH THREAD] Installing version...')
                 install_minecraft_version(
                     versionid=launch_version,
                     minecraft_directory=MINECRAFT_DIR,
                     callback={
-                        "setStatus": lambda text: (
-                            print(f"[INSTALL] {text}", end="\r"),
+                        'setStatus': lambda text: (
+                            print(f'[INSTALL] {text}', end='\r'),
                             self.progress_update_signal.emit(0, 100, text),
                         ),
-                        "setProgress": lambda value: (
-                            print(f"[INSTALL] Progress: {value}%", end="\r"),
-                            self.progress_update_signal.emit(value, 100, ""),
+                        'setProgress': lambda value: (
+                            print(f'[INSTALL] Progress: {value}%', end='\r'),
+                            self.progress_update_signal.emit(value, 100, ''),
                         ),
-                        "setMax": lambda value: (
-                            print(f"[INSTALL] Max progress set to: {value}"),
-                            self.progress_update_signal.emit(0, value, ""),
+                        'setMax': lambda value: (
+                            print(f'[INSTALL] Max progress set to: {value}'),
+                            self.progress_update_signal.emit(0, value, ''),
                         ),
                     },
                 )
 
             # 6. Формирование команды запуска
-            print("[LAUNCH THREAD] Building command...")
+            print('[LAUNCH THREAD] Building command...')
             command = get_minecraft_command(
                 version=launch_version,
                 minecraft_directory=MINECRAFT_DIR,
                 options=options,
             )
-            print("[LAUNCH THREAD] Final command:", " ".join(command))
+            print('[LAUNCH THREAD] Final command:', ' '.join(command))
 
             # 7. Запуск процесса
-            print("[LAUNCH THREAD] Starting Minecraft...")
+            print('[LAUNCH THREAD] Starting Minecraft...')
             minecraft_process = subprocess.Popen(
                 command,
-                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
-                if os.name == "nt"
-                else 0,
+                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
             )
 
             # 8. Закрытие лаунчера если нужно
             if self.close_on_launch:
-                print("[LAUNCH THREAD] Closing launcher...")
+                print('[LAUNCH THREAD] Closing launcher...')
                 self.close_launcher_signal.emit()
 
             self.state_update_signal.emit(False)
-            print("[LAUNCH THREAD] Launch completed successfully")
+            print('[LAUNCH THREAD] Launch completed successfully')
 
         except Exception as e:
-            print(f"[LAUNCH THREAD ERROR] {str(e)}")
-            logging.error(f"Launch thread failed: {traceback.format_exc()}")
+            print(f'[LAUNCH THREAD ERROR] {e!s}')
+            logging.exception(f'Launch thread failed: {traceback.format_exc()}')
             self.state_update_signal.emit(False)
 
     @staticmethod
     def is_legacy_version(version: str):
         """Проверяет, является ли версия старой (до 1.7.5)"""
         try:
-            major, minor, patch = re.match(r"(\d+)\.(\d+)\.?(\d+)?", version).groups()
-            if int(major) == 1 and (
-                int(minor) < 7 or (int(minor) == 7 and int(patch or 0) < 5)
-            ):
+            major, minor, patch = re.match(r'(\d+)\.(\d+)\.?(\d+)?', version).groups()
+            if int(major) == 1 and (int(minor) < 7 or (int(minor) == 7 and int(patch or 0) < 5)):
                 return True
             return False
         except Exception:
@@ -185,11 +182,11 @@ class LaunchThread(QThread):
         """Настраивает authlib-injector для новых версий"""
         if not os.path.exists(AUTHLIB_JAR_PATH):
             if not self.download_authlib():
-                raise Exception("Failed to download authlib-injector")
+                raise Exception('Failed to download authlib-injector')
 
-        options["jvmArguments"].append(f"-javaagent:{AUTHLIB_JAR_PATH}=ely.by")
-        options["jvmArguments"].append(
-            "-Dauthlibinjector.yggdrasil.prefetched={...}"
+        options['jvmArguments'].append(f'-javaagent:{AUTHLIB_JAR_PATH}=ely.by')
+        options['jvmArguments'].append(
+            '-Dauthlibinjector.yggdrasil.prefetched={...}',
         )
 
     @staticmethod
@@ -197,30 +194,30 @@ class LaunchThread(QThread):
         """Скачивает authlib-injector"""
         try:
             response = requests.get(
-                "https://maven.ely.by/releases/by/ely/authlib/1.2.0/authlib-1.2.0.jar"
+                'https://maven.ely.by/releases/by/ely/authlib/1.2.0/authlib-1.2.0.jar',
             )  # Актуальная версия
-            with open(AUTHLIB_JAR_PATH, "wb") as f:
+            with open(AUTHLIB_JAR_PATH, 'wb') as f:
                 f.write(response.content)
             return True
         except Exception as e:
-            logging.error(f"Authlib download failed: {str(e)}")
+            logging.exception(f'Authlib download failed: {e!s}')
             return False
 
     @staticmethod
     def apply_legacy_patch(version: str):
         """Применяет патч для старых версий"""
-        jar_path = os.path.join(MINECRAFT_DIR, "versions", version, f"{version}.jar")
+        jar_path = os.path.join(MINECRAFT_DIR, 'versions', version, f'{version}.jar')
 
         if not os.path.exists(jar_path):
-            raise Exception("JAR file not found")
+            raise Exception('JAR file not found')
 
-        patch_url = "https://ely.by/load/legacy-patch.jar"  # Пример URL
+        patch_url = 'https://ely.by/load/legacy-patch.jar'  # Пример URL
         patch_data = requests.get(patch_url).content
 
-        with zipfile.ZipFile(jar_path, "a") as jar:
+        with zipfile.ZipFile(jar_path, 'a') as jar:
             with zipfile.ZipFile(io.BytesIO(patch_data)) as patch:
                 for file in patch.namelist():
-                    if file.endswith(".class"):
+                    if file.endswith('.class'):
                         jar.writestr(file, patch.read(file))
 
     def _set_status(self, text):
@@ -228,11 +225,9 @@ class LaunchThread(QThread):
 
     def _set_progress(self, sub_value: int):
         percent_of_stage = 20
-        global_progress = self.progress_step * percent_of_stage + (
-            sub_value * percent_of_stage // 100
-        )
+        global_progress = self.progress_step * percent_of_stage + (sub_value * percent_of_stage // 100)
         self.current_step = global_progress
-        self.progress_update_signal.emit(self.current_step, self.total_steps, "")
+        self.progress_update_signal.emit(self.current_step, self.total_steps, '')
 
     def _set_max(self, _):  # не нужен для глобального прогресса
         pass

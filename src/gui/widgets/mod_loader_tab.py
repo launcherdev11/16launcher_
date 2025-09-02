@@ -1,19 +1,19 @@
 import logging
 
+from minecraft_launcher_lib.forge import find_forge_version
 from PyQt5.QtWidgets import (
-    QWidget,
     QComboBox,
     QLabel,
-    QVBoxLayout,
-    QPushButton,
-    QProgressBar,
     QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
 )
-from minecraft_launcher_lib.forge import find_forge_version
 
-from ..threads.mod_loader_installer import ModLoaderInstaller
 from ...config import MINECRAFT_VERSIONS
 from ...util import get_quilt_versions
+from ..threads.mod_loader_installer import ModLoaderInstaller
 
 
 class ModLoaderTab(QWidget):
@@ -28,26 +28,26 @@ class ModLoaderTab(QWidget):
 
         # Выбор версии Minecraft
         self.mc_version_combo = QComboBox()
-        layout.addWidget(QLabel("Версия Minecraft:"))
+        layout.addWidget(QLabel('Версия Minecraft:'))
         layout.addWidget(self.mc_version_combo)
 
         # Для Forge - выбор версии Forge
-        if self.loader_type == "forge":
+        if self.loader_type == 'forge':
             self.forge_version_combo = QComboBox()
-            layout.addWidget(QLabel("Версия Forge:"))
+            layout.addWidget(QLabel('Версия Forge:'))
             layout.addWidget(self.forge_version_combo)
             self.mc_version_combo.currentTextChanged.connect(self.update_forge_versions)
             self.update_forge_versions()
 
-        if self.loader_type == "quilt":
+        if self.loader_type == 'quilt':
             self.loader_version_combo = QComboBox()
-            layout.addWidget(QLabel("Версия Quilt:"))
+            layout.addWidget(QLabel('Версия Quilt:'))
             layout.addWidget(self.loader_version_combo)
             self.mc_version_combo.currentTextChanged.connect(self.update_quilt_versions)
             self.update_quilt_versions()
 
         # Кнопка установки
-        self.install_btn = QPushButton(f"Установить {self.loader_type}")
+        self.install_btn = QPushButton(f'Установить {self.loader_type}')
         self.install_btn.clicked.connect(self.install_loader)
         layout.addWidget(self.install_btn)
 
@@ -69,7 +69,7 @@ class ModLoaderTab(QWidget):
 
     def update_forge_versions(self):
         """Обновляет список версий Forge при изменении версии MC"""
-        if self.loader_type != "forge":
+        if self.loader_type != 'forge':
             return
 
         mc_version = self.mc_version_combo.currentText()
@@ -80,39 +80,39 @@ class ModLoaderTab(QWidget):
             if forge_version:
                 self.forge_version_combo.addItem(forge_version)
             else:
-                self.forge_version_combo.addItem("Автоматический выбор")
+                self.forge_version_combo.addItem('Автоматический выбор')
         except Exception as e:
-            logging.error(f"Ошибка загрузки Forge: {str(e)}")
-            self.forge_version_combo.addItem("Ошибка загрузки")
+            logging.exception(f'Ошибка загрузки Forge: {e!s}')
+            self.forge_version_combo.addItem('Ошибка загрузки')
 
     def update_quilt_versions(self):
         """Обновляет список версий Quilt"""
-        if self.loader_type != "quilt":
+        if self.loader_type != 'quilt':
             return
 
         self.loader_version_combo.clear()
         try:
             versions = get_quilt_versions(self.mc_version_combo.currentText())
             for v in versions:
-                self.loader_version_combo.addItem(v["version"])
+                self.loader_version_combo.addItem(v['version'])
             if versions:
                 self.loader_version_combo.setCurrentIndex(0)
         except Exception as e:
-            logging.error(f"Ошибка загрузки Quilt: {e}")
-            self.loader_version_combo.addItem("Ошибка загрузки")
+            logging.exception(f'Ошибка загрузки Quilt: {e}')
+            self.loader_version_combo.addItem('Ошибка загрузки')
 
     def install_loader(self):
         mc_version = self.mc_version_combo.currentText()
 
-        if self.loader_type == "forge":
+        if self.loader_type == 'forge':
             forge_version = self.forge_version_combo.currentText()
-            if forge_version == "Автоматический выбор":
+            if forge_version == 'Автоматический выбор':
                 forge_version = None
-            self.install_thread = ModLoaderInstaller("forge", forge_version, mc_version)
-        elif self.loader_type == "quilt":
+            self.install_thread = ModLoaderInstaller('forge', forge_version, mc_version)
+        elif self.loader_type == 'quilt':
             loader_version = self.loader_version_combo.currentText()
             self.install_thread = ModLoaderInstaller(
-                "quilt",
+                'quilt',
                 loader_version,  # Передаем версию лоадера
                 mc_version,
             )
@@ -139,5 +139,5 @@ class ModLoaderTab(QWidget):
         msg = QMessageBox(self)
         msg.setIcon(QMessageBox.Information if success else QMessageBox.Critical)
         msg.setText(message)
-        msg.setWindowTitle("Результат установки")
+        msg.setWindowTitle('Результат установки')
         msg.exec_()

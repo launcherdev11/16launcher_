@@ -2,26 +2,26 @@ import logging
 import os
 import subprocess
 
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (
-    QWidget,
     QApplication,
-    QVBoxLayout,
-    QLabel,
-    QHBoxLayout,
-    QComboBox,
-    QPushButton,
-    QSlider,
     QCheckBox,
-    QLineEdit,
+    QComboBox,
     QFileDialog,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
     QMessageBox,
+    QPushButton,
     QScrollArea,
+    QSlider,
+    QVBoxLayout,
+    QWidget,
 )
 
-from ...util import load_settings, save_settings, resource_path
 from ...config import MINECRAFT_DIR, MODS_DIR
+from ...util import load_settings, resource_path, save_settings
 
 
 class SettingsTab(QWidget):
@@ -93,9 +93,7 @@ class SettingsTab(QWidget):
                 padding: 8px 10px 8px 10px;
             }
         """
-        header_style = (
-            "font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 2px;"
-        )
+        header_style = 'font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 2px;'
 
         # Внешний вид
         appearance_card = QWidget()
@@ -103,17 +101,17 @@ class SettingsTab(QWidget):
         appearance_layout = QVBoxLayout(appearance_card)
         appearance_layout.setSpacing(7)
 
-        appearance_header = QLabel("Внешний вид")
+        appearance_header = QLabel('Внешний вид')
         appearance_header.setStyleSheet(header_style)
         appearance_layout.addWidget(appearance_header)
 
         # Язык
         language_layout = QHBoxLayout()
-        language_label = QLabel("Язык:")
-        language_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        language_label = QLabel('Язык:')
+        language_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.language_combo = QComboBox()
-        self.language_combo.addItem("Русский", "ru")
-        self.language_combo.addItem("English", "en")
+        self.language_combo.addItem('Русский', 'ru')
+        self.language_combo.addItem('English', 'en')
         self.language_combo.setStyleSheet("""
             QComboBox {
                 background-color: #3d3d3d;
@@ -161,14 +159,14 @@ class SettingsTab(QWidget):
         game_layout = QVBoxLayout(game_card)
         game_layout.setSpacing(15)
 
-        game_header = QLabel("Игровые настройки")
+        game_header = QLabel('Игровые настройки')
         game_header.setStyleSheet(header_style)
         game_layout.addWidget(game_header)
 
         # Память
         memory_layout = QVBoxLayout()
-        memory_label = QLabel("Оперативная память (ГБ)")
-        memory_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        memory_label = QLabel('Оперативная память (ГБ)')
+        memory_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.memory_slider = QSlider(Qt.Orientation.Horizontal)
         self.memory_slider.setRange(1, 32)
         self.memory_slider.setValue(4)
@@ -191,8 +189,8 @@ class SettingsTab(QWidget):
                 background: #1a88e0;
             }
         """)
-        self.memory_value_label = QLabel("4 ГБ")
-        self.memory_value_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        self.memory_value_label = QLabel('4 ГБ')
+        self.memory_value_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.memory_slider.valueChanged.connect(self.update_memory_label)
         memory_layout.addWidget(memory_label)
         memory_layout.addWidget(self.memory_slider)
@@ -200,7 +198,7 @@ class SettingsTab(QWidget):
         game_layout.addLayout(memory_layout)
 
         # Чекбокс закрытия
-        self.close_on_launch_checkbox = QCheckBox("Закрывать лаунчер при запуске игры")
+        self.close_on_launch_checkbox = QCheckBox('Закрывать лаунчер при запуске игры')
         self.close_on_launch_checkbox.setStyleSheet("""
             QCheckBox {
                 color: #ffffff;
@@ -229,7 +227,7 @@ class SettingsTab(QWidget):
         directories_layout = QVBoxLayout(directories_card)
         directories_layout.setSpacing(7)
 
-        directories_header = QLabel("Директории")
+        directories_header = QLabel('Директории')
         directories_header.setStyleSheet(header_style)
         directories_layout.addWidget(directories_header)
 
@@ -263,12 +261,12 @@ class SettingsTab(QWidget):
 
         # Директория игры
         game_dir_layout = QHBoxLayout()
-        game_dir_label = QLabel("Игра:")
-        game_dir_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        game_dir_label = QLabel('Игра:')
+        game_dir_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.directory_edit = QLineEdit()
         self.directory_edit.setText(MINECRAFT_DIR)
         self.directory_edit.setStyleSheet(input_style)
-        self.choose_directory_button = QPushButton("...")
+        self.choose_directory_button = QPushButton('...')
         self.choose_directory_button.setFixedWidth(32)
         self.choose_directory_button.setStyleSheet(button_style)
         self.choose_directory_button.clicked.connect(self.choose_directory)
@@ -279,12 +277,12 @@ class SettingsTab(QWidget):
 
         # Директория модов
         mods_dir_layout = QHBoxLayout()
-        mods_dir_label = QLabel("Моды:")
-        mods_dir_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        mods_dir_label = QLabel('Моды:')
+        mods_dir_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.mods_directory_edit = QLineEdit()
         self.mods_directory_edit.setText(MODS_DIR)
         self.mods_directory_edit.setStyleSheet(input_style)
-        self.choose_mods_directory_button = QPushButton("...")
+        self.choose_mods_directory_button = QPushButton('...')
         self.choose_mods_directory_button.setFixedWidth(32)
         self.choose_mods_directory_button.setStyleSheet(button_style)
         self.choose_mods_directory_button.clicked.connect(self.choose_mods_directory)
@@ -299,10 +297,10 @@ class SettingsTab(QWidget):
         versions_card.setStyleSheet(card_style)
         versions_layout = QVBoxLayout(versions_card)
         versions_layout.setSpacing(7)
-        versions_header = QLabel("Версии Minecraft")
+        versions_header = QLabel('Версии Minecraft')
         versions_header.setStyleSheet(header_style)
         versions_layout.addWidget(versions_header)
-        self.show_snapshots_checkbox = QCheckBox("Показывать Снапшоты")
+        self.show_snapshots_checkbox = QCheckBox('Показывать Снапшоты')
         self.show_snapshots_checkbox.setStyleSheet("""
             QCheckBox {
                 color: #ffffff;
@@ -321,29 +319,26 @@ class SettingsTab(QWidget):
                 border: 1px solid #0078d7;
             }
         """)
-        if "show_snapshots" in self.parent_window.settings:
+        if 'show_snapshots' in self.parent_window.settings:
             self.show_snapshots_checkbox.setChecked(
-                self.parent_window.settings["show_snapshots"]
+                self.parent_window.settings['show_snapshots'],
             )
         self.show_snapshots_checkbox.stateChanged.connect(
-            self.parent_window.update_version_list
+            self.parent_window.update_version_list,
         )
         versions_layout.addWidget(self.show_snapshots_checkbox)
         settings_layout.addWidget(versions_card)
 
         # Аккаунт Ely.by
-        if (
-            hasattr(self.parent_window, "ely_session")
-            and self.parent_window.ely_session
-        ):
+        if hasattr(self.parent_window, 'ely_session') and self.parent_window.ely_session:
             ely_card = QWidget()
             ely_card.setStyleSheet(card_style)
             ely_layout = QVBoxLayout(ely_card)
             ely_layout.setSpacing(7)
-            ely_header = QLabel("Аккаунт Ely.by")
+            ely_header = QLabel('Аккаунт Ely.by')
             ely_header.setStyleSheet(header_style)
             ely_layout.addWidget(ely_header)
-            self.ely_logout_button = QPushButton("Выйти из Ely.by")
+            self.ely_logout_button = QPushButton('Выйти из Ely.by')
             self.ely_logout_button.setStyleSheet("""
                 QPushButton {
                     background-color: #dc3545;
@@ -366,18 +361,18 @@ class SettingsTab(QWidget):
         builds_card.setStyleSheet(card_style)
         builds_layout = QVBoxLayout(builds_card)
         builds_layout.setSpacing(7)
-        builds_header = QLabel("Сборки")
+        builds_header = QLabel('Сборки')
         builds_header.setStyleSheet(header_style)
         builds_layout.addWidget(builds_header)
         export_path_layout = QHBoxLayout()
-        export_path_label = QLabel("Экспорт:")
-        export_path_label.setStyleSheet("color: #ffffff; font-size: 15px;")
+        export_path_label = QLabel('Экспорт:')
+        export_path_label.setStyleSheet('color: #ffffff; font-size: 15px;')
         self.export_path_edit = QLineEdit()
         self.export_path_edit.setText(
-            self.parent_window.settings.get("export_path", "")
+            self.parent_window.settings.get('export_path', ''),
         )
         self.export_path_edit.setStyleSheet(input_style)
-        self.export_path_btn = QPushButton("...")
+        self.export_path_btn = QPushButton('...')
         self.export_path_btn.setFixedWidth(32)
         self.export_path_btn.setStyleSheet(button_style)
         self.export_path_btn.clicked.connect(self.set_export_path)
@@ -395,17 +390,15 @@ class SettingsTab(QWidget):
         main_layout.addWidget(scroll)
 
         # Загружаем настройки
-        settings = (
-            self.parent_window.settings if self.parent_window else load_settings()
-        )
-        if "close_on_launch" in settings:
-            self.close_on_launch_checkbox.setChecked(settings["close_on_launch"])
-        if "memory" in settings:
-            self.memory_slider.setValue(settings["memory"])
-        if "minecraft_directory" in settings:
-            self.directory_edit.setText(settings["minecraft_directory"])
-        if "mods_directory" in settings:
-            self.mods_directory_edit.setText(settings["mods_directory"])
+        settings = self.parent_window.settings if self.parent_window else load_settings()
+        if 'close_on_launch' in settings:
+            self.close_on_launch_checkbox.setChecked(settings['close_on_launch'])
+        if 'memory' in settings:
+            self.memory_slider.setValue(settings['memory'])
+        if 'minecraft_directory' in settings:
+            self.directory_edit.setText(settings['minecraft_directory'])
+        if 'mods_directory' in settings:
+            self.mods_directory_edit.setText(settings['mods_directory'])
 
         # Принудительно обновляем стили
         self.style().unpolish(self)
@@ -413,30 +406,31 @@ class SettingsTab(QWidget):
         self.update()
 
     def update_memory_label(self):
-        self.memory_value_label.setText(f"{self.memory_slider.value()} ГБ")
+        self.memory_value_label.setText(f'{self.memory_slider.value()} ГБ')
 
     def choose_mods_directory(self):
         """Выбор директории для модов"""
         try:
             directory = QFileDialog.getExistingDirectory(
-                self, "Выберите директорию для модов"
+                self,
+                'Выберите директорию для модов',
             )
             if directory:
                 self.mods_directory_edit.setText(directory)
                 MODS_DIR = directory
                 # Сохраняем в настройках
                 if self.parent_window:
-                    self.parent_window.settings["mods_directory"] = directory
+                    self.parent_window.settings['mods_directory'] = directory
                     save_settings(self.parent_window.settings)
         except Exception as e:
-            logging.error(f"Ошибка при выборе директории модов: {e}")
-            self.show_error_message("Ошибка при выборе директории модов")
+            logging.exception(f'Ошибка при выборе директории модов: {e}')
+            self.show_error_message('Ошибка при выборе директории модов')
 
     def set_export_path(self):
-        path = QFileDialog.getExistingDirectory(self, "Выберите папку для экспорта")
+        path = QFileDialog.getExistingDirectory(self, 'Выберите папку для экспорта')
         if path:
             self.export_path_edit.setText(path)
-            self.parent_window.settings["export_path"] = path
+            self.parent_window.settings['export_path'] = path
             save_settings(self.parent_window.settings)
 
     def open_mods_directory(self):
@@ -445,25 +439,25 @@ class SettingsTab(QWidget):
             mods_dir = self.mods_directory_edit.text()
             if not os.path.exists(mods_dir):
                 os.makedirs(mods_dir)
-            if os.name == "nt":
+            if os.name == 'nt':
                 subprocess.Popen(f'explorer "{mods_dir}"')
-            elif os.name == "posix":
-                subprocess.Popen(["xdg-open", mods_dir])
+            elif os.name == 'posix':
+                subprocess.Popen(['xdg-open', mods_dir])
         except Exception as e:
-            logging.error(f"Ошибка при открытии директории модов: {e}")
-            self.show_error_message("Ошибка при открытии директории модов")
+            logging.exception(f'Ошибка при открытии директории модов: {e}')
+            self.show_error_message('Ошибка при открытии директории модов')
 
     def setup_language_selector(self):
         # Добавляем в layout настроек
         self.language_combo = QComboBox()
-        self.language_combo.addItem("Русский", "ru")
-        self.language_combo.addItem("English", "en")
+        self.language_combo.addItem('Русский', 'ru')
+        self.language_combo.addItem('English', 'en')
         self.language_combo.currentIndexChanged.connect(self.change_language)
 
         # Добавляем в layout настроек
         language_layout = QHBoxLayout()
-        language_label = QLabel("Язык:")
-        language_label.setStyleSheet("color: #ffffff;")
+        language_label = QLabel('Язык:')
+        language_label.setStyleSheet('color: #ffffff;')
         language_layout.addWidget(language_label)
         language_layout.addWidget(self.language_combo)
 
@@ -479,36 +473,33 @@ class SettingsTab(QWidget):
 
     def toggle_theme(self):
         """Переключает тему между светлой и темной"""
-        current_theme = getattr(self.parent_window, "current_theme", "dark")
-        new_theme = "light" if current_theme == "dark" else "dark"
+        current_theme = getattr(self.parent_window, 'current_theme', 'dark')
+        new_theme = 'light' if current_theme == 'dark' else 'dark'
 
         # Применяем новую тему
         self.parent_window.apply_dark_theme(
-            new_theme == "dark"
+            new_theme == 'dark',
         )  # <- Исправлено на apply_dark_theme
         self.update_theme_button_icon()
 
         # Сохраняем выбор темы
-        self.parent_window.settings["theme"] = new_theme
+        self.parent_window.settings['theme'] = new_theme
         save_settings(self.parent_window.settings)
 
     def update_theme_button_icon(self):
         """Обновляет иконку и текст кнопки в зависимости от текущей темы"""
-        current_theme = getattr(self.parent_window, "current_theme", "dark")
-        if current_theme == "dark":
-            self.theme_button.setIcon(QIcon(resource_path("assets/sun.png")))
-            self.theme_button.setText(" Светлая тема")
+        current_theme = getattr(self.parent_window, 'current_theme', 'dark')
+        if current_theme == 'dark':
+            self.theme_button.setIcon(QIcon(resource_path('assets/sun.png')))
+            self.theme_button.setText(' Светлая тема')
         else:
-            self.theme_button.setIcon(QIcon(resource_path("assets/moon.png")))
-            self.theme_button.setText(" Тёмная тема")
+            self.theme_button.setIcon(QIcon(resource_path('assets/moon.png')))
+            self.theme_button.setText(' Тёмная тема')
         self.theme_button.setIconSize(QSize(24, 24))
 
     def update_logout_button_visibility(self):
         """Обновляет видимость кнопки выхода в зависимости от статуса авторизации"""
-        if (
-            hasattr(self.parent_window, "ely_session")
-            and self.parent_window.ely_session
-        ):
+        if hasattr(self.parent_window, 'ely_session') and self.parent_window.ely_session:
             self.ely_logout_button.setVisible(True)
         else:
             self.ely_logout_button.setVisible(False)
@@ -518,38 +509,39 @@ class SettingsTab(QWidget):
     def choose_directory(self):
         try:
             directory = QFileDialog.getExistingDirectory(
-                self, "Выберите директорию Minecraft"
+                self,
+                'Выберите директорию Minecraft',
             )
             if directory:
                 self.directory_edit.setText(directory)
                 MINECRAFT_DIR = directory
-                SETTINGS_PATH = os.path.join(MINECRAFT_DIR, "settings.json")
-                LOG_FILE = os.path.join(MINECRAFT_DIR, "launcher_log.txt")
+                SETTINGS_PATH = os.path.join(MINECRAFT_DIR, 'settings.json')
+                LOG_FILE = os.path.join(MINECRAFT_DIR, 'launcher_log.txt')
         except Exception as e:
-            logging.error(f"Ошибка при выборе директории: {e}")
-            self.show_error_message("Ошибка при выборе директории")
+            logging.exception(f'Ошибка при выборе директории: {e}')
+            self.show_error_message('Ошибка при выборе директории')
 
     def open_directory(self):
         try:
-            if os.name == "nt":
+            if os.name == 'nt':
                 subprocess.Popen(f'explorer "{MINECRAFT_DIR}"')
-            elif os.name == "posix":
-                subprocess.Popen(["xdg-open", MINECRAFT_DIR])
+            elif os.name == 'posix':
+                subprocess.Popen(['xdg-open', MINECRAFT_DIR])
         except Exception as e:
-            logging.error(f"Ошибка при открытии директории: {e}")
-            self.show_error_message("Ошибка при открытии директории")
+            logging.exception(f'Ошибка при открытии директории: {e}')
+            self.show_error_message('Ошибка при открытии директории')
 
     def show_error_message(self, message):
-        QMessageBox.critical(self, "Ошибка", message)
+        QMessageBox.critical(self, 'Ошибка', message)
 
     def closeEvent(self, event):
         # Сохраняем настройки через главное окно
         if self.parent_window:
             self.parent_window.settings = {
-                "close_on_launch": self.close_on_launch_checkbox.isChecked(),
-                "memory": self.memory_slider.value(),
-                "minecraft_directory": self.directory_edit.text(),
-                "mods_directory": self.mods_directory_edit.text(),
+                'close_on_launch': self.close_on_launch_checkbox.isChecked(),
+                'memory': self.memory_slider.value(),
+                'minecraft_directory': self.directory_edit.text(),
+                'mods_directory': self.mods_directory_edit.text(),
                 # Убрали сохранение last_username здесь
             }
             save_settings(self.parent_window.settings)

@@ -33,4 +33,3 @@ jobs:
 
       - name: Run MyPy type checking
         run: uv run mypy src/
-

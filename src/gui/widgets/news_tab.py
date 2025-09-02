@@ -4,12 +4,12 @@ import threading
 import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QTabWidget,
     QLabel,
-    QScrollArea,
     QPushButton,
+    QScrollArea,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
 )
 
 from ...minecraft_news_translator import MinecraftNewsTranslator
@@ -30,12 +30,12 @@ class NewsTab(QWidget):
         # Minecraft News Tab
         self.minecraft_news_tab = QWidget()
         self.setup_minecraft_news_tab()
-        self.tabs.addTab(self.minecraft_news_tab, "Minecraft")
+        self.tabs.addTab(self.minecraft_news_tab, 'Minecraft')
 
         # Launcher News Tab
         self.launcher_news_tab = QWidget()
         self.setup_launcher_news_tab()
-        self.tabs.addTab(self.launcher_news_tab, "Лаунчер")
+        self.tabs.addTab(self.launcher_news_tab, 'Лаунчер')
 
         layout.addWidget(self.tabs)
 
@@ -52,7 +52,7 @@ class NewsTab(QWidget):
 
         layout.addWidget(scroll)
 
-        self.refresh_button = QPushButton("Обновить")
+        self.refresh_button = QPushButton('Обновить')
         self.refresh_button.clicked.connect(self.load_minecraft_news)
         layout.addWidget(self.refresh_button)
 
@@ -78,7 +78,8 @@ class NewsTab(QWidget):
     def load_minecraft_news(self):
         try:
             news = requests.get(
-                "https://launchercontent.mojang.com/news.json", timeout=10
+                'https://launchercontent.mojang.com/news.json',
+                timeout=10,
             ).json()
 
             html_content = """
@@ -86,56 +87,54 @@ class NewsTab(QWidget):
             <p><small>Автоматический перевод с английского</small></p>
             """
 
-            for item in news["entries"][
-                :50
-            ]:  # Берем 50 последних новостей (меньше для скорости)
+            for item in news['entries'][:50]:  # Берем 50 последних новостей (меньше для скорости)
                 try:
                     # Обработка даты
-                    date = item["date"][:10] if "date" in item else "Дата не указана"
+                    date = item['date'][:10] if 'date' in item else 'Дата не указана'
 
                     # Переводим заголовок и текст
                     title = MinecraftNewsTranslator.translate_text(
-                        item.get("title", "")
+                        item.get('title', ''),
                     )
-                    text = MinecraftNewsTranslator.translate_text(item.get("text", ""))
+                    text = MinecraftNewsTranslator.translate_text(item.get('text', ''))
 
                     html_content += f"""
                     <div style="margin-bottom: 20px; border-bottom: 1px solid #555; padding-bottom: 10px;">
                         <h2 style="color: #55AAFF;">{title}</h2>
                         <p><small>{date}</small></p>
                         <p>{text}</p>
-                        <a href="{item.get("readMoreLink", "#")}">Подробнее (оригинал)...</a>
+                        <a href="{item.get('readMoreLink', '#')}">Подробнее (оригинал)...</a>
                     </div>
                     """
                 except Exception as e:
-                    logging.error(f"Ошибка обработки новости: {str(e)}")
+                    logging.exception(f'Ошибка обработки новости: {e!s}')
                     continue
 
             self.minecraft_news_list.setText(html_content)
         except Exception as e:
             self.minecraft_news_list.setText(f"""
                 <h1 style="color: #FF5555;">Ошибка загрузки новостей</h1>
-                <p>Не удалось загрузить новости Minecraft: {str(e)}</p>
+                <p>Не удалось загрузить новости Minecraft: {e!s}</p>
                 <p>Попробуйте позже или проверьте интернет-соединение.</p>
             """)
-            logging.error(f"Ошибка загрузки новостей Minecraft: {str(e)}")
+            logging.exception(f'Ошибка загрузки новостей Minecraft: {e!s}')
 
     def load_launcher_news(self):
         try:
             response = requests.get(
-                "https://raw.githubusercontent.com/16steyy/launcher-news/refs/heads/main/launcher_news.json",
+                'https://raw.githubusercontent.com/16steyy/launcher-news/refs/heads/main/launcher_news.json',
                 timeout=10,
             )
             news = response.json()
 
-            html_content = "<h1>Новости лаунчера</h1>"
+            html_content = '<h1>Новости лаунчера</h1>'
 
             for item in news:
                 html_content += f"""
                 <div style="margin-bottom: 20px; border-bottom: 1px solid #555; padding-bottom: 10px;">
-                    <h2>{item["title"]}</h2>
-                    <p><small>{item["date"]}</small></p>
-                    <p>{item["content"]}</p>
+                    <h2>{item['title']}</h2>
+                    <p><small>{item['date']}</small></p>
+                    <p>{item['content']}</p>
                 </div>
                 """
 
@@ -144,6 +143,6 @@ class NewsTab(QWidget):
         except Exception as e:
             self.launcher_news_list.setText(f"""
                 <h1 style="color: #FF5555;">Ошибка загрузки</h1>
-                <p>Не удалось загрузить новости лаунчера: {str(e)}</p>
+                <p>Не удалось загрузить новости лаунчера: {e!s}</p>
             """)
-            logging.error(f"Ошибка загрузки новостей лаунчера: {str(e)}")
+            logging.exception(f'Ошибка загрузки новостей лаунчера: {e!s}')
