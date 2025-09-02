@@ -4,7 +4,7 @@ import webbrowser
 
 import requests
 
-from .config import CLIENT_ID, DEVICE_CODE_URL, TOKEN_URL, headers
+from config import CLIENT_ID, DEVICE_CODE_URL, TOKEN_URL, headers
 
 
 def get_device_code():

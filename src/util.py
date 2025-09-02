@@ -8,7 +8,7 @@ from typing import Any
 
 import requests
 
-from .config import (
+from config import (
     AUTHLIB_INJECTOR_URL,
     AUTHLIB_JAR_PATH,
     MINECRAFT_DIR,

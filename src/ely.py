@@ -2,9 +2,9 @@ import logging
 
 import requests
 
-from .ely_device import authorize_via_device_code
-from .flow import logged
-from .util import read, write
+from ely_device import authorize_via_device_code
+from flow import logged
+from util import read, write
 
 BASE_URL = 'https://authserver.ely.by'
 

@@ -1,12 +1,17 @@
+from multiprocessing.context import Process
+
+
+from typing import Any, Callable, Coroutine
+
+
 import asyncio
 import logging
 import multiprocessing
-from threading import Lock as TLock
-from threading import Thread
+from threading import Lock as TLock, Thread
 
 
-def dedicated(f):
-    def wrapper(*args, **kwargs):
+def dedicated(f: Callable[..., Any]) -> Thread:
+    def wrapper(*args: tuple[Any, ...], **kwargs: dict[str, Any]) -> Thread:
         t = Thread(target=f, args=args, kwargs=kwargs)
         t.daemon = True
         t.start()
@@ -15,34 +20,34 @@ def dedicated(f):
     return wrapper
 
 
-def dedicate(func, *args, **kwargs):
+def dedicate(func: Callable[..., Any], *args: tuple[Any, ...], **kwargs: dict[str, Any]) -> Thread:
     t = Thread(target=func, args=args, kwargs=kwargs)
     t.daemon = True
     t.start()
     return t
 
 
-def adedicate(func):
+def adedicate(func: Coroutine[Any, Any, Any]) -> None:
     asyncio.run(func)
 
 
 class Mutex:
-    def __init__(self):
+    def __init__(self) -> None:
         self.tlock = TLock()
 
-    def lock(self):
+    def lock(self) -> None:
         self.tlock.acquire(True)
 
-    def unlock(self):
+    def unlock(self) -> None:
         self.tlock.release()
 
-    def sync(self):
+    def sync(self) -> None:
         self.lock()
         self.unlock()
 
 
-def pdedicate(func):
-    def wrapper(*args, **kwargs):
+def pdedicate(func: Callable[..., Any]) -> multiprocessing.Process:
+    def wrapper(*args: tuple[Any, ...], **kwargs: dict[str, Any]) -> Process:
         p = multiprocessing.Process(target=func, args=args, kwargs=kwargs)
         p.daemon = True
         p.start()
@@ -54,8 +59,8 @@ def pdedicate(func):
 __logged_level = 0
 
 
-def logged(func):
-    def wrapper(*args, **kwargs):
+def logged(func: Callable[..., Any]) -> Callable[..., Any]:
+    def wrapper(*args: tuple[Any, ...], **kwargs: dict[str, Any]) -> Any:
         global __logged_level
         logging.debug(' ' * 4 * __logged_level + f'Running {func.__name__}')
         __logged_level += 1

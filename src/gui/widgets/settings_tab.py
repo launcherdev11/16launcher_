@@ -20,8 +20,8 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from ...config import MINECRAFT_DIR, MODS_DIR
-from ...util import load_settings, resource_path, save_settings
+from config import MINECRAFT_DIR, MODS_DIR
+from util import load_settings, resource_path, save_settings
 
 
 class SettingsTab(QWidget):

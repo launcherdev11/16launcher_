@@ -12,15 +12,20 @@ from minecraft_launcher_lib.fabric import install_fabric as fabric_install
 from minecraft_launcher_lib.forge import find_forge_version, install_forge_version
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS
-from ...util import get_quilt_versions
+from config import MINECRAFT_DIR, MINECRAFT_VERSIONS
+from util import get_quilt_versions
 
 
 class ModLoaderInstaller(QThread):
     progress_signal = pyqtSignal(int, int, str)
     finished_signal = pyqtSignal(bool, str)
 
-    def __init__(self, loader_type, version, mc_version=None):
+    def __init__(
+        self,
+        loader_type: str,
+        version: str,
+        mc_version: str | None = None,
+    ) -> None:
         super().__init__()
         self.loader_type = loader_type.lower()  # Приводим к нижнему регистру
         self.version = version

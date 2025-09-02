@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QProgressBar, QVBoxLayout, QWidget
 
-from ...util import resource_path
+from util import resource_path
 
 
 class SplashScreen(QWidget):
@@ -10,8 +10,8 @@ class SplashScreen(QWidget):
         super().__init__()
         self.setWindowTitle('16Launcher')
         self.setFixedSize(600, 400)
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         self.setup_ui()
 
@@ -38,11 +38,11 @@ class SplashScreen(QWidget):
         pixmap = QPixmap(resource_path('assets/icon.ico')).scaled(
             200,
             200,
-            Qt.KeepAspectRatio,
-            Qt.SmoothTransformation,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
         )
         self.logo.setPixmap(pixmap)
-        self.logo.setAlignment(Qt.AlignCenter)
+        self.logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         content_layout.addWidget(self.logo)
 
         # Прогресс-бар
@@ -65,13 +65,13 @@ class SplashScreen(QWidget):
 
         # Статус
         self.status_label = QLabel('Инициализация...')
-        self.status_label.setAlignment(Qt.AlignCenter)
+        self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.status_label.setStyleSheet('color: #AAAAAA; font-size: 14px;')
         content_layout.addWidget(self.status_label)
 
         # Версия
         version_label = QLabel('Версия 1.0.2')
-        version_label.setAlignment(Qt.AlignCenter)
+        version_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         version_label.setStyleSheet('color: #666666; font-size: 12px;')
         content_layout.addWidget(version_label)
 

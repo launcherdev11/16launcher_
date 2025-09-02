@@ -3,10 +3,11 @@ import logging
 import os
 import shutil
 import time
+from typing import Any, Callable
 import zipfile
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QCursor, QFont, QIcon, QPixmap
+from PyQt5.QtGui import QCursor, QDragEnterEvent, QDropEvent, QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (
     QAction,
     QApplication,
@@ -32,13 +33,13 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from ...config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
-from ...mod_manager import ModManager
-from ...util import resource_path
+from config import MINECRAFT_DIR, MINECRAFT_VERSIONS, MODS_DIR
+from mod_manager import ModManager
+from util import resource_path
 
 
 class ModpackTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.parent_window = parent
         self.modpacks_dir = os.path.join(MINECRAFT_DIR, 'modpacks')
@@ -69,7 +70,7 @@ class ModpackTab(QWidget):
         title_layout.addWidget(icon_label)
 
         self.title = QLabel('Мои сборки')
-        self.title.setFont(QFont('Arial', 16, QFont.Bold))
+        self.title.setFont(QFont('Arial', 16, QFont.Weight.Bold))
         title_layout.addWidget(self.title)
         title_layout.addStretch()
         header.addLayout(title_layout)
@@ -119,7 +120,7 @@ class ModpackTab(QWidget):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget()
         self.grid_layout = QGridLayout(self.scroll_content)
-        self.grid_layout.setAlignment(Qt.AlignTop)
+        self.grid_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.grid_layout.setContentsMargins(10, 10, 10, 10)
         self.grid_layout.setSpacing(15)
         self.scroll_area.setWidget(self.scroll_content)
@@ -127,7 +128,7 @@ class ModpackTab(QWidget):
 
         # Status Label
         self.status_label = QLabel()
-        self.status_label.setAlignment(Qt.AlignCenter)
+        self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.status_label.setStyleSheet('color: #AAAAAA; font-size: 14px;')
         layout.addWidget(self.status_label)
 
@@ -157,12 +158,17 @@ class ModpackTab(QWidget):
             }
         """)
 
-    def create_tool_button(self, text: str, icon: str, callback):
+    def create_tool_button(
+        self,
+        text: str,
+        icon: str,
+        callback: Callable[[], None],
+    ) -> QToolButton:
         btn = QToolButton()
         btn.setText(text)
         btn.setIcon(QIcon(resource_path(f'assets/{icon}')))
         btn.setIconSize(QSize(24, 24))
-        btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
         btn.setFixedSize(100, 70)
         btn.clicked.connect(callback)
         btn.setStyleSheet("""
@@ -177,7 +183,7 @@ class ModpackTab(QWidget):
         """)
         return btn
 
-    def create_modpack_card(self, pack_data):
+    def create_modpack_card(self, pack_data: dict[str, Any]) -> QFrame:
         icon = QLabel()
         icon_name = pack_data.get('icon')
         icon_path = os.path.join(self.icons_dir, icon_name) if icon_name else ''
@@ -207,7 +213,7 @@ class ModpackTab(QWidget):
 
         title_layout = QVBoxLayout()
         title = QLabel(pack_data['name'])
-        title.setFont(QFont('Arial', 12, QFont.Bold))
+        title.setFont(QFont('Arial', 12, QFont.Weight.Bold))
         title.setStyleSheet('color: #FFFFFF;')
 
         version = QLabel(f'· Minecraft {pack_data["version"]}')
@@ -255,7 +261,12 @@ class ModpackTab(QWidget):
 
         return card
 
-    def create_card_button(self, text, icon, callback):
+    def create_card_button(
+        self,
+        text: str,
+        icon: str,
+        callback: Callable[[], None],
+    ) -> QPushButton:
         btn = QPushButton(text)
         btn.setFixedSize(80, 28)
         btn.setIcon(QIcon(resource_path(f'assets/{icon}')))
@@ -275,7 +286,7 @@ class ModpackTab(QWidget):
         """)
         return btn
 
-    def filter_modpacks(self):
+    def filter_modpacks(self) -> None:
         search_text = self.search_bar.text().lower()
         filter_type = self.filter_combo.currentText()
 
@@ -294,7 +305,7 @@ class ModpackTab(QWidget):
             f'Найдено сборок: {visible_count}' if visible_count > 0 else 'Сборки не найдены',
         )
 
-    def load_modpacks(self):
+    def load_modpacks(self) -> None:
         # Clear existing cards
         while self.grid_layout.count():
             item = self.grid_layout.takeAt(0)
@@ -332,7 +343,7 @@ class ModpackTab(QWidget):
 
         self.status_label.setText(f'Загружено сборок: {len(modpacks)}')
 
-    def get_modpack_size(self, pack_data):
+    def get_modpack_size(self, pack_data: dict[str, Any]) -> str:
         total_size = 0
         mods_dir = os.path.join(MODS_DIR, pack_data['version'])
         if os.path.exists(mods_dir):
@@ -342,7 +353,7 @@ class ModpackTab(QWidget):
                     total_size += os.path.getsize(mod_path)
         return f'{total_size / 1024 / 1024:.1f} MB'
 
-    def show_context_menu(self, pack_data):
+    def show_context_menu(self, pack_data: dict[str, Any]) -> None:
         menu = QMenu(self)
 
         export_action = QAction(
@@ -371,12 +382,12 @@ class ModpackTab(QWidget):
         menu.addAction(delete_action)
         menu.exec_(QCursor.pos())
 
-    def duplicate_modpack(self, pack_data):
+    def duplicate_modpack(self, pack_data: dict[str, Any]) -> None:
         new_name, ok = QInputDialog.getText(
             self,
             'Дублирование сборки',
             'Введите новое название:',
-            QLineEdit.Normal,
+            QLineEdit.EchoMode.Normal,
             f'{pack_data["name"]} - Копия',
         )
 
@@ -405,7 +416,7 @@ class ModpackTab(QWidget):
                     f'Не удалось создать копию: {e!s}',
                 )
 
-    def launch_modpack(self, pack_data):
+    def launch_modpack(self, pack_data: dict[str, Any]) -> None:
         self.parent_window.version_select.setCurrentText(pack_data['version'])
         self.parent_window.loader_select.setCurrentText(pack_data['loader'])
         self.parent_window.tabs.setCurrentIndex(0)
@@ -415,7 +426,7 @@ class ModpackTab(QWidget):
             f"Параметры сборки '{pack_data['name']}' установлены!\nНажмите 'Играть' для запуска.",
         )
 
-    def edit_modpack(self, pack_data):
+    def edit_modpack(self, pack_data: dict[str, Any]) -> None:
         dialog = QDialog(self)
         dialog.setWindowTitle(f'Редактирование: {pack_data["name"]}')
         dialog.setFixedSize(800, 600)
@@ -483,13 +494,13 @@ class ModpackTab(QWidget):
         dialog.setLayout(layout)
         dialog.exec_()
 
-    def remove_selected_mods(self):
+    def remove_selected_mods(self) -> None:
         selected_items = self.mods_list.selectedItems()
         for item in selected_items:
             row = self.mods_list.row(item)
             self.mods_list.takeItem(row)
 
-    def add_mods_to_pack(self, pack_data):
+    def add_mods_to_pack(self, pack_data: dict[str, Any]) -> None:
         # Диалог выбора модов
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
@@ -513,7 +524,7 @@ class ModpackTab(QWidget):
 
             QMessageBox.information(self, 'Успех', 'Моды успешно добавлены!')
 
-    def save_modpack_changes(self, old_pack, dialog):
+    def save_modpack_changes(self, old_pack: dict[str, Any], dialog: QDialog) -> None:
         new_name = self.name_edit.text()
         new_version = self.version_combo.currentText()
         new_loader = self.loader_combo.currentText()
@@ -550,7 +561,7 @@ class ModpackTab(QWidget):
                 f'Не удалось сохранить изменения: {e!s}',
             )
 
-    def delete_modpack(self, pack_data):
+    def delete_modpack(self, pack_data: dict[str, Any]) -> None:
         confirm = QMessageBox.question(
             self,
             'Удаление сборки',  # Исправлен заголовок
@@ -575,13 +586,13 @@ class ModpackTab(QWidget):
         self.scroll_area.setAcceptDrops(True)
         self.scroll_area.viewport().setAcceptDrops(True)
 
-    def dragEnterEvent(self, event):
+    def dragEnterEvent(self, event: QDragEnterEvent) -> None:
         if event.mimeData().hasUrls():
             urls = event.mimeData().urls()
             if any(url.toLocalFile().lower().endswith('.zip') for url in urls):
                 event.acceptProposedAction()
 
-    def dropEvent(self, event):
+    def dropEvent(self, event: QDropEvent) -> None:
         urls = event.mimeData().urls()
         for url in urls:
             file_path = url.toLocalFile()
@@ -589,10 +600,10 @@ class ModpackTab(QWidget):
                 self.handle_dropped_file(file_path)
         event.acceptProposedAction()
 
-    def handle_dropped_file(self, file_path):
+    def handle_dropped_file(self, file_path: str) -> None:
         try:
             loading_indicator = QLabel('Импорт сборки...', self)
-            loading_indicator.setAlignment(Qt.AlignCenter)
+            loading_indicator.setAlignment(Qt.AlignmentFlag.AlignCenter)
             loading_indicator.setStyleSheet("""
                 QLabel {
                     background-color: #454545;

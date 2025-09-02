@@ -2,17 +2,18 @@ import json
 import logging
 import os
 import shutil
+from typing import Any
 import zipfile
 from functools import lru_cache
 
 import requests
 
-from .config import MODS_DIR
+from config import MODS_DIR
 
 
 class ModManager:
     @staticmethod
-    def get_mods_list(version):
+    def get_mods_list(version: str) -> list[str]:
         """Получает список установленных модов для указанной версии"""
         version_mods_dir = os.path.join(MODS_DIR, version)
         if not os.path.exists(version_mods_dir):
@@ -21,7 +22,7 @@ class ModManager:
         return [f for f in os.listdir(version_mods_dir) if f.endswith('.jar') or f.endswith('.zip')]
 
     @staticmethod
-    def install_mod_from_file(file_path, version):
+    def install_mod_from_file(file_path: str, version: str) -> tuple[bool, str]:
         """Устанавливает мод из файла"""
         try:
             os.makedirs(os.path.join(MODS_DIR, version), exist_ok=True)
@@ -32,7 +33,7 @@ class ModManager:
             return False, f'Ошибка установки мода: {e!s}'
 
     @staticmethod
-    def remove_mod(mod_name, version):
+    def remove_mod(mod_name: str, version: str) -> tuple[bool, str]:
         """Удаляет мод"""
         try:
             mod_path = os.path.join(MODS_DIR, version, mod_name)
@@ -45,12 +46,12 @@ class ModManager:
 
     @staticmethod
     def search_modrinth(
-        query,
-        version=None,
-        loader=None,
-        category=None,
-        sort_by='relevance',
-    ):
+        query: str,
+        version: str | None = None,
+        loader: str | None = None,
+        category: str | None = None,
+        sort_by: str = 'relevance',
+    ) -> list[dict[str, Any]]:
         try:
             # Преобразуем параметры сортировки
             sort_mapping = {
@@ -94,7 +95,7 @@ class ModManager:
             return []
 
     @staticmethod
-    def search_curseforge(query, version=None, loader=None):
+    def search_curseforge(query: str, version: str | None = None, loader: str | None = None) -> list[dict[str, Any]]:
         """Поиск модов на CurseForge"""
         try:
             headers = {
@@ -123,7 +124,7 @@ class ModManager:
             return []
 
     @staticmethod
-    def download_modrinth_mod(mod_id, version):
+    def download_modrinth_mod(mod_id: str, version: str) -> tuple[bool, str]:
         """Скачивает мод с Modrinth"""
         try:
             # Получаем информацию о файле
@@ -154,7 +155,7 @@ class ModManager:
             return False, f'Ошибка загрузки мода: {e!s}'
 
     @staticmethod
-    def download_curseforge_mod(mod_id, version):
+    def download_curseforge_mod(mod_id: str, version: str) -> tuple[bool, str]:
         """Скачивает мод с CurseForge"""
         try:
             headers = {'x-api-key': 'YOUR_CURSEFORGE_API_KEY'}
@@ -188,7 +189,7 @@ class ModManager:
             return False, f'Ошибка загрузки мода: {e!s}'
 
     @staticmethod
-    def create_modpack(version, mods, output_path):
+    def create_modpack(version: str, mods: list[str], output_path: str) -> tuple[bool, str]:
         """Создает сборку модов"""
         try:
             with zipfile.ZipFile(output_path, 'w') as zipf:
@@ -220,7 +221,7 @@ class ModManager:
             return False, f'Ошибка создания сборки: {e!s}'
 
     @staticmethod
-    def get_mod_categories(source='modrinth'):
+    def get_mod_categories(source: str = 'modrinth') -> list[str]:
         """Получает список доступных категорий модов"""
         if source == 'modrinth':
             try:
@@ -232,7 +233,7 @@ class ModManager:
         return []
 
     @staticmethod
-    def get_mod_details(mod_id, source='modrinth'):
+    def get_mod_details(mod_id: str, source: str = 'modrinth') -> dict[str, Any] | None:
         """Получает подробную информацию о моде"""
         try:
             if source == 'modrinth':
@@ -253,7 +254,7 @@ class ModManager:
             return None
 
     @staticmethod
-    def get_mod_icon(mod_id, source='modrinth'):
+    def get_mod_icon(mod_id: str, source: str = 'modrinth') -> str | None:
         """Получает URL иконки мода"""
         try:
             if source == 'modrinth':
@@ -278,13 +279,13 @@ class ModManager:
     @staticmethod
     @lru_cache(maxsize=100)
     def cached_search(
-        query,
-        version=None,
-        loader=None,
-        category=None,
-        sort_by='relevance',
-        source='modrinth',
-    ):
+        query: str,
+        version: str | None = None,
+        loader: str | None = None,
+        category: str | None = None,
+        sort_by: str = 'relevance',
+        source: str = 'modrinth',
+    ) -> list[dict[str, Any]]:
         """Кэшированный поиск модов"""
         if source == 'modrinth':
             return ModManager.search_modrinth(query, version, loader, category, sort_by)

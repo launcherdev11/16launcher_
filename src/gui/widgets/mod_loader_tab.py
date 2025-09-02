@@ -11,8 +11,8 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from ...config import MINECRAFT_VERSIONS
-from ...util import get_quilt_versions
+from config import MINECRAFT_VERSIONS
+from util import get_quilt_versions
 from ..threads.mod_loader_installer import ModLoaderInstaller
 
 

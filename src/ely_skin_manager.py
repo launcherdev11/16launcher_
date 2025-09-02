@@ -4,7 +4,7 @@ import shutil
 
 import requests
 
-from .config import MINECRAFT_DIR, SKINS_DIR
+from config import MINECRAFT_DIR, SKINS_DIR
 
 
 class ElySkinManager:

@@ -14,7 +14,7 @@ from minecraft_launcher_lib.forge import find_forge_version
 from minecraft_launcher_lib.install import install_minecraft_version
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from ...config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
+from config import AUTHLIB_JAR_PATH, MINECRAFT_DIR
 
 
 class LaunchThread(QThread):

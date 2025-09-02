@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
 )
 
-from .config import ELYBY_AUTH_URL, ELYBY_SKINS_URL, SKINS_DIR
+from config import ELYBY_AUTH_URL, ELYBY_SKINS_URL, SKINS_DIR
 
 
 class ElyBySkinManager:

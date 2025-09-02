@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from ...mod_manager import ModManager
+from mod_manager import ModManager
 
 
 class ModSearchThread(QThread):

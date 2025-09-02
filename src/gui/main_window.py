@@ -35,12 +35,12 @@ from PyQt5.QtWidgets import (
 
 import constants
 
-from .. import ely
-from ..config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
-from ..ely_by_skin_manager import ElyBySkinManager
-from ..ely_skin_manager import ElySkinManager
-from ..translator import Translator
-from ..util import (
+import ely
+from config import AUTHLIB_JAR_PATH, MINECRAFT_DIR, SKINS_DIR
+from ely_by_skin_manager import ElyBySkinManager
+from ely_skin_manager import ElySkinManager
+from translator import Translator
+from util import (
     download_authlib_injector,
     generate_random_username,
     load_settings,
@@ -630,7 +630,8 @@ class MainWindow(QMainWindow):
 
     def show_game_tab(self) -> None:
         """Переключает на вкладку с игрой"""
-        self.stacked_widget.setCurrentWidget(self.game_tab)
+        self.stacked_widget.setCurrentWidget(self.tab_widget)
+        self.tabs.setCurrentIndex(0)
 
     def toggle_theme(self) -> None:
         current_theme = getattr(self, 'current_theme', 'dark')

@@ -1,8 +1,9 @@
 import logging
+from typing import Any
 
 import requests
 from PyQt5.QtCore import QSize, Qt, QTimer
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QShowEvent
 from PyQt5.QtWidgets import (
     QComboBox,
     QHBoxLayout,
@@ -16,15 +17,15 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from ...config import MINECRAFT_VERSIONS
-from ...mod_manager import ModManager
-from ...util import resource_path
+from config import MINECRAFT_VERSIONS
+from mod_manager import ModManager
+from util import resource_path
 from ..threads.mod_search_thread import ModSearchThread
 from ..threads.popular_mods_thread import PopularModsThread
 
 
 class ModsTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.parent_window = parent
         self.search_thread = None
@@ -39,7 +40,7 @@ class ModsTab(QWidget):
 
         # Добавляем надпись о загрузке
         self.loading_label = QLabel('Моды загружаются, подождите...')
-        self.loading_label.setAlignment(Qt.AlignCenter)
+        self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.loading_label.setStyleSheet("""
             QLabel {
                 color: #aaaaaa;
@@ -49,7 +50,7 @@ class ModsTab(QWidget):
         """)
         self.mods_layout.addWidget(self.loading_label)
 
-    def showEvent(self, event):
+    def showEvent(self, event: QShowEvent) -> None:
         """Запускаем загрузку только при первом открытии вкладки"""
         if not self.is_loaded:
             self.load_popular_mods()
@@ -118,8 +119,8 @@ class ModsTab(QWidget):
         version_layout.addWidget(QLabel('Версия Minecraft:'))
 
         # Используем слайдер для выбора версии
-        self.version_slider = QSlider(Qt.Horizontal)
-        self.version_slider.setTickPosition(QSlider.TicksBelow)
+        self.version_slider = QSlider(Qt.Orientation.Horizontal)
+        self.version_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.version_label = QLabel()
         self.version_slider.setStyleSheet("""
             QSlider::groove:horizontal {
@@ -269,7 +270,7 @@ class ModsTab(QWidget):
 
         layout.addWidget(pagination_widget)
 
-    def create_mod_card(self, mod):
+    def create_mod_card(self, mod: dict[str, Any]) -> QWidget:
         """Создает карточку мода"""
         card = QWidget()
         card.setStyleSheet("""
@@ -306,7 +307,7 @@ class ModsTab(QWidget):
             try:
                 pixmap.loadFromData(requests.get(icon_url).content)
                 icon_label.setPixmap(
-                    pixmap.scaled(90, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation),
+                    pixmap.scaled(90, 90, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation),
                 )
             except:
                 pass
