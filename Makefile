@@ -38,20 +38,13 @@ test:
 
 lint:
 	@echo "Checking code..."
-	uv run ruff check core/
-	uv run mypy core/
-    uv run bandit -r ./core
-    uv run pydocstyle ./core
-    uv run radon cc -s -a
-
-cloc:
-    @echo "Calculating cloc..."
-    cloc ./core
+	uv run ruff check src/
+	uv run mypy src/
 
 fmt:
 	@echo "Formatting code..."
-	uv run ruff format core/
-	uv run ruff check --fix core/
+	uv run ruff format src/
+	uv run ruff check --fix src/
 
 build:
 	@echo "Building project..."

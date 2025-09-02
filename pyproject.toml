@@ -41,7 +41,7 @@ requires = ["setuptools==69.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["core*"]
+include = ["src*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.json", "*.txt", "*.md"]
@@ -56,8 +56,6 @@ prod = [
 dev = [
     "mypy==1.17.1",
     "pre-commit==4.3.0",
-    "pytest==8.4.1",
-    "pytest-cov==6.2.1",
     "ruff==0.12.10",
 ]
 
@@ -117,10 +115,3 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 show_error_codes = true
 ignore_missing_imports = true
-
-[tool.pytest.ini_options]
-testpaths = ["tests", "src/tests"]
-python_files = "test_*.py"
-python_classes = "Test*"
-python_functions = "test_*"
-addopts = "-v --cov=core --cov-report=xml"

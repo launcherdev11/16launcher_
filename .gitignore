@@ -1,4 +1,4 @@
-/core/logs/
+/src/logs/
 /docs/_build/
 /installer_build/
 /config/
