@@ -1,3 +1,4 @@
+# main_window.py
 import json
 import logging
 import os
@@ -7,11 +8,12 @@ import shutil
 import subprocess
 import traceback
 import webbrowser
+from datetime import datetime
 
 import requests
 from minecraft_launcher_lib.utils import get_version_list
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QCloseEvent, QIcon
+from PyQt5.QtGui import QCloseEvent, QIcon, QFont
 from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
@@ -31,6 +33,7 @@ from PyQt5.QtWidgets import (
     QToolButton,
     QVBoxLayout,
     QWidget,
+    QTextEdit,
 )
 
 import constants
@@ -100,10 +103,14 @@ class MainWindow(QMainWindow):
         'sidebar_layout',
         'splash',
         'start_progress_label',
+        'start_progress',
         'support_button',
         'telegram_button',
         'toggle_sidebar_button',
         'username',
+        # NOTE: не забудьте, что если у вас уже была логика со slots — возможно
+        # вы захотите добавить сюда все дополнительные поля, но оригинальный
+        # код работал и без явного указания всех атрибутов.
     )
 
     def __init__(self) -> None:
@@ -168,9 +175,11 @@ class MainWindow(QMainWindow):
         logging.debug('Создаем UI элементы')
         self.splash.update_progress(23, 'Создаем UI элементы')
         self.launch_thread = LaunchThread(self)
+        # Подключаем сигналы (включая лог-сигнал)
         self.launch_thread.state_update_signal.connect(self.state_update)
         self.launch_thread.progress_update_signal.connect(self.update_progress)
         self.launch_thread.close_launcher_signal.connect(self.close_launcher)
+        self.launch_thread.log_signal.connect(self.append_console)
 
         logging.debug('Создаём основной контейнер')
         self.splash.update_progress(25, 'Создаём основной экран')
@@ -453,6 +462,26 @@ class MainWindow(QMainWindow):
 
         form_layout.addLayout(version_row)
 
+        # --- Консоль логов (появляется при старте) ---
+        self.start_console = QTextEdit(self.game_tab)
+        self.start_console.setReadOnly(True)
+        self.start_console.setVisible(False)
+        self.start_console.setFixedHeight(160)
+        # стиль для читабельности
+        font = QFont('Courier New')
+        font.setPointSize(10)
+        self.start_console.setFont(font)
+        self.start_console.setStyleSheet("""
+            QTextEdit {
+                background-color: #1e1e1e;
+                color: #e6e6e6;
+                border: 1px solid #333;
+                border-radius: 6px;
+                padding: 8px;
+            }
+        """)
+        form_layout.addWidget(self.start_console)
+
         # Третья строка — Играть и Сменить скин
         bottom_row = QHBoxLayout()
         bottom_row.setSpacing(10)
@@ -510,7 +539,7 @@ class MainWindow(QMainWindow):
             padding: 5px;
         """)
         layout.addWidget(self.motd_label)
-        layout.addStretch()  # Добавляем растягивающееся пространство
+        layout.addStretch()
 
         self.show_message_of_the_day()
 
@@ -1551,7 +1580,6 @@ class MainWindow(QMainWindow):
                 f'Close on launch: {close_on_launch}',
             )
 
-            # Handle Ely.by session
             if not hasattr(self, 'ely_session'):
                 self.ely_session = None
                 logging.info('[LAUNCHER] No Ely.by session found')
@@ -1566,9 +1594,9 @@ class MainWindow(QMainWindow):
 
             # Handle authlib for Ely.by
             if hasattr(self, 'ely_session') and self.ely_session:
-                logging.info('[LAUNCHER] Ely.by session detected, checking authlib...')
+                logging.info('[LAUNCH THREAD] Ely.by session detected, checking authlib...')
                 if not os.path.exists(AUTHLIB_JAR_PATH):
-                    logging.info('[LAUNCHER] Downloading authlib-injector...')
+                    logging.info('[LAUNCH THREAD] Downloading authlib-injector...')
                     if not download_authlib_injector():
                         QMessageBox.critical(
                             self,
@@ -1582,11 +1610,16 @@ class MainWindow(QMainWindow):
             self.settings['last_loader'] = loader_type
             save_settings(self.settings)
 
-            # Show progress UI
+            # Show progress UI and console
             self.start_progress_label.setText('Подготовка к запуску...')
             self.start_progress_label.setVisible(True)
             self.start_progress.setVisible(True)
-            QApplication.processEvents()  # Force UI update
+            # показать консоль
+            self.start_console.clear()
+            self.start_console.setVisible(True)
+            self.append_console('Подготовка к запуску...')
+
+            QApplication.processEvents() 
 
             logging.info('[LAUNCHER] Starting launch thread...')
             self.launch_thread.launch_setup(
@@ -1607,6 +1640,15 @@ class MainWindow(QMainWindow):
                 f'Не удалось запустить игру: {e!s}',
             )
 
+    def append_console(self, text: str) -> None:
+        try:
+            ts = datetime.now().strftime('%H:%M:%S')
+            self.start_console.append(f'[{ts}] {text}')
+
+            self.start_console.verticalScrollBar().setValue(self.start_console.verticalScrollBar().maximum())
+        except Exception:
+            logging.exception('Ошибка при добавлении в консоль')
+
     def update_progress(self, current: int, total: int, text: str) -> None:
         self.start_progress.setMaximum(total)
         self.start_progress.setValue(current)
@@ -1616,10 +1658,13 @@ class MainWindow(QMainWindow):
     def state_update(self, is_running: bool) -> None:
         if is_running:
             self.start_button.setEnabled(False)
+            self.start_console.setVisible(True)
         else:
             self.start_button.setEnabled(True)
             self.start_progress_label.setVisible(False)
             self.start_progress.setVisible(False)
+            self.append_console('Процесс запуска завершён.')
+            self.start_console.setVisible(True)
 
     def show_message_of_the_day(self) -> None:
         if hasattr(self, 'motd_label') and self.settings.get('show_motd', True):
