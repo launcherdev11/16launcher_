@@ -8,7 +8,7 @@ from functools import lru_cache
 
 import requests
 
-from config import MODS_DIR
+from config import MODS_DIR, RESOURCEPACKS_DIR, SHADERPACKS_DIR
 
 
 class ModManager:
@@ -290,3 +290,24 @@ class ModManager:
         if source == 'modrinth':
             return ModManager.search_modrinth(query, version, loader, category, sort_by)
         return ModManager.search_curseforge(query, version, loader)
+
+
+    @staticmethod
+    def get_textures_list(version: str) -> list[str]:
+        """Возвращает список доступных ресурспаков (текстур)."""
+        if not os.path.exists(RESOURCEPACKS_DIR):
+            return []
+        return [
+            f for f in os.listdir(RESOURCEPACKS_DIR)
+            if f.endswith(".zip") or os.path.isdir(os.path.join(RESOURCEPACKS_DIR, f))
+        ]
+
+    @staticmethod
+    def get_shaders_list(version: str) -> list[str]:
+        """Возвращает список доступных шейдеров."""
+        if not os.path.exists(SHADERPACKS_DIR):
+            return []
+        return [
+            f for f in os.listdir(SHADERPACKS_DIR)
+            if f.endswith(".zip") or os.path.isdir(os.path.join(SHADERPACKS_DIR, f))
+        ]
